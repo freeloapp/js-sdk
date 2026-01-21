@@ -4,8 +4,8 @@
  *
  * @example
  * ```typescript
- * import { Freelo } from '@freelo/js-sdk';
- * import { createPaginator, iteratePages } from '@freelo/js-sdk';
+ * import { Freelo } from '@freeloapp/js-sdk';
+ * import { createPaginator, iteratePages } from '@freeloapp/js-sdk';
  *
  * const freelo = new Freelo({ email, apiKey, userAgent });
  *

@@ -6,7 +6,7 @@
  */
 
 import { ref, onMounted } from 'vue';
-import { Freelo, type ProjectWithTasklists, FreeloApiError } from '@freelo/js-sdk';
+import { Freelo, type ProjectWithTasklists, FreeloApiError } from '@freeloapp/js-sdk';
 
 const freelo = new Freelo({
   email: import.meta.env.VITE_FREELO_EMAIL,

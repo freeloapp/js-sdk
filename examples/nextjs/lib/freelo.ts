@@ -4,7 +4,7 @@
  * Singleton pattern for the Freelo client to be used across API routes.
  */
 
-import { Freelo } from '@freelo/js-sdk';
+import { Freelo } from '@freeloapp/js-sdk';
 
 let freeloInstance: Freelo | null = null;
 
@@ -30,10 +30,10 @@ export function getFreelo(): Freelo {
 /**
  * Export types for convenience
  */
-export { FreeloApiError, RateLimitError } from '@freelo/js-sdk';
+export { FreeloApiError, RateLimitError } from '@freeloapp/js-sdk';
 export type {
   ProjectWithTasklists,
   ProjectDetail,
   TaskFull,
   TaskCreated,
-} from '@freelo/js-sdk';
+} from '@freeloapp/js-sdk';

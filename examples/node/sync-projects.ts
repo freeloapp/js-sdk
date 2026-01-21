@@ -4,7 +4,7 @@
  * Script that fetches and displays all projects with their details.
  */
 
-import { Freelo, FreeloApiError } from '@freelo/js-sdk';
+import { Freelo, FreeloApiError } from '@freeloapp/js-sdk';
 
 const freelo = new Freelo({
   email: process.env.FREELO_EMAIL!,

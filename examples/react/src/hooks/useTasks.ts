@@ -5,7 +5,7 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { Freelo, type TaskFull, FreeloApiError } from '@freelo/js-sdk';
+import { Freelo, type TaskFull, FreeloApiError } from '@freeloapp/js-sdk';
 
 // Initialize the client
 const freelo = new Freelo({

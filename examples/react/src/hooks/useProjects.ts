@@ -5,7 +5,7 @@
  */
 
 import { useState, useEffect } from 'react';
-import { Freelo, type ProjectWithTasklists } from '@freelo/js-sdk';
+import { Freelo, type ProjectWithTasklists } from '@freeloapp/js-sdk';
 
 // Initialize the client (in a real app, consider using React Context)
 const freelo = new Freelo({

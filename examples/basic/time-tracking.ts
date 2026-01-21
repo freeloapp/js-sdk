@@ -4,7 +4,7 @@
  * This example demonstrates how to start and stop time tracking.
  */
 
-import { Freelo } from '@freelo/js-sdk';
+import { Freelo } from '@freeloapp/js-sdk';
 
 const freelo = new Freelo({
   email: process.env.FREELO_EMAIL!,

@@ -4,7 +4,7 @@
  * Demonstrates comprehensive error handling strategies.
  */
 
-import { Freelo, FreeloApiError, RateLimitError } from '@freelo/js-sdk';
+import { Freelo, FreeloApiError, RateLimitError } from '@freeloapp/js-sdk';
 
 const freelo = new Freelo({
   email: process.env.FREELO_EMAIL!,

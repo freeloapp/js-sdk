@@ -6,7 +6,7 @@ Simple examples demonstrating core Freelo SDK functionality.
 
 - Node.js 18+
 - Freelo account with API key
-- Install the SDK: `npm install @freelo/js-sdk`
+- Install the SDK: `npm install @freeloapp/js-sdk`
 
 ## Setup
 

@@ -2,7 +2,7 @@
 
 Official JavaScript/TypeScript SDK for [Freelo.io](https://app.freelo.io) API.
 
-[![npm version](https://badge.fury.io/js/@freelo/js-sdk.svg)](https://badge.fury.io/js/@freelo/js-sdk)
+[![npm version](https://badge.fury.io/js/@freeloapp/js-sdk.svg)](https://badge.fury.io/js/@freeloapp/js-sdk)
 [![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -19,17 +19,17 @@ Official JavaScript/TypeScript SDK for [Freelo.io](https://app.freelo.io) API.
 ## Installation
 
 ```bash
-npm install @freelo/js-sdk
+npm install @freeloapp/js-sdk
 # or
-yarn add @freelo/js-sdk
+yarn add @freeloapp/js-sdk
 # or
-pnpm add @freelo/js-sdk
+pnpm add @freeloapp/js-sdk
 ```
 
 ## Quick Start
 
 ```typescript
-import { Freelo } from '@freelo/js-sdk';
+import { Freelo } from '@freeloapp/js-sdk';
 
 const freelo = new Freelo({
   email: 'your@email.tld',
@@ -418,7 +418,7 @@ const states = await freelo.states.list();
 The SDK provides utilities for handling paginated responses:
 
 ```typescript
-import { fetchAllPages, iteratePages, createPaginator } from '@freelo/js-sdk';
+import { fetchAllPages, iteratePages, createPaginator } from '@freeloapp/js-sdk';
 
 // Fetch all pages at once
 const allProjects = await fetchAllPages(
@@ -449,7 +449,7 @@ for await (const items of paginator.iterate()) { /* ... */ }
 ## Error Handling
 
 ```typescript
-import { Freelo, FreeloApiError, RateLimitError } from '@freelo/js-sdk';
+import { Freelo, FreeloApiError, RateLimitError } from '@freeloapp/js-sdk';
 
 try {
   await freelo.projects.get(123);
@@ -480,7 +480,7 @@ The API allows 25 requests per minute. When exceeded, you'll receive a 429 statu
 ### Date Utilities
 
 ```typescript
-import { dateToApi, dateFromApi, today, daysFromNow } from '@freelo/js-sdk';
+import { dateToApi, dateFromApi, today, daysFromNow } from '@freeloapp/js-sdk';
 
 // Convert to API format (YYYY-MM-DD)
 const apiDate = dateToApi(new Date());  // "2024-01-15"
@@ -496,7 +496,7 @@ const nextWeek = daysFromNow(7);         // 7 days from now
 ### Currency Utilities
 
 ```typescript
-import { currencyToApi, currencyFromApi, formatCurrency } from '@freelo/js-sdk';
+import { currencyToApi, currencyFromApi, formatCurrency } from '@freeloapp/js-sdk';
 
 // Convert decimal to API format (cents)
 const cents = currencyToApi(123.45);      // 12345
@@ -531,7 +531,7 @@ import type {
   Comment,
   WorkReport,
   FreeloConfig,
-} from '@freelo/js-sdk';
+} from '@freeloapp/js-sdk';
 
 // All API responses are fully typed
 const projects: Project[] = (await freelo.projects.list()).data.projects;

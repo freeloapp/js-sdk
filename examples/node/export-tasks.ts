@@ -5,7 +5,7 @@
  */
 
 import { writeFileSync } from 'fs';
-import { Freelo, FreeloApiError } from '@freelo/js-sdk';
+import { Freelo, FreeloApiError } from '@freeloapp/js-sdk';
 
 const freelo = new Freelo({
   email: process.env.FREELO_EMAIL!,

@@ -4,7 +4,7 @@
  * This example demonstrates how to initialize the SDK and list all projects.
  */
 
-import { Freelo } from '@freelo/js-sdk';
+import { Freelo } from '@freeloapp/js-sdk';
 
 // Initialize the client
 const freelo = new Freelo({

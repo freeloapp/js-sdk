@@ -4,7 +4,7 @@
  * Demonstrates different pagination strategies.
  */
 
-import { Freelo, type TaskFull, type ProjectFull } from '@freelo/js-sdk';
+import { Freelo, type TaskFull, type ProjectFull } from '@freeloapp/js-sdk';
 
 const freelo = new Freelo({
   email: process.env.FREELO_EMAIL!,

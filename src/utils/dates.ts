@@ -8,7 +8,7 @@
  *
  * @example
  * ```typescript
- * import { dates } from '@freelo/js-sdk';
+ * import { dates } from '@freeloapp/js-sdk';
  *
  * // Format for API (date only)
  * dates.toApi(new Date()); // "2024-01-15"

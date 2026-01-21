@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@freelo/js-sdk": "^1.0.0",
+    "@freeloapp/js-sdk": "^1.0.0",
     "vue": "^3.4.0"
   },
   "devDependencies": {

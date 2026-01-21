@@ -8,7 +8,7 @@
  *
  * @example
  * ```typescript
- * import { currency } from '@freelo/js-sdk';
+ * import { currency } from '@freeloapp/js-sdk';
  *
  * // Convert to API format
  * currency.toApi(1000.25); // "100025"

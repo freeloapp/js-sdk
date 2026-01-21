@@ -51,7 +51,7 @@ The API provides these main resources:
 ## Usage Pattern
 
 ```typescript
-import { Freelo } from '@freelo/js-sdk';
+import { Freelo } from '@freeloapp/js-sdk';
 
 const freelo = new Freelo({
   email: 'your@email.tld',

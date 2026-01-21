@@ -3,7 +3,7 @@
  *
  * @example
  * ```typescript
- * import { Freelo } from '@freelo/js-sdk';
+ * import { Freelo } from '@freeloapp/js-sdk';
  *
  * const freelo = new Freelo({
  *   email: 'your@email.tld',

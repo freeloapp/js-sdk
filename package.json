@@ -1,5 +1,5 @@
 {
-  "name": "@freelo/js-sdk",
+  "name": "@freeloapp/js-sdk",
   "version": "1.0.0",
   "description": "Official JavaScript/TypeScript SDK for Freelo.io API",
   "license": "MIT",
