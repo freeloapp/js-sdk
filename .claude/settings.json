@@ -1,0 +1,23 @@
+{
+  "projectContext": {
+    "name": "Freelo JS SDK",
+    "description": "Official JavaScript/TypeScript SDK for Freelo.io API",
+    "type": "npm-package"
+  },
+  "includeFiles": [
+    ".openapi/freelo-api-openapi.yaml",
+    "CLAUDE.md",
+    "docs/phases/0-overview.md"
+  ],
+  "codeStyle": {
+    "language": "typescript",
+    "strict": true,
+    "formatting": "prettier"
+  },
+  "conventions": {
+    "dependencies": "minimal - prefer native APIs",
+    "httpClient": "native fetch (no superagent)",
+    "exports": "ESM + CommonJS dual",
+    "testing": "vitest"
+  }
+}
