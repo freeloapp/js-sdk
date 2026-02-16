@@ -114,6 +114,19 @@ describe('Freelo Client', () => {
     });
   });
 
+  describe('call', () => {
+    it('should expose call method', () => {
+      const client = new Freelo(validConfig);
+      expect(typeof client.call).toBe('function');
+    });
+
+    it('should be available on withCredentials instances', () => {
+      const client = new Freelo(validConfig);
+      const derived = client.withCredentials({ apiKey: 'other-key' });
+      expect(typeof derived.call).toBe('function');
+    });
+  });
+
   describe('resource namespaces', () => {
     it('should have projects resource', () => {
       const client = new Freelo(validConfig);

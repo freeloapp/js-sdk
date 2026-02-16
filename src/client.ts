@@ -210,6 +210,32 @@ export class Freelo {
       timeout: parentConfig.timeout,
     });
   }
+
+  /**
+   * Make a low-level API call to any endpoint.
+   * Use this for endpoints not covered by the resource namespaces.
+   *
+   * @param path - Endpoint path without base URL (e.g., '/jobs/create')
+   * @param method - HTTP method: 'GET', 'POST', 'PUT', or 'DELETE'
+   * @param data - Optional JSON request body (plain object, no validation)
+   * @param params - Optional query parameters appended to the URL
+   * @returns Response data
+   *
+   * @example
+   * ```typescript
+   * const result = await freelo.call('/jobs/create', 'POST', { name: 'My Job' });
+   * const jobs = await freelo.call('/jobs', 'GET', undefined, { page: 2, limit: 10 });
+   * await freelo.call('/jobs/123', 'DELETE');
+   * ```
+   */
+  call<T = unknown>(
+    path: string,
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    data?: unknown,
+    params?: Record<string, string | number | boolean | string[] | number[] | undefined>,
+  ): Promise<T> {
+    return this.http.request<T>(path, { method, body: data, params });
+  }
 }
 
 export default Freelo;
