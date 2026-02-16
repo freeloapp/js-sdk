@@ -14,6 +14,11 @@ export function createMockHttpClient(): MockHttpClient {
     request: vi.fn(),
     uploadFile: vi.fn(),
     requestWithRetry: vi.fn(),
+    setCredentials: vi.fn(),
+    getConfig: vi.fn().mockReturnValue({
+      baseUrl: 'https://api.freelo.io/v1',
+      timeout: 30000,
+    }),
   };
 }
 
@@ -26,6 +31,8 @@ export interface MockHttpClient {
   request: ReturnType<typeof vi.fn>;
   uploadFile: ReturnType<typeof vi.fn>;
   requestWithRetry: ReturnType<typeof vi.fn>;
+  setCredentials: ReturnType<typeof vi.fn>;
+  getConfig: ReturnType<typeof vi.fn>;
 }
 
 // Mock data for testing

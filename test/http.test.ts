@@ -29,6 +29,25 @@ describe('HttpClient', () => {
     });
   });
 
+  describe('getConfig', () => {
+    it('should return a copy of the current config', () => {
+      const client = new HttpClient(defaultConfig);
+      const config = client.getConfig();
+
+      expect(config).toEqual(defaultConfig);
+      expect(config).not.toBe(defaultConfig);
+    });
+
+    it('should reflect credential changes', () => {
+      const client = new HttpClient(defaultConfig);
+      client.setCredentials({ email: 'new@example.com' });
+      const config = client.getConfig();
+
+      expect(config.email).toBe('new@example.com');
+      expect(config.apiKey).toBe('test-api-key');
+    });
+  });
+
   describe('request', () => {
     it('should make GET request with auth header', async () => {
       fetchMock.mockResolvedValue({
@@ -479,6 +498,121 @@ describe('HttpClient', () => {
       ).rejects.toThrow(FreeloApiError);
 
       expect(callCount).toBe(1);
+    });
+  });
+
+  describe('setCredentials', () => {
+    it('should update email and apiKey', async () => {
+      fetchMock.mockResolvedValue({
+        ok: true,
+        status: 200,
+        headers: new Headers({ 'content-type': 'application/json' }),
+        json: () => Promise.resolve({ data: 'test' }),
+      });
+
+      const client = new HttpClient(defaultConfig);
+      client.setCredentials({ email: 'new@example.com', apiKey: 'new-key' });
+      await client.get('/test');
+
+      const expectedCredentials = btoa('new@example.com:new-key');
+      expect(fetchMock).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            'Authorization': `Basic ${expectedCredentials}`,
+          }),
+        })
+      );
+    });
+
+    it('should update userAgent', async () => {
+      fetchMock.mockResolvedValue({
+        ok: true,
+        status: 200,
+        headers: new Headers({ 'content-type': 'application/json' }),
+        json: () => Promise.resolve({ data: 'test' }),
+      });
+
+      const client = new HttpClient(defaultConfig);
+      client.setCredentials({ userAgent: 'NewApp/2.0' });
+      await client.get('/test');
+
+      expect(fetchMock).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            'User-Agent': 'NewApp/2.0',
+          }),
+        })
+      );
+    });
+
+    it('should allow partial updates preserving existing values', async () => {
+      fetchMock.mockResolvedValue({
+        ok: true,
+        status: 200,
+        headers: new Headers({ 'content-type': 'application/json' }),
+        json: () => Promise.resolve({ data: 'test' }),
+      });
+
+      const client = new HttpClient(defaultConfig);
+      client.setCredentials({ apiKey: 'updated-key' });
+      await client.get('/test');
+
+      const expectedCredentials = btoa('test@example.com:updated-key');
+      expect(fetchMock).toHaveBeenCalledWith(
+        expect.any(String),
+        expect.objectContaining({
+          headers: expect.objectContaining({
+            'Authorization': `Basic ${expectedCredentials}`,
+            'User-Agent': 'TestApp/1.0 (test@example.com)',
+          }),
+        })
+      );
+    });
+  });
+
+  describe('lazy initialization', () => {
+    it('should create client without credentials', () => {
+      const client = new HttpClient({ baseUrl: 'https://api.freelo.io/v1' });
+      expect(client).toBeDefined();
+    });
+
+    it('should throw on request when credentials are missing', async () => {
+      const client = new HttpClient({ baseUrl: 'https://api.freelo.io/v1' });
+
+      await expect(client.get('/test')).rejects.toThrow(FreeloApiError);
+      await expect(client.get('/test')).rejects.toThrow('email and apiKey are required');
+    });
+
+    it('should throw on request when userAgent is missing', async () => {
+      const client = new HttpClient({
+        baseUrl: 'https://api.freelo.io/v1',
+        email: 'test@example.com',
+        apiKey: 'test-key',
+      });
+
+      await expect(client.get('/test')).rejects.toThrow(FreeloApiError);
+      await expect(client.get('/test')).rejects.toThrow('userAgent is required');
+    });
+
+    it('should succeed after setCredentials provides missing values', async () => {
+      fetchMock.mockResolvedValue({
+        ok: true,
+        status: 200,
+        headers: new Headers({ 'content-type': 'application/json' }),
+        json: () => Promise.resolve({ data: 'success' }),
+      });
+
+      const client = new HttpClient({ baseUrl: 'https://api.freelo.io/v1' });
+      client.setCredentials({
+        email: 'test@example.com',
+        apiKey: 'test-key',
+        userAgent: 'TestApp/1.0',
+      });
+
+      const result = await client.get('/test');
+      expect(result).toEqual({ data: 'success' });
     });
   });
 

@@ -3,7 +3,7 @@
  * Main entry point for the SDK
  */
 
-import { HttpClient } from './http.js';
+import { HttpClient, type HttpClientCredentials } from './http.js';
 import {
   ProjectsResource,
   TasklistsResource,
@@ -24,7 +24,7 @@ import {
 } from './resources/index.js';
 
 /**
- * Configuration options for the Freelo client
+ * Configuration options for the Freelo client (all credentials required)
  */
 export interface FreeloConfig {
   /** Your Freelo account email */
@@ -38,6 +38,27 @@ export interface FreeloConfig {
   /** Optional request timeout in milliseconds (defaults to 30000) */
   timeout?: number;
 }
+
+/**
+ * Configuration for lazy/deferred initialization (credentials optional)
+ */
+export interface FreeloLazyConfig {
+  /** Your Freelo account email (can be set later via setCredentials) */
+  email?: string;
+  /** Your API key from Freelo settings (can be set later via setCredentials) */
+  apiKey?: string;
+  /** User-Agent string (can be set later via setCredentials) */
+  userAgent?: string;
+  /** Optional base URL (defaults to https://api.freelo.io/v1) */
+  baseUrl?: string;
+  /** Optional request timeout in milliseconds (defaults to 30000) */
+  timeout?: number;
+}
+
+/**
+ * Credentials that can be updated at runtime
+ */
+export type FreeloCredentials = HttpClientCredentials;
 
 /** Default configuration values */
 const DEFAULT_BASE_URL = 'https://api.freelo.io/v1';
@@ -123,25 +144,14 @@ export class Freelo {
   /** State definitions */
   public readonly states: StatesResource;
 
-  constructor(config: FreeloConfig) {
-    // Validate required config
-    if (!config.email) {
-      throw new Error('Freelo config: email is required');
-    }
-    if (!config.apiKey) {
-      throw new Error('Freelo config: apiKey is required');
-    }
-    if (!config.userAgent) {
-      throw new Error('Freelo config: userAgent is required');
-    }
-
+  constructor(config?: FreeloConfig | FreeloLazyConfig) {
     // Create HTTP client
     this.http = new HttpClient({
-      email: config.email,
-      apiKey: config.apiKey,
-      userAgent: config.userAgent,
-      baseUrl: config.baseUrl ?? DEFAULT_BASE_URL,
-      timeout: config.timeout ?? DEFAULT_TIMEOUT,
+      email: config?.email,
+      apiKey: config?.apiKey,
+      userAgent: config?.userAgent,
+      baseUrl: config?.baseUrl ?? DEFAULT_BASE_URL,
+      timeout: config?.timeout ?? DEFAULT_TIMEOUT,
     });
 
     // Initialize resource namespaces
@@ -161,6 +171,44 @@ export class Freelo {
     this.notes = new NotesResource(this.http);
     this.invoicing = new InvoicingResource(this.http);
     this.states = new StatesResource(this.http);
+  }
+
+  /**
+   * Update credentials at runtime (email, apiKey, userAgent).
+   *
+   * **Warning**: Not safe for concurrent server requests — use {@link withCredentials} instead.
+   *
+   * @example
+   * ```typescript
+   * freelo.setCredentials({ email: 'other@email.tld', apiKey: 'other-key' });
+   * ```
+   */
+  setCredentials(credentials: FreeloCredentials): void {
+    this.http.setCredentials(credentials);
+  }
+
+  /**
+   * Create a new Freelo instance with different credentials, inheriting
+   * baseUrl and timeout from this instance. Safe for concurrent server requests.
+   *
+   * @example
+   * ```typescript
+   * const userFreelo = freelo.withCredentials({
+   *   email: req.user.email,
+   *   apiKey: req.user.apiKey,
+   * });
+   * const projects = await userFreelo.projects.list();
+   * ```
+   */
+  withCredentials(credentials: FreeloCredentials): Freelo {
+    const parentConfig = this.http.getConfig();
+    return new Freelo({
+      email: credentials.email ?? parentConfig.email ?? '',
+      apiKey: credentials.apiKey ?? parentConfig.apiKey ?? '',
+      userAgent: credentials.userAgent ?? parentConfig.userAgent ?? '',
+      baseUrl: parentConfig.baseUrl,
+      timeout: parentConfig.timeout,
+    });
   }
 }
 

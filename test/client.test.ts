@@ -31,34 +31,15 @@ describe('Freelo Client', () => {
       expect(client.states).toBeDefined();
     });
 
-    it('should throw error when email is missing', () => {
-      expect(() => {
-        new Freelo({
-          email: '',
-          apiKey: 'test-api-key',
-          userAgent: 'TestApp/1.0',
-        });
-      }).toThrow('Freelo config: email is required');
+    it('should create client without any config (lazy initialization)', () => {
+      const client = new Freelo();
+      expect(client).toBeDefined();
+      expect(client.projects).toBeDefined();
     });
 
-    it('should throw error when apiKey is missing', () => {
-      expect(() => {
-        new Freelo({
-          email: 'test@example.com',
-          apiKey: '',
-          userAgent: 'TestApp/1.0',
-        });
-      }).toThrow('Freelo config: apiKey is required');
-    });
-
-    it('should throw error when userAgent is missing', () => {
-      expect(() => {
-        new Freelo({
-          email: 'test@example.com',
-          apiKey: 'test-api-key',
-          userAgent: '',
-        });
-      }).toThrow('Freelo config: userAgent is required');
+    it('should create client with partial config', () => {
+      const client = new Freelo({ email: 'test@example.com' });
+      expect(client).toBeDefined();
     });
 
     it('should accept custom base URL', () => {
@@ -77,6 +58,59 @@ describe('Freelo Client', () => {
       });
 
       expect(client).toBeDefined();
+    });
+  });
+
+  describe('setCredentials', () => {
+    it('should expose setCredentials method', () => {
+      const client = new Freelo(validConfig);
+      expect(typeof client.setCredentials).toBe('function');
+    });
+
+    it('should allow setting credentials after construction', () => {
+      const client = new Freelo();
+      expect(() => {
+        client.setCredentials({
+          email: 'new@example.com',
+          apiKey: 'new-key',
+          userAgent: 'NewApp/1.0',
+        });
+      }).not.toThrow();
+    });
+
+    it('should allow partial credential updates', () => {
+      const client = new Freelo(validConfig);
+      expect(() => {
+        client.setCredentials({ apiKey: 'updated-key' });
+      }).not.toThrow();
+    });
+  });
+
+  describe('withCredentials', () => {
+    it('should return a new Freelo instance', () => {
+      const client = new Freelo(validConfig);
+      const derived = client.withCredentials({ email: 'other@example.com', apiKey: 'other-key' });
+
+      expect(derived).toBeInstanceOf(Freelo);
+      expect(derived).not.toBe(client);
+    });
+
+    it('should have all resource namespaces on derived instance', () => {
+      const client = new Freelo(validConfig);
+      const derived = client.withCredentials({ apiKey: 'other-key' });
+
+      expect(derived.projects).toBeDefined();
+      expect(derived.tasks).toBeDefined();
+      expect(derived.users).toBeDefined();
+    });
+
+    it('should allow partial credential overrides', () => {
+      const client = new Freelo(validConfig);
+      // Only override apiKey — email and userAgent should be inherited
+      const derived = client.withCredentials({ apiKey: 'new-key' });
+
+      expect(derived).toBeDefined();
+      expect(typeof derived.setCredentials).toBe('function');
     });
   });
 

@@ -5,9 +5,9 @@
 
 /** HTTP client configuration */
 export interface HttpClientConfig {
-  email: string;
-  apiKey: string;
-  userAgent: string;
+  email?: string;
+  apiKey?: string;
+  userAgent?: string;
   baseUrl: string;
   timeout?: number;
 }
@@ -89,16 +89,59 @@ export interface FileUploadResponse {
 /** Helper to create a delay */
 const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
 
+/** Credentials that can be updated at runtime */
+export interface HttpClientCredentials {
+  email?: string;
+  apiKey?: string;
+  userAgent?: string;
+}
+
 /**
  * HTTP Client for making authenticated requests to Freelo API
  */
 export class HttpClient {
-  private readonly authHeader: string;
+  constructor(private config: HttpClientConfig) {}
 
-  constructor(private readonly config: HttpClientConfig) {
-    // Create Basic Auth header
-    const credentials = `${config.email}:${config.apiKey}`;
-    this.authHeader = `Basic ${btoa(credentials)}`;
+  /**
+   * Update credentials at runtime (email, apiKey, userAgent)
+   */
+  setCredentials(credentials: HttpClientCredentials): void {
+    this.config = { ...this.config, ...credentials };
+  }
+
+  /**
+   * Get a copy of the current configuration
+   */
+  getConfig(): HttpClientConfig {
+    return { ...this.config };
+  }
+
+  /**
+   * Compute Basic Auth header from current credentials.
+   * Throws if email or apiKey are not set.
+   */
+  private getAuthHeader(): string {
+    if (!this.config.email || !this.config.apiKey) {
+      throw new FreeloApiError(
+        'Credentials not set: email and apiKey are required. Use setCredentials() to provide them.',
+        0
+      );
+    }
+    return `Basic ${btoa(`${this.config.email}:${this.config.apiKey}`)}`;
+  }
+
+  /**
+   * Get User-Agent header from current config.
+   * Throws if userAgent is not set.
+   */
+  private getUserAgent(): string {
+    if (!this.config.userAgent) {
+      throw new FreeloApiError(
+        'Credentials not set: userAgent is required. Use setCredentials() to provide it.',
+        0
+      );
+    }
+    return this.config.userAgent;
   }
 
   /**
@@ -133,8 +176,8 @@ export class HttpClient {
     const url = this.buildUrl(path, params);
 
     const headers: HeadersInit = {
-      'Authorization': this.authHeader,
-      'User-Agent': this.config.userAgent,
+      'Authorization': this.getAuthHeader(),
+      'User-Agent': this.getUserAgent(),
       'Accept': 'application/json',
     };
 
@@ -279,8 +322,8 @@ export class HttpClient {
       const response = await fetch(url, {
         method: 'POST',
         headers: {
-          'Authorization': this.authHeader,
-          'User-Agent': this.config.userAgent,
+          'Authorization': this.getAuthHeader(),
+          'User-Agent': this.getUserAgent(),
           // Note: Don't set Content-Type for FormData - fetch will set it with boundary
         },
         body: formData,

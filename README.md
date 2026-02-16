@@ -12,6 +12,7 @@ Official JavaScript/TypeScript SDK for [Freelo.io](https://app.freelo.io) API.
 - Zero runtime dependencies (uses native fetch)
 - Works in Node.js 18+, browsers, and all major frameworks
 - Promise-based async/await API
+- Dynamic credentials (switch users or set credentials lazily)
 - Comprehensive error handling
 - Tree-shakeable ES modules
 - Built-in pagination utilities
@@ -64,6 +65,48 @@ const freelo = new Freelo({
   baseUrl: 'https://api.freelo.io/v1',  // Optional: API base URL
   timeout: 30000,                // Optional: Request timeout in ms
 });
+```
+
+## Dynamic Credentials
+
+The SDK supports changing credentials at runtime. This is useful for multi-user systems that make requests on behalf of different users.
+
+### Per-request credentials (server-safe)
+
+Use `withCredentials()` to create a new isolated instance. This is safe for concurrent server requests since each instance has its own credentials:
+
+```typescript
+const freelo = new Freelo({
+  email: 'default@email.tld',
+  apiKey: 'default-key',
+  userAgent: 'MyApp/1.0',
+});
+
+// Each request handler gets its own instance
+app.get('/projects', async (req, res) => {
+  const userFreelo = freelo.withCredentials({
+    email: req.user.email,
+    apiKey: req.user.apiKey,
+  });
+  const projects = await userFreelo.projects.list();
+  res.json(projects);
+});
+```
+
+### Lazy initialization
+
+Create the client without credentials and derive per-user instances later:
+
+```typescript
+const freelo = new Freelo({ userAgent: 'MyApp/1.0' });
+
+// ... later, when a user authenticates:
+const userFreelo = freelo.withCredentials({
+  email: 'user@email.tld',
+  apiKey: 'user-api-key',
+});
+
+const projects = await userFreelo.projects.list();
 ```
 
 ## API Reference
@@ -531,6 +574,8 @@ import type {
   Comment,
   WorkReport,
   FreeloConfig,
+  FreeloLazyConfig,
+  FreeloCredentials,
 } from '@freeloapp/js-sdk';
 
 // All API responses are fully typed

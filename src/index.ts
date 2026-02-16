@@ -30,12 +30,12 @@
 export const VERSION = '1.0.0';
 
 // Main client
-export { Freelo, type FreeloConfig } from './client.js';
+export { Freelo, type FreeloConfig, type FreeloLazyConfig, type FreeloCredentials } from './client.js';
 export { default } from './client.js';
 
 // HTTP client and errors
 export { HttpClient, FreeloApiError, RateLimitError } from './http.js';
-export type { HttpClientConfig, ApiError, RequestOptions, RateLimitConfig, FileUploadResponse } from './http.js';
+export type { HttpClientConfig, HttpClientCredentials, ApiError, RequestOptions, RateLimitConfig, FileUploadResponse } from './http.js';
 
 // All types
 export * from './types/index.js';
