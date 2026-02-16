@@ -109,6 +109,27 @@ const userFreelo = freelo.withCredentials({
 const projects = await userFreelo.projects.list();
 ```
 
+### Low-level API calls
+
+Use `call()` to hit any endpoint not covered by the resource namespaces:
+
+```typescript
+// POST with JSON body
+const result = await freelo.call('/jobs/create', 'POST', { name: 'My Job' });
+
+// GET with query parameters
+const jobs = await freelo.call('/jobs', 'GET', undefined, { page: 2, limit: 10 });
+
+// DELETE
+await freelo.call('/jobs/123', 'DELETE');
+```
+
+Parameters:
+- **`path`** — endpoint path without the base URL (e.g., `/jobs/create`)
+- **`method`** — `GET`, `POST`, `PUT`, or `DELETE`
+- **`data`** — optional JSON request body (plain object, no validation)
+- **`params`** — optional query parameters as `{ key: value }`
+
 ## API Reference
 
 ### Projects
