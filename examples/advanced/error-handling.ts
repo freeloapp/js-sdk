@@ -16,8 +16,7 @@ import {
 } from '@freeloapp/js-sdk';
 
 createFreelo({
-  email: process.env.FREELO_EMAIL!,
-  apiKey: process.env.FREELO_API_KEY!,
+  auth: { type: 'basic', email: process.env.FREELO_EMAIL!, apiKey: process.env.FREELO_API_KEY! },
   userAgent: 'ErrorHandlingDemo/1.0',
 });
 

@@ -30,8 +30,7 @@ import { createFreelo, getProjects, createTask } from '@freeloapp/js-sdk';
 
 // Initialize client (sets global default)
 createFreelo({
-  email: 'your@email.tld',
-  apiKey: 'your-api-key',
+  auth: { type: 'basic', email: 'your@email.tld', apiKey: 'your-api-key' },
   userAgent: 'YourApp/1.0 (contact@yourapp.com)',
 });
 
@@ -60,8 +59,11 @@ The SDK uses HTTP Basic Auth with your email as the username and API key as the 
 import { createFreelo } from '@freeloapp/js-sdk';
 
 const client = createFreelo({
-  email: 'your@email.tld',       // Required: Your Freelo account email
-  apiKey: 'your-api-key',        // Required: API key from Freelo settings
+  auth: {                        // Required: authentication credentials
+    type: 'basic',               //   Basic Auth with email + API key
+    email: 'your@email.tld',
+    apiKey: 'your-api-key',
+  },
   userAgent: 'YourApp/1.0',      // Required: Identifies your application
   baseUrl: 'https://api.freelo.io/v1',  // Optional: API base URL
   logging: true,                 // Optional: Log requests to console
@@ -77,15 +79,19 @@ import { createFreelo, getProjects } from '@freeloapp/js-sdk';
 
 // Default client
 const defaultClient = createFreelo({
-  email: 'admin@company.com',
-  apiKey: 'admin-key',
+  auth: { type: 'basic', email: 'admin@company.com', apiKey: 'admin-key' },
   userAgent: 'MyApp/1.0',
 });
 
 // Per-user client
 const userClient = createFreelo({
-  email: user.email,
-  apiKey: user.apiKey,
+  auth: { type: 'basic', email: user.email, apiKey: user.apiKey },
+  userAgent: 'MyApp/1.0',
+});
+
+// Bearer token auth (JWT, PASETO, etc.)
+const tokenClient = createFreelo({
+  auth: { type: 'bearer', token: 'your-jwt-token' },
   userAgent: 'MyApp/1.0',
 });
 
@@ -94,6 +100,9 @@ const { data: adminProjects } = await getProjects();
 
 // Use per-user client
 const { data: userProjects } = await getProjects({ client: userClient });
+
+// Use token-based client
+const { data: tokenProjects } = await getProjects({ client: tokenClient });
 ```
 
 ## API Reference
@@ -335,7 +344,7 @@ const projects = await freelo.projects.list();
 
 // v2 (function-based, tree-shakeable)
 import { createFreelo, getProjects } from '@freeloapp/js-sdk';
-createFreelo({ email, apiKey, userAgent });
+createFreelo({ auth: { type: 'basic', email, apiKey }, userAgent });
 const { data: projects } = await getProjects();
 ```
 

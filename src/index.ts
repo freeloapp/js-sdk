@@ -7,8 +7,7 @@
  *
  * // Initialize client (sets global default)
  * createFreelo({
- *   email: 'your@email.tld',
- *   apiKey: 'your-api-key',
+ *   auth: { type: 'basic', email: 'your@email.tld', apiKey: 'your-api-key' },
  *   userAgent: 'YourApp/1.0 (contact@yourapp.com)',
  * });
  *
@@ -25,8 +24,16 @@
  * @packageDocumentation
  */
 
-// Main configuration function
-export { createFreelo, type FreeloConfig } from './freelo.js';
+// Main configuration function + low-level call
+export {
+  createFreelo,
+  call,
+  type FreeloConfig,
+  type FreeloAuth,
+  type BasicAuth,
+  type BearerAuth,
+  type CallOptions,
+} from './freelo.js';
 
 // Generated client (for advanced usage / custom client instances)
 export { createClient } from './generated/client/index.js';

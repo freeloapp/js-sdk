@@ -7,8 +7,7 @@
 import { createFreelo, createTask, createComment } from '@freeloapp/js-sdk';
 
 createFreelo({
-  email: process.env.FREELO_EMAIL!,
-  apiKey: process.env.FREELO_API_KEY!,
+  auth: { type: 'basic', email: process.env.FREELO_EMAIL!, apiKey: process.env.FREELO_API_KEY! },
   userAgent: 'MyApp/1.0',
 });
 

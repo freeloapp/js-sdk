@@ -18,8 +18,7 @@ export function initFreelo(): void {
     }
 
     createFreelo({
-      email: process.env.FREELO_EMAIL,
-      apiKey: process.env.FREELO_API_KEY,
+      auth: { type: 'basic', email: process.env.FREELO_EMAIL, apiKey: process.env.FREELO_API_KEY },
       userAgent: 'NextJS-App/1.0',
     });
 

@@ -8,8 +8,7 @@ import { createFreelo, getProjects } from '@freeloapp/js-sdk';
 
 // Initialize the client
 createFreelo({
-  email: 'your@email.tld',
-  apiKey: 'your-api-key',
+  auth: { type: 'basic', email: 'your@email.tld', apiKey: 'your-api-key' },
   userAgent: 'MyApp/1.0 (contact@myapp.com)',
 });
 

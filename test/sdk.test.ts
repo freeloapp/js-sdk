@@ -22,8 +22,7 @@ describe('SDK functions with mock fetch', () => {
     mockFetch.mockReset();
 
     client = createFreelo({
-      email: 'test@example.com',
-      apiKey: 'test-key',
+      auth: { type: 'basic', email: 'test@example.com', apiKey: 'test-key' },
       userAgent: 'SDKTest/1.0',
     });
   });
@@ -200,8 +199,7 @@ describe('SDK functions with mock fetch', () => {
       mockJsonResponse([]);
 
       const otherClient = createFreelo({
-        email: 'other@example.com',
-        apiKey: 'other-key',
+        auth: { type: 'basic', email: 'other@example.com', apiKey: 'other-key' },
         userAgent: 'Test/1.0',
       });
 

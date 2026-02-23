@@ -9,8 +9,7 @@ import { ref, onMounted } from 'vue';
 import { createFreelo, getProjects, isFreeloError } from '@freeloapp/js-sdk';
 
 createFreelo({
-  email: import.meta.env.VITE_FREELO_EMAIL,
-  apiKey: import.meta.env.VITE_FREELO_API_KEY,
+  auth: { type: 'basic', email: import.meta.env.VITE_FREELO_EMAIL, apiKey: import.meta.env.VITE_FREELO_API_KEY },
   userAgent: 'VueApp/1.0',
 });
 

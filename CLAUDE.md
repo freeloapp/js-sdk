@@ -19,7 +19,7 @@ This is the official JavaScript/TypeScript SDK for [Freelo.io](https://app.freel
 ## API Information
 
 - **Base URL**: `https://api.freelo.io/v1`
-- **Authentication**: HTTP Basic Auth (email as username, API key as password)
+- **Authentication**: Basic Auth (email + API key) or Bearer token (JWT/PASETO)
 - **Rate Limiting**: 25 requests per minute (429 status when exceeded, wait 60s)
 - **Response Format**: JSON (UTF-8)
 - **API Documentation**: https://freelo.docs.apiary.io/
@@ -31,8 +31,7 @@ import { createFreelo, getProjects, createTask } from '@freeloapp/js-sdk';
 
 // Initialize client (sets global default)
 createFreelo({
-  email: 'your@email.tld',
-  apiKey: 'your-api-key',
+  auth: { type: 'basic', email: 'your@email.tld', apiKey: 'your-api-key' },
   userAgent: 'YourApp/1.0 (contact@yourapp.com)',
 });
 

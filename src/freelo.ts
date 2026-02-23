@@ -1,24 +1,85 @@
 import { createClient } from './generated/client';
 import type { Client } from './generated/client';
 import { client as defaultClient } from './generated/client.gen';
+import type { HttpMethod } from './generated/core/types.gen';
+
+/** Basic Auth using email + API key. */
+export interface BasicAuth {
+  type: 'basic';
+  email: string;
+  apiKey: string;
+}
+
+/** Bearer token auth (JWT, PASETO, etc.). */
+export interface BearerAuth {
+  type: 'bearer';
+  token: string;
+}
+
+/** Supported authentication methods. */
+export type FreeloAuth = BasicAuth | BearerAuth;
 
 export interface FreeloConfig {
-  /** E-mail for Basic Auth */
-  email: string;
-  /** API key for Basic Auth */
-  apiKey: string;
-  /** Required User-Agent header */
+  /** Authentication credentials. */
+  auth: FreeloAuth;
+  /** Required User-Agent header. */
   userAgent: string;
   /** Optional base URL (default: https://api.freelo.io/v1) */
   baseUrl?: string;
-  /** Enable request/response logging to console */
+  /** Enable request/response logging to console. */
   logging?: boolean;
+}
+
+/**
+ * Resolve auth config into an Authorization header value.
+ */
+function resolveAuthHeader(auth: FreeloAuth): string {
+  switch (auth.type) {
+    case 'basic':
+      return `Basic ${btoa(`${auth.email}:${auth.apiKey}`)}`;
+    case 'bearer':
+      return `Bearer ${auth.token}`;
+  }
+}
+
+/**
+ * Apply shared interceptors (auth, user-agent, logging, rate-limit) to a client.
+ */
+function applyInterceptors(target: Client, config: FreeloConfig): void {
+  // Auth + User-Agent
+  target.interceptors.request.use((request) => {
+    request.headers.set('Authorization', resolveAuthHeader(config.auth));
+    request.headers.set('User-Agent', config.userAgent);
+    return request;
+  });
+
+  // Logging
+  if (config.logging) {
+    target.interceptors.request.use((request) => {
+      console.log(`[Freelo] ${request.method} ${request.url}`);
+      return request;
+    });
+    target.interceptors.response.use((response, request) => {
+      console.log(`[Freelo] ${response.status} ${request.url}`);
+      return response;
+    });
+  }
+
+  // Rate limit warning
+  target.interceptors.response.use((response) => {
+    if (response.status === 429) {
+      console.warn(
+        '[Freelo] Rate limited (429). Freelo allows 25 requests per minute. Wait 60 seconds before retrying.',
+      );
+    }
+    return response;
+  });
 }
 
 /**
  * Create and configure a Freelo API client.
  *
- * Sets up Basic Auth, User-Agent header, optional logging,
+ * Sets up authentication, User-Agent header, optional logging,
  * and rate limit handling via interceptors. The created client
  * is also set as the global default so SDK functions can be
  * called without explicitly passing `{ client }`.
@@ -28,8 +89,7 @@ export interface FreeloConfig {
  * import { createFreelo, getProjects } from '@freeloapp/js-sdk';
  *
  * const client = createFreelo({
- *   email: 'you@example.com',
- *   apiKey: 'your-api-key',
+ *   auth: { type: 'basic', email: 'you@example.com', apiKey: 'your-api-key' },
  *   userAgent: 'MyApp/1.0 (contact@myapp.com)',
  * });
  *
@@ -41,72 +101,90 @@ export interface FreeloConfig {
  * ```
  */
 export function createFreelo(config: FreeloConfig): Client {
-  const client = createClient({
-    baseUrl: config.baseUrl ?? 'https://api.freelo.io/v1',
-  });
+  const baseUrl = config.baseUrl ?? 'https://api.freelo.io/v1';
 
-  // Basic Auth + User-Agent interceptor
-  client.interceptors.request.use((request) => {
-    const credentials = btoa(`${config.email}:${config.apiKey}`);
-    request.headers.set('Authorization', `Basic ${credentials}`);
-    request.headers.set('User-Agent', config.userAgent);
-    return request;
-  });
-
-  // Logging interceptor
-  if (config.logging) {
-    client.interceptors.request.use((request) => {
-      console.log(`[Freelo] ${request.method} ${request.url}`);
-      return request;
-    });
-    client.interceptors.response.use((response, request) => {
-      console.log(`[Freelo] ${response.status} ${request.url}`);
-      return response;
-    });
-  }
-
-  // Rate limit interceptor — log warning on 429
-  client.interceptors.response.use((response) => {
-    if (response.status === 429) {
-      console.warn(
-        '[Freelo] Rate limited (429). Freelo allows 25 requests per minute. Wait 60 seconds before retrying.',
-      );
-    }
-    return response;
-  });
+  const client = createClient({ baseUrl });
+  applyInterceptors(client, config);
 
   // Set as global default so SDK functions work without { client }
-  defaultClient.setConfig({
-    baseUrl: config.baseUrl ?? 'https://api.freelo.io/v1',
-  });
-
-  // Copy interceptors to default client
-  defaultClient.interceptors.request.use((request) => {
-    const credentials = btoa(`${config.email}:${config.apiKey}`);
-    request.headers.set('Authorization', `Basic ${credentials}`);
-    request.headers.set('User-Agent', config.userAgent);
-    return request;
-  });
-
-  if (config.logging) {
-    defaultClient.interceptors.request.use((request) => {
-      console.log(`[Freelo] ${request.method} ${request.url}`);
-      return request;
-    });
-    defaultClient.interceptors.response.use((response, request) => {
-      console.log(`[Freelo] ${response.status} ${request.url}`);
-      return response;
-    });
-  }
-
-  defaultClient.interceptors.response.use((response) => {
-    if (response.status === 429) {
-      console.warn(
-        '[Freelo] Rate limited (429). Freelo allows 25 requests per minute. Wait 60 seconds before retrying.',
-      );
-    }
-    return response;
-  });
+  defaultClient.setConfig({ baseUrl });
+  applyInterceptors(defaultClient, config);
 
   return client;
+}
+
+/**
+ * Options for the low-level `call()` function.
+ */
+export interface CallOptions {
+  /** HTTP method (GET, POST, PUT, PATCH, DELETE, etc.) */
+  method: Uppercase<HttpMethod>;
+  /**
+   * URL path relative to baseUrl (e.g. `/projects` or `/task/123`).
+   * Can also be a full URL — it will be passed through as-is.
+   */
+  url: string;
+  /** Query parameters appended to the URL */
+  query?: Record<string, unknown>;
+  /** Request body (will be JSON-serialized) */
+  body?: unknown;
+  /** Additional headers merged with the defaults (Auth, User-Agent) */
+  headers?: Record<string, string>;
+  /** Path parameters interpolated into the URL (e.g. `{task_id}`) */
+  path?: Record<string, unknown>;
+  /** Optional client instance; defaults to the global client set by `createFreelo()` */
+  client?: Client;
+}
+
+/**
+ * Low-level function for calling arbitrary Freelo API endpoints.
+ *
+ * Authentication, User-Agent, logging, and rate-limit handling are applied
+ * automatically via the interceptors configured by `createFreelo()`.
+ *
+ * Use this when you need to call an endpoint that is not (yet) covered
+ * by the auto-generated SDK functions.
+ *
+ * @example
+ * ```ts
+ * import { createFreelo, call } from '@freeloapp/js-sdk';
+ *
+ * createFreelo({ auth: { type: 'basic', email, apiKey }, userAgent: 'MyApp/1.0' });
+ *
+ * // GET /projects
+ * const { data, error } = await call({ method: 'GET', url: '/projects' });
+ *
+ * // POST with body
+ * const { data: task } = await call({
+ *   method: 'POST',
+ *   url: '/tasklist/{tasklist_id}/tasks',
+ *   path: { tasklist_id: 123 },
+ *   body: { name: 'New task' },
+ * });
+ *
+ * // With query params and extra headers
+ * const { data: results } = await call({
+ *   method: 'GET',
+ *   url: '/search',
+ *   query: { q: 'keyword', page: 1 },
+ *   headers: { 'X-Custom': 'value' },
+ * });
+ * ```
+ */
+export async function call<TData = unknown, TError = unknown>(
+  options: CallOptions,
+): Promise<
+  | { data: TData; error: undefined; request: Request; response: Response }
+  | { data: undefined; error: TError; request: Request; response: Response }
+> {
+  const c = options.client ?? defaultClient;
+
+  return c.request({
+    method: options.method,
+    url: options.url,
+    body: options.body,
+    query: options.query,
+    path: options.path,
+    headers: options.headers,
+  }) as any;
 }

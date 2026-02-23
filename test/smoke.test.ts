@@ -9,8 +9,7 @@ import { getProjects } from '../src/generated/sdk.gen';
  */
 describe.skipIf(!process.env.FREELO_EMAIL)('Smoke tests', () => {
   const client = createFreelo({
-    email: process.env.FREELO_EMAIL!,
-    apiKey: process.env.FREELO_API_KEY!,
+    auth: { type: 'basic', email: process.env.FREELO_EMAIL!, apiKey: process.env.FREELO_API_KEY! },
     userAgent: 'FreeloSDK-SmokeTest/1.0',
   });
 

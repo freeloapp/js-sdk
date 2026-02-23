@@ -16,8 +16,7 @@ describe('createFreelo', () => {
 
   it('creates a client with correct baseUrl', () => {
     const client = createFreelo({
-      email: 'test@example.com',
-      apiKey: 'test-key',
+      auth: { type: 'basic', email: 'test@example.com', apiKey: 'test-key' },
       userAgent: 'Test/1.0',
     });
 
@@ -27,8 +26,7 @@ describe('createFreelo', () => {
 
   it('uses custom baseUrl when provided', () => {
     const client = createFreelo({
-      email: 'test@example.com',
-      apiKey: 'test-key',
+      auth: { type: 'basic', email: 'test@example.com', apiKey: 'test-key' },
       userAgent: 'Test/1.0',
       baseUrl: 'https://custom.api.com/v1',
     });
@@ -46,8 +44,7 @@ describe('createFreelo', () => {
     );
 
     const client = createFreelo({
-      email: 'test@example.com',
-      apiKey: 'test-key',
+      auth: { type: 'basic', email: 'test@example.com', apiKey: 'test-key' },
       userAgent: 'Test/1.0',
     });
 
@@ -63,6 +60,29 @@ describe('createFreelo', () => {
     );
   });
 
+  it('sets Bearer Auth header on requests', async () => {
+    mockFetch.mockResolvedValue(
+      new Response(JSON.stringify([]), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+
+    const client = createFreelo({
+      auth: { type: 'bearer', token: 'my-jwt-token' },
+      userAgent: 'ms-teams',
+    });
+
+    await client.get({
+      url: '/projects',
+    });
+
+    expect(mockFetch).toHaveBeenCalledTimes(1);
+    const request = mockFetch.mock.calls[0][0] as Request;
+    expect(request.headers.get('Authorization')).toBe('Bearer my-jwt-token');
+    expect(request.headers.get('User-Agent')).toBe('ms-teams');
+  });
+
   it('sets User-Agent header on requests', async () => {
     mockFetch.mockResolvedValue(
       new Response(JSON.stringify([]), {
@@ -72,8 +92,7 @@ describe('createFreelo', () => {
     );
 
     const client = createFreelo({
-      email: 'test@example.com',
-      apiKey: 'test-key',
+      auth: { type: 'basic', email: 'test@example.com', apiKey: 'test-key' },
       userAgent: 'TestApp/2.0 (contact@test.com)',
     });
 
@@ -98,8 +117,7 @@ describe('createFreelo', () => {
     );
 
     const client = createFreelo({
-      email: 'test@example.com',
-      apiKey: 'test-key',
+      auth: { type: 'basic', email: 'test@example.com', apiKey: 'test-key' },
       userAgent: 'Test/1.0',
       logging: true,
     });
@@ -126,8 +144,7 @@ describe('createFreelo', () => {
     );
 
     const client = createFreelo({
-      email: 'test@example.com',
-      apiKey: 'test-key',
+      auth: { type: 'basic', email: 'test@example.com', apiKey: 'test-key' },
       userAgent: 'Test/1.0',
       logging: false,
     });
@@ -152,8 +169,7 @@ describe('createFreelo', () => {
     );
 
     const client = createFreelo({
-      email: 'test@example.com',
-      apiKey: 'test-key',
+      auth: { type: 'basic', email: 'test@example.com', apiKey: 'test-key' },
       userAgent: 'Test/1.0',
     });
 
@@ -179,14 +195,12 @@ describe('createFreelo', () => {
     );
 
     const client1 = createFreelo({
-      email: 'user1@example.com',
-      apiKey: 'key1',
+      auth: { type: 'basic', email: 'user1@example.com', apiKey: 'key1' },
       userAgent: 'Test/1.0',
     });
 
     const client2 = createFreelo({
-      email: 'user2@example.com',
-      apiKey: 'key2',
+      auth: { type: 'basic', email: 'user2@example.com', apiKey: 'key2' },
       userAgent: 'Test/1.0',
     });
 
@@ -201,5 +215,38 @@ describe('createFreelo', () => {
 
     expect(request1.headers.get('Authorization')).toBe(`Basic ${creds1}`);
     expect(request2.headers.get('Authorization')).toBe(`Basic ${creds2}`);
+  });
+
+  it('supports mixed auth types across clients', async () => {
+    mockFetch.mockImplementation(() =>
+      Promise.resolve(
+        new Response(JSON.stringify([]), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      ),
+    );
+
+    const basicClient = createFreelo({
+      auth: { type: 'basic', email: 'user@example.com', apiKey: 'key' },
+      userAgent: 'MyApp/1.0',
+    });
+
+    const bearerClient = createFreelo({
+      auth: { type: 'bearer', token: 'jwt-token-123' },
+      userAgent: 'ms-teams',
+    });
+
+    await basicClient.get({ url: '/projects' });
+    await bearerClient.get({ url: '/projects' });
+
+    const request1 = mockFetch.mock.calls[0][0] as Request;
+    const request2 = mockFetch.mock.calls[1][0] as Request;
+
+    expect(request1.headers.get('Authorization')).toBe(
+      `Basic ${btoa('user@example.com:key')}`,
+    );
+    expect(request2.headers.get('Authorization')).toBe('Bearer jwt-token-123');
+    expect(request2.headers.get('User-Agent')).toBe('ms-teams');
   });
 });
