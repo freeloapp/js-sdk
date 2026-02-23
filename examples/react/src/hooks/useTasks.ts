@@ -5,17 +5,17 @@
  */
 
 import { useState, useEffect, useCallback } from 'react';
-import { Freelo, type TaskFull, FreeloApiError } from '@freeloapp/js-sdk';
+import { getTasksInTasklist, isFreeloError } from '@freeloapp/js-sdk';
 
-// Initialize the client
-const freelo = new Freelo({
-  email: import.meta.env.VITE_FREELO_EMAIL,
-  apiKey: import.meta.env.VITE_FREELO_API_KEY,
-  userAgent: 'ReactApp/1.0',
-});
+interface TaskItem {
+  id: number;
+  name: string;
+  due_date?: string | null;
+  labels?: { name: string; color?: string }[];
+}
 
 export interface UseTasksResult {
-  tasks: TaskFull[];
+  tasks: TaskItem[];
   loading: boolean;
   error: Error | null;
   hasMore: boolean;
@@ -24,7 +24,7 @@ export interface UseTasksResult {
 }
 
 export function useTasks(tasklistId: number): UseTasksResult {
-  const [tasks, setTasks] = useState<TaskFull[]>([]);
+  const [tasks, setTasks] = useState<TaskItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
   const [page, setPage] = useState(0);
@@ -34,21 +34,26 @@ export function useTasks(tasklistId: number): UseTasksResult {
     async (pageNum: number, append = false) => {
       setLoading(true);
       setError(null);
-      try {
-        const response = await freelo.tasks.listByTasklist(tasklistId, pageNum);
-        const newTasks = response.data.tasks;
 
-        setTasks((prev) => (append ? [...prev, ...newTasks] : newTasks));
-        setHasMore(response.count > (pageNum + 1) * 20); // Assuming 20 items per page
-      } catch (e) {
-        if (e instanceof FreeloApiError) {
-          setError(new Error(`API Error: ${e.message}`));
+      const { data, error: apiError } = await getTasksInTasklist({
+        path: { tasklist_id: tasklistId },
+        query: { p: pageNum },
+      });
+
+      if (apiError) {
+        if (isFreeloError(apiError)) {
+          setError(new Error(`API Error: ${String(apiError)}`));
         } else {
-          setError(e instanceof Error ? e : new Error('Failed to fetch tasks'));
+          setError(new Error('Failed to fetch tasks'));
         }
-      } finally {
         setLoading(false);
+        return;
       }
+
+      const newTasks = data.tasks ?? [];
+      setTasks((prev) => (append ? [...prev, ...newTasks] : newTasks));
+      setHasMore(data.count > (pageNum + 1) * 20); // Assuming 20 items per page
+      setLoading(false);
     },
     [tasklistId]
   );

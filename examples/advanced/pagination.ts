@@ -4,29 +4,43 @@
  * Demonstrates different pagination strategies.
  */
 
-import { Freelo, type TaskFull, type ProjectFull } from '@freeloapp/js-sdk';
+import { createFreelo, getAllTasks, getAllProjects } from '@freeloapp/js-sdk';
 
-const freelo = new Freelo({
+createFreelo({
   email: process.env.FREELO_EMAIL!,
   apiKey: process.env.FREELO_API_KEY!,
   userAgent: 'PaginationDemo/1.0',
 });
 
+interface TaskItem {
+  id: number;
+  name: string;
+  due_date?: string | null;
+  labels?: { name: string; color?: string }[];
+}
+
+interface ProjectItem {
+  id: number;
+  name: string;
+  state?: { name: string };
+}
+
 /**
  * Example 1: Manual pagination with while loop
  */
-async function getAllTasksManual(): Promise<TaskFull[]> {
-  const allTasks: TaskFull[] = [];
+async function getAllTasksManual(): Promise<TaskItem[]> {
+  const allTasks: TaskItem[] = [];
   let page = 0;
   let hasMore = true;
 
   console.log('Fetching all tasks (manual pagination)...');
 
   while (hasMore) {
-    const response = await freelo.tasks.list({ page });
-    allTasks.push(...response.data.tasks);
+    const { data: response } = await getAllTasks({ query: { p: page } });
+    const tasks = response.tasks ?? [];
+    allTasks.push(...tasks);
 
-    console.log(`  Page ${page + 1}: fetched ${response.data.tasks.length} tasks (total: ${allTasks.length})`);
+    console.log(`  Page ${page + 1}: fetched ${tasks.length} tasks (total: ${allTasks.length})`);
 
     // Check if there are more pages
     hasMore = response.count > allTasks.length;
@@ -39,18 +53,19 @@ async function getAllTasksManual(): Promise<TaskFull[]> {
 /**
  * Example 2: Async generator for memory-efficient iteration
  */
-async function* iterateTasks(): AsyncGenerator<TaskFull, void, unknown> {
+async function* iterateTasks(): AsyncGenerator<TaskItem, void, unknown> {
   let page = 0;
   let hasMore = true;
 
   while (hasMore) {
-    const response = await freelo.tasks.list({ page });
+    const { data: response } = await getAllTasks({ query: { p: page } });
+    const tasks = response.tasks ?? [];
 
-    for (const task of response.data.tasks) {
+    for (const task of tasks) {
       yield task;
     }
 
-    hasMore = response.count > (page + 1) * response.data.tasks.length;
+    hasMore = response.count > (page + 1) * tasks.length;
     page++;
   }
 }
@@ -59,15 +74,15 @@ async function* iterateTasks(): AsyncGenerator<TaskFull, void, unknown> {
  * Example 3: Batch processing with concurrency control
  */
 async function processTasksInBatches(
-  processor: (task: TaskFull) => Promise<void>,
+  processor: (task: TaskItem) => Promise<void>,
   concurrency = 5
 ): Promise<void> {
   let page = 0;
   let hasMore = true;
 
   while (hasMore) {
-    const response = await freelo.tasks.list({ page });
-    const tasks = response.data.tasks;
+    const { data: response } = await getAllTasks({ query: { p: page } });
+    const tasks = response.tasks ?? [];
 
     // Process in batches with controlled concurrency
     for (let i = 0; i < tasks.length; i += concurrency) {
@@ -83,13 +98,13 @@ async function processTasksInBatches(
 /**
  * Example 4: Parallel page fetching (use with caution - can hit rate limits)
  */
-async function getAllProjectsParallel(): Promise<ProjectFull[]> {
+async function getAllProjectsParallel(): Promise<ProjectItem[]> {
   // First, get the total count
-  const firstPage = await freelo.projects.listAll({ page: 0 });
+  const { data: firstPage } = await getAllProjects({ query: { p: 0 } });
   const totalPages = Math.ceil(firstPage.total / 20); // Assuming 20 items per page
 
   if (totalPages <= 1) {
-    return firstPage.data.projects;
+    return firstPage.projects;
   }
 
   console.log(`Fetching ${totalPages} pages in parallel...`);
@@ -97,13 +112,13 @@ async function getAllProjectsParallel(): Promise<ProjectFull[]> {
   // Fetch remaining pages in parallel (with some limit to avoid rate limiting)
   const pagePromises = [];
   for (let page = 1; page < totalPages; page++) {
-    pagePromises.push(freelo.projects.listAll({ page }));
+    pagePromises.push(getAllProjects({ query: { p: page } }));
   }
 
   const results = await Promise.all(pagePromises);
 
   // Combine all results
-  const allProjects = [...firstPage.data.projects];
+  const allProjects = [...firstPage.projects];
   for (const result of results) {
     allProjects.push(...result.data.projects);
   }
@@ -118,15 +133,16 @@ class TaskPaginator {
   private currentPage = 0;
   private cachedTotal = 0;
 
-  async next(): Promise<{ tasks: TaskFull[]; done: boolean }> {
-    const response = await freelo.tasks.list({ page: this.currentPage });
+  async next(): Promise<{ tasks: TaskItem[]; done: boolean }> {
+    const { data: response } = await getAllTasks({ query: { p: this.currentPage } });
+    const tasks = response.tasks ?? [];
     this.cachedTotal = response.total;
     this.currentPage++;
 
-    const fetched = this.currentPage * response.data.tasks.length;
+    const fetched = this.currentPage * tasks.length;
     const done = fetched >= response.count;
 
-    return { tasks: response.data.tasks, done };
+    return { tasks, done };
   }
 
   reset(): void {

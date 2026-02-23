@@ -4,70 +4,79 @@
  * Demonstrates comprehensive error handling strategies.
  */
 
-import { Freelo, FreeloApiError, RateLimitError } from '@freeloapp/js-sdk';
+import {
+  createFreelo,
+  getProjects,
+  getProject,
+  createTask,
+  isFreeloError,
+  isRateLimited,
+  isUnauthorized,
+  isNotFound,
+} from '@freeloapp/js-sdk';
 
-const freelo = new Freelo({
+createFreelo({
   email: process.env.FREELO_EMAIL!,
   apiKey: process.env.FREELO_API_KEY!,
   userAgent: 'ErrorHandlingDemo/1.0',
 });
 
 /**
- * Example 1: Basic error handling with type checking
+ * Example 1: Basic error handling with the { data, error } pattern
  */
 async function basicErrorHandling(projectId: number) {
-  try {
-    return await freelo.projects.get(projectId);
-  } catch (error: unknown) {
-    if (error instanceof FreeloApiError) {
-      console.error(`API Error: ${error.message} (Status: ${error.status})`);
+  const { data, error } = await getProject({ path: { project_id: projectId } });
 
-      // Check specific error types
-      if (error.isNotFound) {
-        console.log('Project not found');
-        return null;
-      }
+  if (error) {
+    console.error(`API Error:`, error);
 
-      if (error.isUnauthorized) {
-        console.log('Invalid credentials - check your API key');
-        throw new Error('Authentication failed');
-      }
-
-      if (error.isRateLimited) {
-        console.log('Rate limited - need to wait');
-      }
-
-      if (error.isClientError) {
-        console.log('Client error - check your request');
-      }
-
-      if (error.isServerError) {
-        console.log('Server error - Freelo may be having issues');
-      }
+    // Check specific error types
+    if (isNotFound(error)) {
+      console.log('Project not found');
+      return null;
     }
+
+    if (isUnauthorized(error)) {
+      console.log('Invalid credentials - check your API key');
+      throw new Error('Authentication failed');
+    }
+
+    if (isRateLimited(error)) {
+      console.log('Rate limited - need to wait');
+    }
+
+    if (isFreeloError(error)) {
+      console.log('General Freelo API error');
+    }
+
     throw error;
   }
+
+  return data;
 }
 
 /**
  * Example 2: Automatic retry on rate limiting
  */
 async function withRateLimitRetry<T>(
-  fn: () => Promise<T>,
+  fn: () => Promise<{ data: T; error?: unknown }>,
   maxRetries = 3,
   delayMs = 60000
 ): Promise<T> {
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    try {
-      return await fn();
-    } catch (error: unknown) {
-      if (error instanceof RateLimitError && attempt < maxRetries) {
-        console.log(`Rate limited. Waiting ${delayMs / 1000}s before retry ${attempt + 1}/${maxRetries}...`);
-        await new Promise((resolve) => setTimeout(resolve, delayMs));
-        continue;
-      }
-      throw error;
+    const { data, error } = await fn();
+
+    if (!error) {
+      return data;
     }
+
+    if (isRateLimited(error) && attempt < maxRetries) {
+      console.log(`Rate limited. Waiting ${delayMs / 1000}s before retry ${attempt + 1}/${maxRetries}...`);
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+      continue;
+    }
+
+    throw error;
   }
   throw new Error('Max retries exceeded');
 }
@@ -76,33 +85,35 @@ async function withRateLimitRetry<T>(
  * Example 3: Safe wrapper that returns null on not found
  */
 async function safeGetProject(projectId: number) {
-  try {
-    return await freelo.projects.get(projectId);
-  } catch (error: unknown) {
-    if (error instanceof FreeloApiError && error.isNotFound) {
+  const { data, error } = await getProject({ path: { project_id: projectId } });
+
+  if (error) {
+    if (isNotFound(error)) {
       return null;
     }
     throw error;
   }
+
+  return data;
 }
 
 /**
  * Example 4: Handle validation errors
  */
 async function createTaskWithValidation(tasklistId: number, name: string) {
-  try {
-    return await freelo.tasks.create(tasklistId, { name });
-  } catch (error: unknown) {
-    if (error instanceof FreeloApiError && error.errors) {
-      // error.errors contains field-specific validation errors
-      console.error('Validation errors:');
-      for (const [field, messages] of Object.entries(error.errors)) {
-        const messageList = Array.isArray(messages) ? messages.join(', ') : String(messages);
-        console.error(`  ${field}: ${messageList}`);
-      }
+  const { data, error } = await createTask({
+    path: { tasklist_id: tasklistId },
+    body: { name },
+  });
+
+  if (error) {
+    if (isFreeloError(error)) {
+      console.error('Validation / API error:', error);
     }
     throw error;
   }
+
+  return data;
 }
 
 /**
@@ -114,20 +125,21 @@ class CircuitBreaker {
   private readonly threshold = 5;
   private readonly resetTimeout = 60000;
 
-  async execute<T>(fn: () => Promise<T>): Promise<T> {
+  async execute<T>(fn: () => Promise<{ data: T; error?: unknown }>): Promise<T> {
     // Check if circuit is open
     if (this.isOpen()) {
       throw new Error('Circuit breaker is open - service unavailable');
     }
 
-    try {
-      const result = await fn();
-      this.reset();
-      return result;
-    } catch (error: unknown) {
+    const { data, error } = await fn();
+
+    if (error) {
       this.recordFailure();
       throw error;
     }
+
+    this.reset();
+    return data;
   }
 
   private isOpen(): boolean {
@@ -159,7 +171,7 @@ async function demo() {
 
   // Example 2: With retry
   console.log('\n=== With Rate Limit Retry ===');
-  const projects = await withRateLimitRetry(() => freelo.projects.list());
+  const projects = await withRateLimitRetry(() => getProjects());
   console.log(`Found ${projects.length} projects`);
 
   // Example 3: Safe get
@@ -171,7 +183,7 @@ async function demo() {
   console.log('\n=== Circuit Breaker ===');
   const breaker = new CircuitBreaker();
   try {
-    await breaker.execute(() => freelo.projects.list());
+    await breaker.execute(() => getProjects());
     console.log('Success!');
   } catch (error: unknown) {
     console.error('Circuit breaker error:', error);

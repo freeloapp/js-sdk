@@ -39,11 +39,11 @@ src/
 
 ### Composables
 
-- **useProjects**: Vue composable for fetching and managing project data
+- **useProjects**: Vue composable using `getProjects()` with `{ data, error }` pattern
 
 ### Components
 
-- **ProjectList.vue**: Single File Component with script setup, template, and scoped styles
+- **ProjectList.vue**: Single File Component using `createFreelo()` and `getProjects()` with script setup, template, and scoped styles
 
 ## Usage in Your App
 

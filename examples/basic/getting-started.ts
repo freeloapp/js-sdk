@@ -4,10 +4,10 @@
  * This example demonstrates how to initialize the SDK and list all projects.
  */
 
-import { Freelo } from '@freeloapp/js-sdk';
+import { createFreelo, getProjects } from '@freeloapp/js-sdk';
 
 // Initialize the client
-const freelo = new Freelo({
+createFreelo({
   email: 'your@email.tld',
   apiKey: 'your-api-key',
   userAgent: 'MyApp/1.0 (contact@myapp.com)',
@@ -15,7 +15,7 @@ const freelo = new Freelo({
 
 // List all projects
 async function listProjects() {
-  const projects = await freelo.projects.list();
+  const { data: projects } = await getProjects();
 
   for (const project of projects) {
     console.log(`${project.name} (ID: ${project.id})`);

@@ -99,9 +99,9 @@ View at: https://app.freelo.io/project/12345
 
 ## What It Demonstrates
 
-- **sync-projects.ts**: Pagination, project details fetching, error handling
-- **export-tasks.ts**: Iterating through paginated results, file I/O, rate limit handling
-- **create-project-with-tasks.ts**: Creating resources, nested creation patterns
+- **sync-projects.ts**: Pagination with `getAllProjects()`, project details with `getProject()`, error handling with `isFreeloError()` and `isRateLimited()`
+- **export-tasks.ts**: Iterating through paginated results with `getAllTasks()`, file I/O, rate limit handling
+- **create-project-with-tasks.ts**: Creating resources with `createProject()`, `createTasklist()`, `createTask()`, nested creation patterns
 
 ## Customization
 

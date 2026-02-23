@@ -4,9 +4,15 @@
  * Script that creates a project with tasklists and tasks from a config.
  */
 
-import { Freelo, FreeloApiError } from '@freeloapp/js-sdk';
+import {
+  createFreelo,
+  createProject,
+  createTasklist,
+  createTask,
+  isFreeloError,
+} from '@freeloapp/js-sdk';
 
-const freelo = new Freelo({
+createFreelo({
   email: process.env.FREELO_EMAIL!,
   apiKey: process.env.FREELO_API_KEY!,
   userAgent: 'SetupScript/1.0',
@@ -47,44 +53,56 @@ const projectTemplate = {
 async function createProjectFromTemplate() {
   console.log(`Creating project: ${projectTemplate.name}\n`);
 
-  try {
-    // Create the project
-    const project = await freelo.projects.create({
-      name: projectTemplate.name,
-    });
-    console.log(`Created project: ${project.name} (ID: ${project.id})`);
+  // Create the project
+  const { data: project, error: projectError } = await createProject({
+    body: { name: projectTemplate.name },
+  });
 
-    // Create tasklists and tasks
-    for (const tasklistTemplate of projectTemplate.tasklists) {
-      // Create tasklist
-      const tasklist = await freelo.tasklists.create(project.id, {
-        name: tasklistTemplate.name,
-      });
-      console.log(`  Created tasklist: ${tasklist.name}`);
-
-      // Create tasks in the tasklist
-      for (const taskTemplate of tasklistTemplate.tasks) {
-        const task = await freelo.tasks.create(tasklist.id, {
-          name: taskTemplate.name,
-          subtasks: taskTemplate.subtasks?.map((name) => ({ name })),
-        });
-        console.log(`    Created task: ${task.name}`);
-      }
-    }
-
-    console.log('\nProject setup complete!');
-    console.log(`View at: https://app.freelo.io/project/${project.id}`);
-  } catch (error: unknown) {
-    if (error instanceof FreeloApiError) {
-      console.error(`API Error: ${error.message}`);
-      if (error.errors) {
-        console.error('Validation errors:', error.errors);
-      }
-    } else {
-      throw error;
+  if (projectError) {
+    if (isFreeloError(projectError)) {
+      console.error(`API Error:`, projectError);
     }
     process.exit(1);
   }
+
+  console.log(`Created project: ${project.name} (ID: ${project.id})`);
+
+  // Create tasklists and tasks
+  for (const tasklistTemplate of projectTemplate.tasklists) {
+    // Create tasklist
+    const { data: tasklist, error: tasklistError } = await createTasklist({
+      path: { project_id: project.id },
+      body: { name: tasklistTemplate.name },
+    });
+
+    if (tasklistError) {
+      console.error(`Failed to create tasklist: ${tasklistTemplate.name}`, tasklistError);
+      continue;
+    }
+
+    console.log(`  Created tasklist: ${tasklist.name}`);
+
+    // Create tasks in the tasklist
+    for (const taskTemplate of tasklistTemplate.tasks) {
+      const { data: task, error: taskError } = await createTask({
+        path: { tasklist_id: tasklist.id },
+        body: {
+          name: taskTemplate.name,
+          subtasks: taskTemplate.subtasks?.map((name) => ({ name })),
+        },
+      });
+
+      if (taskError) {
+        console.error(`Failed to create task: ${taskTemplate.name}`, taskError);
+        continue;
+      }
+
+      console.log(`    Created task: ${task.name}`);
+    }
+  }
+
+  console.log('\nProject setup complete!');
+  console.log(`View at: https://app.freelo.io/project/${project.id}`);
 }
 
 createProjectFromTemplate();

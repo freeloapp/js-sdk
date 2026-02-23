@@ -1,0 +1,25 @@
+name: OpenAPI Generate Check
+
+on:
+  push:
+    paths:
+      - 'openapi-ts.config.ts'
+      - 'src/generated/**'
+  pull_request:
+    paths:
+      - 'openapi-ts.config.ts'
+      - 'src/generated/**'
+  schedule:
+    - cron: '0 6 * * 1' # Every Monday at 6:00 UTC
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run generate:check

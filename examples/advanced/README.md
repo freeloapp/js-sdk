@@ -27,8 +27,8 @@ npx tsx error-handling.ts
 ```
 
 **What it demonstrates:**
-- Type-safe error checking with `FreeloApiError`
-- Checking specific error types (not found, unauthorized, rate limited)
+- Error checking with `{ data, error }` response pattern
+- Checking specific error types with `isNotFound()`, `isUnauthorized()`, `isRateLimited()`
 - Automatic retry on rate limiting
 - Safe wrappers that return null on not found
 - Validation error handling
@@ -72,10 +72,11 @@ npx tsx bulk-operations.ts
 The Freelo API allows 25 requests per minute. When exceeded, wait 60 seconds:
 
 ```typescript
-try {
-  await freelo.projects.list();
-} catch (error) {
-  if (error instanceof FreeloApiError && error.isRateLimited) {
+import { getProjects, isRateLimited } from '@freeloapp/js-sdk';
+
+const { data, error } = await getProjects();
+if (error) {
+  if (isRateLimited(error)) {
     await new Promise(r => setTimeout(r, 60000));
     // Retry...
   }
@@ -117,11 +118,11 @@ async function* iterateAll() {
   let page = 0;
   let hasMore = true;
   while (hasMore) {
-    const response = await fetchPage(page);
-    for (const item of response.data) {
+    const { data: response } = await getAllTasks({ query: { p: page } });
+    for (const item of response.tasks) {
       yield item;
     }
-    hasMore = response.hasMore;
+    hasMore = response.count > (page + 1) * response.tasks.length;
     page++;
   }
 }

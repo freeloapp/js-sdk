@@ -4,9 +4,9 @@
  * This example demonstrates how to create tasks with subtasks and comments.
  */
 
-import { Freelo } from '@freeloapp/js-sdk';
+import { createFreelo, createTask, createComment } from '@freeloapp/js-sdk';
 
-const freelo = new Freelo({
+createFreelo({
   email: process.env.FREELO_EMAIL!,
   apiKey: process.env.FREELO_API_KEY!,
   userAgent: 'MyApp/1.0',
@@ -18,23 +18,29 @@ const userId = 67890;
 
 async function createTaskWithSubtasks() {
   // Create a task with subtasks
-  const task = await freelo.tasks.create(tasklistId, {
-    name: 'Implement new feature',
-    due_date: '2024-12-31',
-    worker: userId,
-    subtasks: [
-      { name: 'Design' },
-      { name: 'Implementation' },
-      { name: 'Testing' },
-      { name: 'Documentation' },
-    ],
+  const { data: task } = await createTask({
+    path: { tasklist_id: tasklistId },
+    body: {
+      name: 'Implement new feature',
+      due_date: '2024-12-31',
+      worker: userId,
+      subtasks: [
+        { name: 'Design' },
+        { name: 'Implementation' },
+        { name: 'Testing' },
+        { name: 'Documentation' },
+      ],
+    },
   });
 
   console.log(`Created task: ${task.name} (ID: ${task.id})`);
 
   // Add a comment to the task
-  const comment = await freelo.comments.create(task.id, {
-    content: 'Please prioritize this task',
+  const { data: comment } = await createComment({
+    path: { task_id: task.id },
+    body: {
+      content: 'Please prioritize this task',
+    },
   });
 
   console.log(`Added comment: ${comment.content}`);

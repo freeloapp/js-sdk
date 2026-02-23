@@ -2,15 +2,19 @@
 
 ## Project Overview
 
-This is the official JavaScript/TypeScript SDK for [Freelo.io](https://app.freelo.io) - a Project Management Tool. The SDK enables developers to easily integrate Freelo API into any JS/TS project (Node.js, React, Vue, Angular, etc.).
+This is the official JavaScript/TypeScript SDK for [Freelo.io](https://app.freelo.io) - a Project Management Tool. The SDK is auto-generated from the OpenAPI spec using [Hey API](https://heyapi.dev/), providing tree-shakeable functions for all API endpoints.
 
 ## Key Files
 
-- **OpenAPI Specification**: `.openapi/freelo-api-openapi.yaml` - Complete API definition
+- **OpenAPI Specification**: https://api.freelo.io/docs/v1/freelo-api.yaml - Complete API definition (online)
+- **Generator Config**: `openapi-ts.config.ts` - Hey API configuration
 - **Source Code**: `src/` - SDK source files
+  - `src/generated/` - Auto-generated code (do not edit manually)
+  - `src/freelo.ts` - `createFreelo()` configuration function
+  - `src/errors.ts` - Error utility functions
+  - `src/utils/` - Pagination, currency, date helpers
 - **Tests**: `test/` - Test files
 - **Examples**: `examples/` - Usage examples for different frameworks
-- **Phase Documentation**: `docs/phases/` - Implementation phases
 
 ## API Information
 
@@ -20,70 +24,46 @@ This is the official JavaScript/TypeScript SDK for [Freelo.io](https://app.freel
 - **Response Format**: JSON (UTF-8)
 - **API Documentation**: https://freelo.docs.apiary.io/
 
-## API Resources
-
-The API provides these main resources:
-- Projects (CRUD, archive, activate, workers)
-- Tasklists (CRUD, move, budgets)
-- Tasks (CRUD, labels, comments, time estimates)
-- Subtasks
-- Comments (with file attachments)
-- Time Tracking (start, stop, edit)
-- Work Reports
-- Users (manage workers, out-of-office)
-- Invoicing
-- Custom Fields
-- Notes
-- Search
-- Notifications
-- Events
-- Files
-
-## SDK Design Goals
-
-1. **Lightweight**: Minimal dependencies (use native fetch)
-2. **TypeScript**: Full type definitions
-3. **Easy to use**: Simple initialization, self-explanatory methods
-4. **Universal**: Works in Node.js, browsers, and all major frameworks
-5. **Modern**: Promise-based async/await API
-6. **Tree-shakeable**: ES modules for optimal bundling
-
 ## Usage Pattern
 
 ```typescript
-import { Freelo } from '@freeloapp/js-sdk';
+import { createFreelo, getProjects, createTask } from '@freeloapp/js-sdk';
 
-const freelo = new Freelo({
+// Initialize client (sets global default)
+createFreelo({
   email: 'your@email.tld',
   apiKey: 'your-api-key',
-  userAgent: 'YourApp/1.0 (contact@yourapp.com)'
+  userAgent: 'YourApp/1.0 (contact@yourapp.com)',
 });
 
 // Get all projects
-const projects = await freelo.projects.list();
+const { data: projects } = await getProjects();
 
 // Create a task
-const task = await freelo.tasks.create(tasklistId, {
-  name: 'New Task',
-  worker_ids: [userId]
+const { data: task } = await createTask({
+  path: { tasklist_id: 123 },
+  body: { name: 'New Task', worker_ids: [userId] },
 });
 ```
 
 ## Development Commands
 
 ```bash
-npm install      # Install dependencies
-npm run build    # Build the SDK
-npm run test     # Run tests
-npm run lint     # Lint code
-npm run typecheck # Check TypeScript types
+npm install        # Install dependencies
+npm run generate   # Re-generate SDK from OpenAPI spec
+npm run build      # Build the SDK
+npm run test       # Run tests
+npm run test:run   # Run tests once (CI)
+npm run lint       # Lint code
+npm run typecheck  # Check TypeScript types
 ```
 
 ## Coding Conventions
 
 - Use TypeScript strict mode
+- Generated code in `src/generated/` must NOT be edited manually
 - Use native fetch API (no external HTTP libraries)
 - Keep bundle size minimal
 - Export both ESM and CommonJS
-- Provide comprehensive JSDoc comments
+- All exports must be tree-shakeable (individual named functions, no namespace objects)
 - Follow semantic versioning

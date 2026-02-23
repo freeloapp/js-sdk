@@ -37,7 +37,7 @@ app/
     └── tasks/
         └── route.ts          # GET /api/tasks, POST /api/tasks
 lib/
-└── freelo.ts                 # Shared client instance
+└── freelo.ts                 # Shared client initialization
 ```
 
 ## API Endpoints
@@ -81,11 +81,12 @@ curl -X POST http://localhost:3000/api/tasks \
 
 ## What It Demonstrates
 
-- Server-side SDK usage (API keys never exposed to client)
+- Server-side SDK usage with `createFreelo()` (API keys never exposed to client)
+- Tree-shakeable function imports (`getProjects`, `createTask`, etc.)
+- Error handling with `isFreeloError()`, `isNotFound()` utility functions
 - RESTful API design with Next.js App Router
-- Error handling with proper HTTP status codes
-- Shared client instance pattern
-- TypeScript integration
+- `{ data, error }` response pattern
+- Shared client initialization pattern
 
 ## Using from Client Components
 

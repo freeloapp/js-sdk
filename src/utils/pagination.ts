@@ -19,7 +19,7 @@
  * ```
  */
 
-import type { PaginatedResponse } from '../types/index.js';
+import type { PaginatedResponse } from '../generated/types.gen.js';
 
 /**
  * Enhanced paginated response with convenience properties
@@ -57,8 +57,12 @@ export type DataExtractor<TResponse, TItem> = (response: TResponse) => TItem[];
  * @returns True if there are more pages
  */
 export function hasMorePages(response: PaginatedResponse): boolean {
-  const currentCount = response.page * response.per_page + response.count;
-  return currentCount < response.total;
+  const page = response.page ?? 0;
+  const perPage = response.per_page ?? 0;
+  const count = response.count ?? 0;
+  const total = response.total ?? 0;
+  const currentCount = page * perPage + count;
+  return currentCount < total;
 }
 
 /**
@@ -67,7 +71,9 @@ export function hasMorePages(response: PaginatedResponse): boolean {
  * @returns Total number of pages
  */
 export function getTotalPages(response: PaginatedResponse): number {
-  return Math.ceil(response.total / response.per_page);
+  const total = response.total ?? 0;
+  const perPage = response.per_page ?? 1;
+  return Math.ceil(total / perPage);
 }
 
 /**
@@ -236,16 +242,3 @@ export function createPaginator<TResponse extends PaginatedResponse, TItem>(
   };
 }
 
-/**
- * Pagination utility namespace
- */
-export const pagination = {
-  hasMorePages,
-  getTotalPages,
-  iteratePages,
-  iteratePageResponses,
-  fetchAllPages,
-  createPaginator,
-};
-
-export default pagination;

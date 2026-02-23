@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { currency, toApi, fromApi, format, formatFromApi } from '../../src/utils/currency.js';
+import { toApi, fromApi, format, formatFromApi } from '../../src/utils/currency.js';
 
 describe('currency utilities', () => {
   describe('toApi', () => {
@@ -86,14 +86,6 @@ describe('currency utilities', () => {
     });
   });
 
-  describe('currency namespace', () => {
-    it('should export all functions', () => {
-      expect(currency.toApi).toBe(toApi);
-      expect(currency.fromApi).toBe(fromApi);
-      expect(currency.format).toBe(format);
-      expect(currency.formatFromApi).toBe(formatFromApi);
-    });
-  });
 
   describe('round-trip conversion', () => {
     it('should preserve value through round-trip', () => {

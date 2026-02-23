@@ -1,39 +1,33 @@
 /**
- * Freelo SDK - Shared Client Instance
+ * Freelo SDK - Shared Client Initialization
  *
- * Singleton pattern for the Freelo client to be used across API routes.
+ * Initializes the Freelo client once for use across API routes.
  */
 
-import { Freelo } from '@freeloapp/js-sdk';
+import { createFreelo } from '@freeloapp/js-sdk';
 
-let freeloInstance: Freelo | null = null;
+let initialized = false;
 
 /**
- * Get the shared Freelo client instance
+ * Ensure the Freelo client is initialized (call once at startup or in each route)
  */
-export function getFreelo(): Freelo {
-  if (!freeloInstance) {
+export function initFreelo(): void {
+  if (!initialized) {
     if (!process.env.FREELO_EMAIL || !process.env.FREELO_API_KEY) {
       throw new Error('FREELO_EMAIL and FREELO_API_KEY environment variables are required');
     }
 
-    freeloInstance = new Freelo({
+    createFreelo({
       email: process.env.FREELO_EMAIL,
       apiKey: process.env.FREELO_API_KEY,
       userAgent: 'NextJS-App/1.0',
     });
-  }
 
-  return freeloInstance;
+    initialized = true;
+  }
 }
 
 /**
- * Export types for convenience
+ * Export error utilities and types for convenience
  */
-export { FreeloApiError, RateLimitError } from '@freeloapp/js-sdk';
-export type {
-  ProjectWithTasklists,
-  ProjectDetail,
-  TaskFull,
-  TaskCreated,
-} from '@freeloapp/js-sdk';
+export { isFreeloError, isRateLimited, isUnauthorized, isNotFound } from '@freeloapp/js-sdk';

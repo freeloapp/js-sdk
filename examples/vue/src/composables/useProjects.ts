@@ -5,23 +5,29 @@
  */
 
 import { ref, onMounted, type Ref } from 'vue';
-import { Freelo, type ProjectWithTasklists, FreeloApiError } from '@freeloapp/js-sdk';
+import { createFreelo, getProjects, isFreeloError } from '@freeloapp/js-sdk';
 
-const freelo = new Freelo({
+createFreelo({
   email: import.meta.env.VITE_FREELO_EMAIL,
   apiKey: import.meta.env.VITE_FREELO_API_KEY,
   userAgent: 'VueApp/1.0',
 });
 
+interface Project {
+  id: number;
+  name: string;
+  tasklists?: { id: number; name: string }[];
+}
+
 export interface UseProjectsReturn {
-  projects: Ref<ProjectWithTasklists[]>;
+  projects: Ref<Project[]>;
   loading: Ref<boolean>;
   error: Ref<string | null>;
   refetch: () => Promise<void>;
 }
 
 export function useProjects(): UseProjectsReturn {
-  const projects = ref<ProjectWithTasklists[]>([]);
+  const projects = ref<Project[]>([]);
   const loading = ref(true);
   const error = ref<string | null>(null);
 
@@ -29,17 +35,20 @@ export function useProjects(): UseProjectsReturn {
     loading.value = true;
     error.value = null;
 
-    try {
-      projects.value = await freelo.projects.list();
-    } catch (e) {
-      if (e instanceof FreeloApiError) {
-        error.value = `API Error: ${e.message}`;
+    const { data, error: apiError } = await getProjects();
+
+    if (apiError) {
+      if (isFreeloError(apiError)) {
+        error.value = `API Error: ${String(apiError)}`;
       } else {
-        error.value = e instanceof Error ? e.message : 'Failed to fetch projects';
+        error.value = 'Failed to fetch projects';
       }
-    } finally {
       loading.value = false;
+      return;
     }
+
+    projects.value = data;
+    loading.value = false;
   }
 
   onMounted(refetch);

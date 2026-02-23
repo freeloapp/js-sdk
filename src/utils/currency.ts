@@ -85,14 +85,3 @@ export function formatFromApi(
   return format(fromApi(apiValue), currencyCode, locale);
 }
 
-/**
- * Currency utility namespace
- */
-export const currency = {
-  toApi,
-  fromApi,
-  format,
-  formatFromApi,
-};
-
-export default currency;

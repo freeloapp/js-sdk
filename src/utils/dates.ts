@@ -142,20 +142,3 @@ export function range(
   };
 }
 
-/**
- * Dates utility namespace
- */
-export const dates = {
-  toApi,
-  toApiWithTime,
-  toApiWithLocalTime,
-  fromApi,
-  isValid,
-  today,
-  daysFromNow,
-  weeksFromNow,
-  monthsFromNow,
-  range,
-};
-
-export default dates;

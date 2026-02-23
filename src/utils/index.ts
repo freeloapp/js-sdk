@@ -1,11 +1,10 @@
 /**
  * Utilities Index
- * Exports all utility helpers
+ * Exports all utility helpers as individual named exports (tree-shakeable)
  */
 
 // Currency utilities
 export {
-  currency,
   toApi as currencyToApi,
   fromApi as currencyFromApi,
   format as formatCurrency,
@@ -14,7 +13,6 @@ export {
 
 // Date utilities
 export {
-  dates,
   toApi as dateToApi,
   toApiWithTime,
   toApiWithLocalTime,
@@ -29,7 +27,6 @@ export {
 
 // Pagination utilities
 export {
-  pagination,
   hasMorePages,
   getTotalPages,
   iteratePages,

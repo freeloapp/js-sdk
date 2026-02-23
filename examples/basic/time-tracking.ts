@@ -4,9 +4,9 @@
  * This example demonstrates how to start and stop time tracking.
  */
 
-import { Freelo } from '@freeloapp/js-sdk';
+import { createFreelo, startTimeTracking, stopTimeTracking } from '@freeloapp/js-sdk';
 
-const freelo = new Freelo({
+createFreelo({
   email: process.env.FREELO_EMAIL!,
   apiKey: process.env.FREELO_API_KEY!,
   userAgent: 'MyApp/1.0',
@@ -14,19 +14,23 @@ const freelo = new Freelo({
 
 async function trackTime(taskId: number) {
   // Start tracking time on a task
-  const { uuid } = await freelo.timeTracking.start({
-    task_id: taskId,
-    note: 'Working on feature implementation',
+  const { data: tracking } = await startTimeTracking({
+    path: { task_id: taskId },
+    body: {
+      note: 'Working on feature implementation',
+    },
   });
 
-  console.log(`Time tracking started (UUID: ${uuid})`);
+  console.log(`Time tracking started (UUID: ${tracking.uuid})`);
 
   // Simulate some work
   console.log('Working...');
   await new Promise((resolve) => setTimeout(resolve, 5000));
 
   // Stop tracking and get the work report
-  const report = await freelo.timeTracking.stop();
+  const { data: report } = await stopTimeTracking({
+    path: { task_id: taskId },
+  });
 
   console.log(`Time tracked: ${report.time_tracked} seconds`);
   console.log(`Date: ${report.date_report}`);

@@ -41,8 +41,8 @@ src/
 
 ### Custom Hooks
 
-- **useProjects**: Fetches all projects with loading and error states
-- **useTasks**: Fetches tasks with pagination support
+- **useProjects**: Fetches all projects using `getProjects()` with loading and error states
+- **useTasks**: Fetches tasks using `getTasksInTasklist()` with pagination support
 
 ### Components
 

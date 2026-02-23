@@ -5,13 +5,10 @@
  */
 
 import { NextResponse } from 'next/server';
-import { Freelo, FreeloApiError } from '@freeloapp/js-sdk';
+import { getProject, deleteProject, isFreeloError, isNotFound } from '@freeloapp/js-sdk';
+import { initFreelo } from '../../../../lib/freelo';
 
-const freelo = new Freelo({
-  email: process.env.FREELO_EMAIL!,
-  apiKey: process.env.FREELO_API_KEY!,
-  userAgent: 'NextJS-App/1.0',
-});
+initFreelo();
 
 interface RouteParams {
   params: Promise<{ id: string }>;
@@ -22,28 +19,29 @@ interface RouteParams {
  * Fetch a single project by ID
  */
 export async function GET(request: Request, { params }: RouteParams) {
-  try {
-    const { id } = await params;
-    const projectId = parseInt(id, 10);
+  const { id } = await params;
+  const projectId = parseInt(id, 10);
 
-    if (isNaN(projectId)) {
-      return NextResponse.json({ error: 'Invalid project ID' }, { status: 400 });
+  if (isNaN(projectId)) {
+    return NextResponse.json({ error: 'Invalid project ID' }, { status: 400 });
+  }
+
+  const { data, error } = await getProject({ path: { project_id: projectId } });
+
+  if (error) {
+    if (isNotFound(error)) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
-
-    const project = await freelo.projects.get(projectId);
-    return NextResponse.json(project);
-  } catch (error) {
-    if (error instanceof FreeloApiError) {
-      if (error.isNotFound) {
-        return NextResponse.json({ error: 'Project not found' }, { status: 404 });
-      }
+    if (isFreeloError(error)) {
       return NextResponse.json(
-        { error: error.message },
-        { status: error.status || 500 }
+        { error: String(error) },
+        { status: 500 }
       );
     }
     return NextResponse.json({ error: 'Failed to fetch project' }, { status: 500 });
   }
+
+  return NextResponse.json(data);
 }
 
 /**
@@ -51,26 +49,27 @@ export async function GET(request: Request, { params }: RouteParams) {
  * Delete a project by ID
  */
 export async function DELETE(request: Request, { params }: RouteParams) {
-  try {
-    const { id } = await params;
-    const projectId = parseInt(id, 10);
+  const { id } = await params;
+  const projectId = parseInt(id, 10);
 
-    if (isNaN(projectId)) {
-      return NextResponse.json({ error: 'Invalid project ID' }, { status: 400 });
+  if (isNaN(projectId)) {
+    return NextResponse.json({ error: 'Invalid project ID' }, { status: 400 });
+  }
+
+  const { error } = await deleteProject({ path: { project_id: projectId } });
+
+  if (error) {
+    if (isNotFound(error)) {
+      return NextResponse.json({ error: 'Project not found' }, { status: 404 });
     }
-
-    await freelo.projects.delete(projectId);
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    if (error instanceof FreeloApiError) {
-      if (error.isNotFound) {
-        return NextResponse.json({ error: 'Project not found' }, { status: 404 });
-      }
+    if (isFreeloError(error)) {
       return NextResponse.json(
-        { error: error.message },
-        { status: error.status || 500 }
+        { error: String(error) },
+        { status: 500 }
       );
     }
     return NextResponse.json({ error: 'Failed to delete project' }, { status: 500 });
   }
+
+  return NextResponse.json({ success: true });
 }

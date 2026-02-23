@@ -5,32 +5,30 @@
  */
 
 import { NextResponse } from 'next/server';
-import { Freelo, FreeloApiError } from '@freeloapp/js-sdk';
+import { getProjects, createProject, isFreeloError } from '@freeloapp/js-sdk';
+import { initFreelo } from '../../../lib/freelo';
 
 // Initialize the client (server-side only)
-const freelo = new Freelo({
-  email: process.env.FREELO_EMAIL!,
-  apiKey: process.env.FREELO_API_KEY!,
-  userAgent: 'NextJS-App/1.0',
-});
+initFreelo();
 
 /**
  * GET /api/projects
  * Fetch all projects
  */
 export async function GET() {
-  try {
-    const projects = await freelo.projects.list();
-    return NextResponse.json(projects);
-  } catch (error) {
-    if (error instanceof FreeloApiError) {
+  const { data, error } = await getProjects();
+
+  if (error) {
+    if (isFreeloError(error)) {
       return NextResponse.json(
-        { error: error.message, status: error.status },
-        { status: error.status || 500 }
+        { error: String(error) },
+        { status: 500 }
       );
     }
     return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 });
   }
+
+  return NextResponse.json(data);
 }
 
 /**
@@ -38,27 +36,29 @@ export async function GET() {
  * Create a new project
  */
 export async function POST(request: Request) {
-  try {
-    const body = await request.json();
+  const body = await request.json();
 
-    // Validate required fields
-    if (!body.name) {
-      return NextResponse.json({ error: 'Project name is required' }, { status: 400 });
-    }
+  // Validate required fields
+  if (!body.name) {
+    return NextResponse.json({ error: 'Project name is required' }, { status: 400 });
+  }
 
-    const project = await freelo.projects.create({
+  const { data, error } = await createProject({
+    body: {
       name: body.name,
       currency: body.currency,
-    });
+    },
+  });
 
-    return NextResponse.json(project, { status: 201 });
-  } catch (error) {
-    if (error instanceof FreeloApiError) {
+  if (error) {
+    if (isFreeloError(error)) {
       return NextResponse.json(
-        { error: error.message, errors: error.errors },
-        { status: error.status || 500 }
+        { error: String(error) },
+        { status: 500 }
       );
     }
     return NextResponse.json({ error: 'Failed to create project' }, { status: 500 });
   }
+
+  return NextResponse.json(data, { status: 201 });
 }

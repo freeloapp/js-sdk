@@ -5,7 +5,6 @@
     "type": "npm-package"
   },
   "includeFiles": [
-    ".openapi/freelo-api-openapi.yaml",
     "CLAUDE.md",
     "docs/phases/0-overview.md"
   ],

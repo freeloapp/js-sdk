@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import {
-  dates,
   toApi,
   toApiWithTime,
   toApiWithLocalTime,
@@ -189,20 +188,6 @@ describe('dates utilities', () => {
     });
   });
 
-  describe('dates namespace', () => {
-    it('should export all functions', () => {
-      expect(dates.toApi).toBe(toApi);
-      expect(dates.toApiWithTime).toBe(toApiWithTime);
-      expect(dates.toApiWithLocalTime).toBe(toApiWithLocalTime);
-      expect(dates.fromApi).toBe(fromApi);
-      expect(dates.isValid).toBe(isValid);
-      expect(dates.today).toBe(today);
-      expect(dates.daysFromNow).toBe(daysFromNow);
-      expect(dates.weeksFromNow).toBe(weeksFromNow);
-      expect(dates.monthsFromNow).toBe(monthsFromNow);
-      expect(dates.range).toBe(range);
-    });
-  });
 
   describe('round-trip conversion', () => {
     it('should preserve date through round-trip', () => {

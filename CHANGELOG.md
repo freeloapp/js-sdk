@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2026-02-23
+
+### Breaking Changes
+
+- **Class-based API replaced with function-based API**: `new Freelo()` is now `createFreelo()`
+- **Resource methods replaced with tree-shakeable functions**: `freelo.projects.list()` is now `getProjects()`
+- **Response format changed**: SDK functions return `{ data, error, request, response }` instead of raw data
+- **Removed**: `Freelo`, `HttpClient`, `FreeloApiError`, `RateLimitError` classes
+- **Removed**: All resource classes (`ProjectsResource`, `TasksResource`, etc.)
+- **Removed**: `setCredentials()`, `withCredentials()`, `call()` methods — use `createFreelo()` per-client instead
+
+### Added
+
+- Auto-generated SDK from [OpenAPI spec](https://api.freelo.io/docs/v1/freelo-api.yaml) using [Hey API](https://heyapi.dev/)
+- 101 tree-shakeable SDK functions covering all API endpoints
+- `createFreelo()` configuration function with Basic Auth, logging, and rate limit handling
+- Per-request client support for multi-tenant scenarios via `{ client }` parameter
+- Error utility functions: `isFreeloError()`, `isRateLimited()`, `isUnauthorized()`, `isNotFound()`
+- CI/CD pipeline for automated OpenAPI spec checking (GitHub Actions + GitLab CI)
+- Smoke test suite for manual API verification
+
+### Changed
+
+- Pagination utilities updated to work with generated SDK response format
+- Removed namespace objects (`currency`, `dates`, `pagination`) — all exports are now individual functions
+- Coverage thresholds exclude generated code in `src/generated/`
+
+---
+
 ## [1.0.0] - 2024-XX-XX
 
 ### Added

@@ -3,53 +3,50 @@
  *
  * @example
  * ```typescript
- * import { Freelo } from '@freeloapp/js-sdk';
+ * import { createFreelo, getProjects, createTask } from '@freeloapp/js-sdk';
  *
- * const freelo = new Freelo({
+ * // Initialize client (sets global default)
+ * createFreelo({
  *   email: 'your@email.tld',
  *   apiKey: 'your-api-key',
- *   userAgent: 'YourApp/1.0 (contact@yourapp.com)'
+ *   userAgent: 'YourApp/1.0 (contact@yourapp.com)',
  * });
  *
  * // Get all projects
- * const projects = await freelo.projects.list();
+ * const { data: projects } = await getProjects();
  *
  * // Create a task
- * const task = await freelo.tasks.create(tasklistId, {
- *   name: 'New Task',
- *   worker: userId
+ * const { data: task } = await createTask({
+ *   path: { tasklist_id: 123 },
+ *   body: { name: 'New Task', worker_ids: [userId] },
  * });
  * ```
  *
  * @packageDocumentation
  */
 
-/**
- * SDK version
- */
-export const VERSION = '1.0.0';
+// Main configuration function
+export { createFreelo, type FreeloConfig } from './freelo.js';
 
-// Main client
-export { Freelo, type FreeloConfig, type FreeloLazyConfig, type FreeloCredentials } from './client.js';
-export { default } from './client.js';
+// Generated client (for advanced usage / custom client instances)
+export { createClient } from './generated/client/index.js';
 
-// HTTP client and errors
-export { HttpClient, FreeloApiError, RateLimitError } from './http.js';
-export type { HttpClientConfig, HttpClientCredentials, ApiError, RequestOptions, RateLimitConfig, FileUploadResponse } from './http.js';
+// Generated SDK functions — tree-shakeable
+export * from './generated/sdk.gen.js';
 
-// All types
-export * from './types/index.js';
+// Generated types
+export type * from './generated/types.gen.js';
 
-// Utilities
+// Error handling utilities
+export { isFreeloError, isRateLimited, isUnauthorized, isNotFound } from './errors.js';
+export type { FreeloErrorResponse } from './errors.js';
+
+// Utility functions — tree-shakeable
 export {
-  // Currency utilities
-  currency,
   currencyToApi,
   currencyFromApi,
   formatCurrency,
   formatCurrencyFromApi,
-  // Date utilities
-  dates,
   dateToApi,
   toApiWithTime,
   toApiWithLocalTime,
@@ -60,8 +57,6 @@ export {
   weeksFromNow,
   monthsFromNow,
   dateRange,
-  // Pagination utilities
-  pagination,
   hasMorePages,
   getTotalPages,
   iteratePages,
@@ -76,67 +71,3 @@ export type {
   PageFetcher,
   DataExtractor,
 } from './utils/index.js';
-
-// Resource classes and their response types
-export {
-  ProjectsResource,
-  TasklistsResource,
-  TasksResource,
-  SubtasksResource,
-  CommentsResource,
-  TimeTrackingResource,
-  WorkReportsResource,
-  UsersResource,
-  FilesResource,
-  SearchResource,
-  NotificationsResource,
-  EventsResource,
-  CustomFieldsResource,
-  NotesResource,
-  InvoicingResource,
-  StatesResource,
-} from './resources/index.js';
-
-export type {
-  // Projects
-  ProjectsPaginatedResponse,
-  InvitedProjectsPaginatedResponse,
-  ArchivedProjectsPaginatedResponse,
-  TemplateProjectsPaginatedResponse,
-  WorkersPaginatedResponse,
-  // Tasklists
-  TasklistsPaginatedResponse,
-  // Tasks
-  TasksPaginatedResponse,
-  FinishedTasksPaginatedResponse,
-  // Subtasks
-  SubtasksPaginatedResponse,
-  // Comments
-  CommentsPaginatedResponse,
-  // Time Tracking
-  TimeTrackingStartResponse,
-  // Work Reports
-  WorkReportsPaginatedResponse,
-  // Users
-  UsersPaginatedResponse,
-  InviteUsersResponse,
-  OutOfOfficeResponse,
-  // Files
-  FilesPaginatedResponse,
-  // Search
-  SearchPaginatedResponse,
-  // Notifications
-  NotificationsPaginatedResponse,
-  // Events
-  EventsPaginatedResponse,
-  // Custom Fields
-  CustomFieldTypesResponse,
-  CustomFieldsForProjectResponse,
-  CreateCustomFieldResponse,
-  CustomFieldValueResponse,
-  CustomFieldEnumValueResponse,
-  CustomFieldEnumOptionsResponse,
-  CreatedEnumOptionResponse,
-  // Invoicing
-  IssuedInvoicesPaginatedResponse,
-} from './resources/index.js';

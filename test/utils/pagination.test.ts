@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
 import {
-  pagination,
   hasMorePages,
   getTotalPages,
   iteratePages,
@@ -234,14 +233,4 @@ describe('pagination utilities', () => {
     });
   });
 
-  describe('pagination namespace', () => {
-    it('should export all functions', () => {
-      expect(pagination.hasMorePages).toBe(hasMorePages);
-      expect(pagination.getTotalPages).toBe(getTotalPages);
-      expect(pagination.iteratePages).toBe(iteratePages);
-      expect(pagination.iteratePageResponses).toBe(iteratePageResponses);
-      expect(pagination.fetchAllPages).toBe(fetchAllPages);
-      expect(pagination.createPaginator).toBe(createPaginator);
-    });
-  });
 });

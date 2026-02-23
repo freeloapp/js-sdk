@@ -9,7 +9,7 @@
     "create": "tsx create-project-with-tasks.ts"
   },
   "dependencies": {
-    "@freeloapp/js-sdk": "^1.0.0"
+    "@freeloapp/js-sdk": "^2.0.0"
   },
   "devDependencies": {
     "@types/node": "^20.0.0",

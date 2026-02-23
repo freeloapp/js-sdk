@@ -4,9 +4,20 @@
  * Demonstrates patterns for performing bulk operations efficiently.
  */
 
-import { Freelo, FreeloApiError } from '@freeloapp/js-sdk';
+import {
+  createFreelo,
+  getProjects,
+  createTask,
+  finishTask,
+  addTaskLabelsToTask,
+  moveTask,
+  archiveProject,
+  getTasksInTasklist,
+  isFreeloError,
+  isRateLimited,
+} from '@freeloapp/js-sdk';
 
-const freelo = new Freelo({
+createFreelo({
   email: process.env.FREELO_EMAIL!,
   apiKey: process.env.FREELO_API_KEY!,
   userAgent: 'BulkOperationsDemo/1.0',
@@ -28,13 +39,15 @@ async function createMultipleTasks(
     const batch = taskNames.slice(i, i + concurrency);
 
     const results = await Promise.allSettled(
-      batch.map((name) => freelo.tasks.create(tasklistId, { name }))
+      batch.map((name) =>
+        createTask({ path: { tasklist_id: tasklistId }, body: { name } })
+      )
     );
 
     for (const result of results) {
       if (result.status === 'fulfilled') {
         succeeded++;
-        console.log(`  Created: ${result.value.name}`);
+        console.log(`  Created: ${result.value.data.name}`);
       } else {
         failed++;
         console.error(`  Failed: ${result.reason}`);
@@ -57,7 +70,9 @@ async function finishTasks(taskIds: number[]): Promise<{ succeeded: number[]; fa
   const succeeded: number[] = [];
   const failed: number[] = [];
 
-  const results = await Promise.allSettled(taskIds.map((id) => freelo.tasks.finish(id)));
+  const results = await Promise.allSettled(
+    taskIds.map((id) => finishTask({ path: { task_id: id } }))
+  );
 
   results.forEach((result, index) => {
     const taskId = taskIds[index];
@@ -77,7 +92,9 @@ async function finishTasks(taskIds: number[]): Promise<{ succeeded: number[]; fa
  */
 async function addLabelsToTasks(taskIds: number[], labels: { name: string; color?: string }[]) {
   const results = await Promise.allSettled(
-    taskIds.map((taskId) => freelo.tasks.addLabels(taskId, labels))
+    taskIds.map((taskId) =>
+      addTaskLabelsToTask({ path: { task_id: taskId }, body: labels })
+    )
   );
 
   const succeeded = results.filter((r) => r.status === 'fulfilled').length;
@@ -92,7 +109,7 @@ async function addLabelsToTasks(taskIds: number[], labels: { name: string; color
  */
 async function batchUpdateWithRateLimit<T, R>(
   items: T[],
-  updateFn: (item: T) => Promise<R>,
+  updateFn: (item: T) => Promise<{ data: R; error?: unknown }>,
   options: { batchSize?: number; delayMs?: number; rateLimitDelayMs?: number } = {}
 ): Promise<{ results: R[]; errors: Error[] }> {
   const { batchSize = 5, delayMs = 200, rateLimitDelayMs = 60000 } = options;
@@ -104,23 +121,23 @@ async function batchUpdateWithRateLimit<T, R>(
     const batch = items.slice(i, i + batchSize);
 
     for (const item of batch) {
-      try {
-        const result = await updateFn(item);
-        results.push(result);
-      } catch (error: unknown) {
-        if (error instanceof FreeloApiError && error.isRateLimited) {
+      const response = await updateFn(item);
+      if (response.error) {
+        if (isRateLimited(response.error)) {
           console.log(`Rate limited. Waiting ${rateLimitDelayMs / 1000}s...`);
           await new Promise((resolve) => setTimeout(resolve, rateLimitDelayMs));
           // Retry the item
-          try {
-            const result = await updateFn(item);
-            results.push(result);
-          } catch (retryError) {
-            errors.push(retryError instanceof Error ? retryError : new Error(String(retryError)));
+          const retryResponse = await updateFn(item);
+          if (retryResponse.error) {
+            errors.push(new Error(String(retryResponse.error)));
+          } else {
+            results.push(retryResponse.data);
           }
         } else {
-          errors.push(error instanceof Error ? error : new Error(String(error)));
+          errors.push(new Error(String(response.error)));
         }
+      } else {
+        results.push(response.data);
       }
     }
 
@@ -141,7 +158,7 @@ async function moveTasksToTasklist(taskIds: number[], targetTasklistId: number) 
 
   const { results, errors } = await batchUpdateWithRateLimit(
     taskIds,
-    (taskId) => freelo.tasks.move(taskId, targetTasklistId),
+    (taskId) => moveTask({ path: { task_id: taskId }, body: { tasklist_id: targetTasklistId } }),
     { batchSize: 5, delayMs: 200 }
   );
 
@@ -154,10 +171,10 @@ async function moveTasksToTasklist(taskIds: number[], targetTasklistId: number) 
 /**
  * Example 6: Bulk archive projects
  */
-async function archiveProjects(projectIds: number[]) {
+async function archiveProjectsBulk(projectIds: number[]) {
   const results = await batchUpdateWithRateLimit(
     projectIds,
-    (projectId) => freelo.projects.archive(projectId),
+    (projectId) => archiveProject({ path: { project_id: projectId } }),
     { batchSize: 3, delayMs: 500 }
   );
 
@@ -170,7 +187,7 @@ async function archiveProjects(projectIds: number[]) {
 // Demo usage
 async function demo() {
   // Get a tasklist ID for testing
-  const projects = await freelo.projects.list();
+  const { data: projects } = await getProjects();
   if (projects.length === 0 || !projects[0].tasklists?.length) {
     console.log('No projects or tasklists found for demo');
     return;
@@ -186,8 +203,8 @@ async function demo() {
 
   // Example 2: Get task IDs and finish some
   console.log('=== Fetching Tasks ===');
-  const tasksResponse = await freelo.tasks.listByTasklist(tasklistId);
-  const taskIds = tasksResponse.data.tasks.slice(0, 3).map((t: { id: number }) => t.id);
+  const { data: tasksResponse } = await getTasksInTasklist({ path: { tasklist_id: tasklistId } });
+  const taskIds = tasksResponse.tasks.slice(0, 3).map((t: { id: number }) => t.id);
   console.log(`Found ${taskIds.length} tasks to process\n`);
 
   // Example 3: Add labels

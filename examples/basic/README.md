@@ -28,8 +28,8 @@ npx tsx getting-started.ts
 ```
 
 **What it demonstrates:**
-- SDK initialization
-- Listing all projects
+- SDK initialization with `createFreelo()`
+- Listing all projects with `getProjects()`
 - Iterating over tasklists
 
 ### Create Task
@@ -41,9 +41,9 @@ npx tsx create-task.ts
 ```
 
 **What it demonstrates:**
-- Creating a task in a tasklist
+- Creating a task in a tasklist with `createTask()`
 - Adding subtasks
-- Adding comments
+- Adding comments with `createComment()`
 
 ### Time Tracking
 
@@ -54,8 +54,8 @@ npx tsx time-tracking.ts
 ```
 
 **What it demonstrates:**
-- Starting time tracking on a task
-- Stopping time tracking
+- Starting time tracking on a task with `startTimeTracking()`
+- Stopping time tracking with `stopTimeTracking()`
 - Reading the work report
 
 ## Running the Examples

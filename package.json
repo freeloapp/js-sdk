@@ -1,6 +1,6 @@
 {
   "name": "@freeloapp/js-sdk",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Official JavaScript/TypeScript SDK for Freelo.io API",
   "license": "MIT",
   "author": "Freelo Bay s.r.o.",
@@ -57,17 +57,20 @@
     "lint:fix": "eslint src/ --fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "typecheck": "tsc --noEmit",
+    "generate": "openapi-ts",
+    "generate:check": "npm run generate && git diff --exit-code src/generated/",
     "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "@eslint/js": "^9.0.0",
+    "@hey-api/openapi-ts": "0.92.4",
     "@types/node": "^20.11.0",
+    "@vitest/coverage-v8": "^1.2.0",
     "eslint": "^9.0.0",
     "prettier": "^3.2.0",
     "tsup": "^8.0.0",
     "typescript": "^5.3.0",
     "typescript-eslint": "^8.0.0",
-    "vitest": "^1.2.0",
-    "@vitest/coverage-v8": "^1.2.0"
+    "vitest": "^1.2.0"
   }
 }
