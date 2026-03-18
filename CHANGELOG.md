@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2026-03-18
+
+### Added
+
+- `getUsersMe` endpoint for fetching current user info
+- `getTimeTrackingStatus` endpoint for time tracking status
+- `getIssuedInvoiceReportsJson` endpoint for issued invoice reports
+- `ErrorResponse`, `TaskBasic`, `TaskWork`, `WorkReportExtended` types
+
+### Changed
+
+- `TaskDetail.tracking_users` field type updated
+- Error responses on time tracking endpoints
+- `with_labels[]` filter parameter
+- `with_own_taskless` filter parameter
+- `WorkReportFull` nullable fields
+
+### Fixed
+
+- npm version badge (switched to shields.io)
+- Repository URLs (GitLab → GitHub)
+
+### Removed
+
+- `.gitlab-ci.yml` (replaced by GitHub Actions)
+
+---
+
 ## [2.0.0] - 2026-02-23
 
 ### Breaking Changes
