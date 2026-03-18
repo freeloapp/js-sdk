@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskData, ActivateTaskResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskData, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTasklistData, GetTasklistResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetUserProjectsData, GetUserProjectsResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingResponses, UploadFileData, UploadFileResponses } from './types.gen';
+import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskData, ActivateTaskResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskData, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTasklistData, GetTasklistResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UploadFileData, UploadFileResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -17,6 +17,20 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      */
     meta?: Record<string, unknown>;
 };
+
+/**
+ * Authentication health check
+ *
+ * Verifies that the provided credentials are valid.
+ * Returns 200 with the authenticated user's information.
+ * Returns 401 when credentials are invalid or missing.
+ *
+ */
+export const getUsersMe = <ThrowOnError extends boolean = false>(options?: Options<GetUsersMeData, ThrowOnError>) => (options?.client ?? client).get<GetUsersMeResponses, GetUsersMeErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/users/me',
+    ...options
+});
 
 /**
  * Get all own active projects
@@ -653,8 +667,11 @@ export const getAllComments = <ThrowOnError extends boolean = false>(options?: O
 
 /**
  * Start time tracking
+ *
+ * Starts a new time tracking session for the authenticated user. Only one session can be active at a time per user. All parameters are optional — you can start tracking without specifying a task.
+ *
  */
-export const startTimeTracking = <ThrowOnError extends boolean = false>(options?: Options<StartTimeTrackingData, ThrowOnError>) => (options?.client ?? client).post<StartTimeTrackingResponses, unknown, ThrowOnError>({
+export const startTimeTracking = <ThrowOnError extends boolean = false>(options?: Options<StartTimeTrackingData, ThrowOnError>) => (options?.client ?? client).post<StartTimeTrackingResponses, StartTimeTrackingErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/timetracking/start',
     ...options,
@@ -666,8 +683,11 @@ export const startTimeTracking = <ThrowOnError extends boolean = false>(options?
 
 /**
  * Stop time tracking
+ *
+ * Stops the currently running time tracking session for the authenticated user. The session is converted into a work report with calculated minutes. No request body is needed — the endpoint always stops the current user's active session.
+ *
  */
-export const stopTimeTracking = <ThrowOnError extends boolean = false>(options?: Options<StopTimeTrackingData, ThrowOnError>) => (options?.client ?? client).post<StopTimeTrackingResponses, unknown, ThrowOnError>({
+export const stopTimeTracking = <ThrowOnError extends boolean = false>(options?: Options<StopTimeTrackingData, ThrowOnError>) => (options?.client ?? client).post<StopTimeTrackingResponses, StopTimeTrackingErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/timetracking/stop',
     ...options
@@ -675,8 +695,11 @@ export const stopTimeTracking = <ThrowOnError extends boolean = false>(options?:
 
 /**
  * Edit time tracking
+ *
+ * Edits the currently running time tracking session for the authenticated user. Allows changing the assigned task or note on an active session. No session ID is needed — there can only be one active session per user.
+ *
  */
-export const editTimeTracking = <ThrowOnError extends boolean = false>(options?: Options<EditTimeTrackingData, ThrowOnError>) => (options?.client ?? client).post<EditTimeTrackingResponses, unknown, ThrowOnError>({
+export const editTimeTracking = <ThrowOnError extends boolean = false>(options?: Options<EditTimeTrackingData, ThrowOnError>) => (options?.client ?? client).post<EditTimeTrackingResponses, EditTimeTrackingErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/timetracking/edit',
     ...options,
@@ -684,6 +707,18 @@ export const editTimeTracking = <ThrowOnError extends boolean = false>(options?:
         'Content-Type': 'application/json',
         ...options?.headers
     }
+});
+
+/**
+ * Get time tracking status
+ *
+ * Returns the currently running time tracking session for the authenticated user. If no session is active, returns 204 No Content.
+ *
+ */
+export const getTimeTrackingStatus = <ThrowOnError extends boolean = false>(options?: Options<GetTimeTrackingStatusData, ThrowOnError>) => (options?.client ?? client).get<GetTimeTrackingStatusResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/timetracking/status',
+    ...options
 });
 
 /**
@@ -754,6 +789,15 @@ export const getIssuedInvoiceDetail = <ThrowOnError extends boolean = false>(opt
 export const downloadIssuedInvoiceReports = <ThrowOnError extends boolean = false>(options: Options<DownloadIssuedInvoiceReportsData, ThrowOnError>) => (options.client ?? client).get<DownloadIssuedInvoiceReportsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/issued-invoice/{invoice_id}/reports',
+    ...options
+});
+
+/**
+ * Get issued invoice reports as JSON
+ */
+export const getIssuedInvoiceReportsJson = <ThrowOnError extends boolean = false>(options: Options<GetIssuedInvoiceReportsJsonData, ThrowOnError>) => (options.client ?? client).get<GetIssuedInvoiceReportsJsonResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/issued-invoice/{invoice_id}/reports-json',
     ...options
 });
 

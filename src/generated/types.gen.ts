@@ -8,6 +8,10 @@ export type SuccessResponse = {
     result?: string;
 };
 
+export type ErrorResponse = {
+    errors?: Array<string>;
+};
+
 export type PaginatedResponse = {
     total?: number;
     count?: number;
@@ -21,6 +25,19 @@ export type Currency = {
      */
     amount?: string;
     currency?: 'CZK' | 'EUR' | 'USD';
+};
+
+export type TaskBasic = {
+    id?: number;
+    name?: string;
+};
+
+export type TaskWork = {
+    id?: number;
+    reported?: string;
+    minutes?: number;
+    cost?: Currency;
+    notice?: string | null;
 };
 
 export type State = {
@@ -255,6 +272,7 @@ export type TaskDetail = {
     custom_fields?: Array<CustomFieldWithValue>;
     total_time_estimate?: TimeEstimate;
     users_time_estimates?: Array<UserTimeEstimate>;
+    tracking_users?: Array<UserBasic>;
 };
 
 export type SubtaskCreate = {
@@ -367,6 +385,12 @@ export type WorkReport = {
     } | null;
 };
 
+export type WorkReportExtended = WorkReport & {
+    project?: ProjectBasic;
+    tasklist?: TasklistBasic;
+    work_report_id?: number | null;
+};
+
 export type WorkReportFull = WorkReport & {
     date_edited_at?: string;
     task?: {
@@ -378,13 +402,13 @@ export type WorkReportFull = WorkReport & {
         labels?: Array<TaskLabel>;
         total_time_estimate?: TimeEstimate;
         users_time_estimates?: Array<UserTimeEstimate>;
-    };
-    tasklist?: TasklistBasic;
+    } | null;
+    tasklist?: TasklistBasic | null;
     project?: {
         id?: number;
         name?: string;
         labels?: Array<string>;
-    };
+    } | null;
 };
 
 export type IssuedInvoice = {
@@ -414,6 +438,7 @@ export type IssuedInvoiceDetail = IssuedInvoice & {
         price?: Currency;
         reports?: Array<{
             id?: number;
+            work_report_id?: number | null;
             project_name?: string;
             tasklist_name?: string;
             name?: string;
@@ -596,6 +621,43 @@ export type ProjectIdParam = number;
 export type TasklistIdParam = number;
 
 export type TaskIdParam = number;
+
+export type GetUsersMeData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/users/me';
+};
+
+export type GetUsersMeErrors = {
+    /**
+     * Invalid or missing credentials
+     */
+    401: {
+        errors?: Array<{
+            message?: string;
+        }>;
+    };
+};
+
+export type GetUsersMeError = GetUsersMeErrors[keyof GetUsersMeErrors];
+
+export type GetUsersMeResponses = {
+    /**
+     * Authentication is valid
+     */
+    200: {
+        result: string;
+        user: {
+            /**
+             * ID of the authenticated user
+             */
+            id: number;
+        };
+    };
+};
+
+export type GetUsersMeResponse = GetUsersMeResponses[keyof GetUsersMeResponses];
 
 export type GetProjectsData = {
     body?: never;
@@ -1317,29 +1379,53 @@ export type GetAllTasksData = {
          * ID of the tasks state
          */
         state_id?: number;
+        /**
+         * Filter tasks by project IDs. If empty, tasks from all accessible projects are returned.
+         */
         'projects_ids[]'?: Array<number>;
+        /**
+         * Filter tasks by tasklist IDs
+         */
         'tasklists_ids[]'?: Array<number>;
         order_by?: 'priority' | 'name' | 'date_add' | 'date_edited_at';
         order?: 'asc' | 'desc';
         /**
-         * Filter by label name (case insensitive)
+         * Filter tasks that have at least one of the specified labels (case insensitive). Can be combined with with_label.
+         */
+        'with_labels[]'?: Array<string>;
+        /**
+         * Filter tasks by a single label name (case insensitive). If with_labels[] is also provided, this value is merged into that array.
+         *
+         * @deprecated
          */
         with_label?: string;
         /**
-         * Exclude by label name (case insensitive)
+         * Exclude tasks that have the specified label (case insensitive)
          */
         without_label?: string;
         /**
          * Only tasks with no due date
          */
         no_due_date?: boolean;
+        /**
+         * Filter tasks with due date on or after this date
+         */
         'due_date_range[date_from]'?: string;
+        /**
+         * Filter tasks with due date on or before this date
+         */
         'due_date_range[date_to]'?: string;
         /**
          * Only tasks finished after due date
          */
         finished_overdue?: boolean;
+        /**
+         * Filter tasks finished on or after this date
+         */
         'finished_date_range[date_from]'?: string;
+        /**
+         * Filter tasks finished on or before this date
+         */
         'finished_date_range[date_to]'?: string;
         /**
          * Filter by worker ID
@@ -1440,6 +1526,18 @@ export type EditTaskData = {
          * Allowed options are l, m, h. Set to null to remove priority.
          */
         priority_enum?: 'l' | 'm' | 'h';
+        /**
+         * Set (replace) all tracking users. Pass an empty array to remove all.
+         */
+        tracking_users_ids?: Array<number> | null;
+        /**
+         * Add tracking users by user ID (merged with existing).
+         */
+        add_tracking_users_ids?: Array<number>;
+        /**
+         * Remove tracking users by user ID.
+         */
+        remove_tracking_users_ids?: Array<number>;
     };
     path: {
         task_id: number;
@@ -1928,19 +2026,37 @@ export type GetAllCommentsResponse = GetAllCommentsResponses[keyof GetAllComment
 
 export type StartTimeTrackingData = {
     body?: {
-        task_id?: number;
-        note?: string;
+        /**
+         * ID of the task to track time for. Optional — if not provided, time tracking starts without a task assignment.
+         */
+        task_id?: number | null;
+        /**
+         * Optional note for the time tracking session.
+         */
+        note?: string | null;
     };
     path?: never;
     query?: never;
     url: '/timetracking/start';
 };
 
+export type StartTimeTrackingErrors = {
+    /**
+     * Time tracking is already running for this user
+     */
+    409: ErrorResponse;
+};
+
+export type StartTimeTrackingError = StartTimeTrackingErrors[keyof StartTimeTrackingErrors];
+
 export type StartTimeTrackingResponses = {
     /**
-     * Time tracking started
+     * Time tracking started successfully
      */
     200: {
+        /**
+         * UUID of the created time tracking session
+         */
         uuid?: string;
     };
 };
@@ -1954,9 +2070,18 @@ export type StopTimeTrackingData = {
     url: '/timetracking/stop';
 };
 
+export type StopTimeTrackingErrors = {
+    /**
+     * No time tracking is currently running for this user
+     */
+    409: ErrorResponse;
+};
+
+export type StopTimeTrackingError = StopTimeTrackingErrors[keyof StopTimeTrackingErrors];
+
 export type StopTimeTrackingResponses = {
     /**
-     * Time tracking stopped
+     * Time tracking stopped and work report created
      */
     200: WorkReport;
 };
@@ -1965,24 +2090,107 @@ export type StopTimeTrackingResponse = StopTimeTrackingResponses[keyof StopTimeT
 
 export type EditTimeTrackingData = {
     body?: {
-        task_id?: number;
-        note?: string;
+        /**
+         * ID of the task to reassign the session to. Can be used to switch tasks on an active session.
+         */
+        task_id?: number | null;
+        /**
+         * Updated note for the time tracking session.
+         */
+        note?: string | null;
     };
     path?: never;
     query?: never;
     url: '/timetracking/edit';
 };
 
+export type EditTimeTrackingErrors = {
+    /**
+     * No time tracking is currently running for this user
+     */
+    409: ErrorResponse;
+};
+
+export type EditTimeTrackingError = EditTimeTrackingErrors[keyof EditTimeTrackingErrors];
+
 export type EditTimeTrackingResponses = {
     /**
-     * Time tracking updated
+     * Time tracking session updated
      */
     200: {
+        /**
+         * UUID of the updated time tracking session
+         */
         uuid?: string;
     };
 };
 
 export type EditTimeTrackingResponse = EditTimeTrackingResponses[keyof EditTimeTrackingResponses];
+
+export type GetTimeTrackingStatusData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/timetracking/status';
+};
+
+export type GetTimeTrackingStatusResponses = {
+    /**
+     * Active time tracking session details.
+     */
+    200: {
+        /**
+         * UUID of the active time tracking session
+         */
+        uuid?: string;
+        /**
+         * Timestamp when the session was started (ISO 8601 / ATOM format)
+         */
+        date_reported?: string;
+        /**
+         * Associated task, or null if tracking without a task
+         */
+        task?: {
+            id?: number;
+            name?: string;
+            project?: {
+                id?: number;
+                name?: string;
+            } | null;
+            tasklist?: {
+                id?: number;
+                name?: string;
+            } | null;
+        } | null;
+        /**
+         * Note associated with the session
+         */
+        note?: string | null;
+        /**
+         * Cost information
+         */
+        cost?: {
+            [key: string]: unknown;
+        };
+        is_cost_fixed?: boolean;
+        labels?: Array<{
+            name?: string;
+        }>;
+        is_billable?: boolean;
+        /**
+         * Project setting for the associated task's project
+         */
+        project_setting?: {
+            [key: string]: unknown;
+        } | null;
+    };
+    /**
+     * No time tracking session is currently running.
+     */
+    204: void;
+};
+
+export type GetTimeTrackingStatusResponse = GetTimeTrackingStatusResponses[keyof GetTimeTrackingStatusResponses];
 
 export type GetWorkReportsData = {
     body?: never;
@@ -2000,6 +2208,10 @@ export type GetWorkReportsData = {
         'date_add_range[date_from]'?: string;
         'date_add_range[date_to]'?: string;
         date_edited_from?: string;
+        /**
+         * Include the authenticated user's work reports without an associated task. Automatically filters by the authenticated user.
+         */
+        with_own_taskless?: boolean;
         /**
          * Page number (starting from 0)
          */
@@ -2153,6 +2365,24 @@ export type DownloadIssuedInvoiceReportsResponses = {
 };
 
 export type DownloadIssuedInvoiceReportsResponse = DownloadIssuedInvoiceReportsResponses[keyof DownloadIssuedInvoiceReportsResponses];
+
+export type GetIssuedInvoiceReportsJsonData = {
+    body?: never;
+    path: {
+        invoice_id: number;
+    };
+    query?: never;
+    url: '/issued-invoice/{invoice_id}/reports-json';
+};
+
+export type GetIssuedInvoiceReportsJsonResponses = {
+    /**
+     * JSON array of work report rows
+     */
+    200: Array<WorkReportExtended>;
+};
+
+export type GetIssuedInvoiceReportsJsonResponse = GetIssuedInvoiceReportsJsonResponses[keyof GetIssuedInvoiceReportsJsonResponses];
 
 export type MarkAsInvoicedData = {
     body: {
