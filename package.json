@@ -6,12 +6,12 @@
   "author": "Freelo Bay s.r.o.",
   "repository": {
     "type": "git",
-    "url": "git+https://gitlab.com/freeloapp/freelo-js-sdk.git"
+    "url": "git+https://github.com/freeloapp/js-sdk.git"
   },
   "bugs": {
-    "url": "https://gitlab.com/freeloapp/freelo-js-sdk/-/issues"
+    "url": "https://github.com/freeloapp/js-sdk/issues"
   },
-  "homepage": "https://gitlab.com/freeloapp/freelo-js-sdk#readme",
+  "homepage": "https://github.com/freeloapp/js-sdk#readme",
   "keywords": [
     "freelo",
     "api",
