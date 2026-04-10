@@ -166,10 +166,35 @@ export type TaskLabel = {
     color?: string;
 };
 
-export type TaskLabelInput = {
-    name?: string;
+/**
+ * Two input modes: (1) UUID only — reference an existing label by UUID, assigned as-is. (2) Name-based — name is required; color defaults to #77787a if omitted; uuid is auto-generated if omitted. Matching is by name+color — if an existing label matches both, it is reused; otherwise a new label is created.
+ *
+ */
+export type TaskLabelAddInput = {
+    uuid: string;
+} | {
+    name: string;
+    /**
+     * Label color hex code. Defaults to #77787a (gray) if not provided.
+     */
     color?: string;
+    /**
+     * Optional UUID for the label. Auto-generated if omitted.
+     */
     uuid?: string;
+};
+
+/**
+ * Three input modes: (1) UUID — removes the label identified by UUID. (2) Name only — removes all labels with that name regardless of color. (3) Name + color — removes the label matching both name and color.
+ *
+ */
+export type TaskLabelRemoveInput = {
+    uuid: string;
+} | {
+    name: string;
+} | {
+    name: string;
+    color: string;
 };
 
 export type TimeEstimate = {
@@ -223,10 +248,7 @@ export type TaskCreate = {
     comment?: {
         content?: string;
     };
-    labels?: Array<{
-        name?: string;
-        color?: string;
-    }>;
+    labels?: Array<TaskLabelAddInput>;
     tracking_users_ids?: Array<number>;
     turn_off_authors_tracking?: boolean;
     subtasks?: Array<SubtaskCreate>;
@@ -284,7 +306,7 @@ export type SubtaskCreate = {
     comment?: {
         content?: string;
     };
-    labels?: Array<TaskLabelInput>;
+    labels?: Array<TaskLabelAddInput>;
     tracking_users_ids?: Array<number>;
 };
 
@@ -1912,7 +1934,7 @@ export type CreateTaskLabelsResponses = {
 
 export type AddTaskLabelsToTaskData = {
     body: {
-        labels: Array<TaskLabelInput>;
+        labels: Array<TaskLabelAddInput>;
     };
     path: {
         task_id: number;
@@ -1932,7 +1954,7 @@ export type AddTaskLabelsToTaskResponse = AddTaskLabelsToTaskResponses[keyof Add
 
 export type RemoveTaskLabelsFromTaskData = {
     body: {
-        labels: Array<TaskLabelInput>;
+        labels: Array<TaskLabelRemoveInput>;
     };
     path: {
         task_id: number;

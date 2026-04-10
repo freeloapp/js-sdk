@@ -602,6 +602,9 @@ export const createTaskLabels = <ThrowOnError extends boolean = false>(options: 
 
 /**
  * Add task labels to task
+ *
+ * Supports two input modes per label: (1) UUID only — assigns an existing label by UUID as-is. (2) Name-based — provide name (required), optionally color and uuid. If color is omitted it defaults to #77787a (gray). If uuid is omitted it is auto-generated. An existing label is reused when both name AND color match; otherwise a new label is created.
+ *
  */
 export const addTaskLabelsToTask = <ThrowOnError extends boolean = false>(options: Options<AddTaskLabelsToTaskData, ThrowOnError>) => (options.client ?? client).post<AddTaskLabelsToTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -615,6 +618,9 @@ export const addTaskLabelsToTask = <ThrowOnError extends boolean = false>(option
 
 /**
  * Remove task labels from task
+ *
+ * Supports three input modes per label: (1) UUID — removes the label identified by UUID. (2) Name only — removes all labels with that name regardless of color. (3) Name + color — removes the label matching both name and color.
+ *
  */
 export const removeTaskLabelsFromTask = <ThrowOnError extends boolean = false>(options: Options<RemoveTaskLabelsFromTaskData, ThrowOnError>) => (options.client ?? client).post<RemoveTaskLabelsFromTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
