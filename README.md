@@ -49,9 +49,107 @@ const { data: task } = await createTask({
 
 ## Authentication
 
+The SDK supports three authentication methods:
+
+### Basic Auth
+
 Get your API key from [Freelo Settings](https://app.freelo.io/profil/nastaveni).
 
-The SDK uses HTTP Basic Auth with your email as the username and API key as the password.
+```typescript
+createFreelo({
+  auth: { type: 'basic', email: 'your@email.tld', apiKey: 'your-api-key' },
+  userAgent: 'YourApp/1.0',
+});
+```
+
+### Bearer Token
+
+Use a pre-obtained JWT or PASETO token:
+
+```typescript
+createFreelo({
+  auth: { type: 'bearer', token: 'your-jwt-token' },
+  userAgent: 'YourApp/1.0',
+});
+```
+
+### OAuth 2.1 (PKCE)
+
+For applications that authenticate users via Freelo's identity provider (`identity.freelo.io`). The SDK handles automatic token refresh — you handle the initial authorization flow.
+
+**Step 1: Start the OAuth flow**
+
+```typescript
+import {
+  generatePKCEChallenge,
+  buildAuthorizationUrl,
+} from '@freeloapp/js-sdk';
+
+// Generate PKCE challenge (store verifier for step 2)
+const pkce = await generatePKCEChallenge();
+sessionStorage.setItem('pkce_verifier', pkce.codeVerifier);
+
+// Build authorization URL and redirect the user
+const authUrl = buildAuthorizationUrl({
+  clientId: 'your-client-id',
+  redirectUri: 'https://yourapp.com/callback',
+  codeChallenge: pkce.codeChallenge,
+  scope: ['read', 'write', 'projects', 'tasks'],
+  state: crypto.randomUUID(),
+});
+window.location.href = authUrl;
+```
+
+**Step 2: Exchange the authorization code for tokens**
+
+```typescript
+import { exchangeCode } from '@freeloapp/js-sdk';
+
+// In your callback handler (e.g. /callback)
+const params = new URLSearchParams(window.location.search);
+const tokens = await exchangeCode({
+  code: params.get('code')!,
+  codeVerifier: sessionStorage.getItem('pkce_verifier')!,
+  clientId: 'your-client-id',
+  redirectUri: 'https://yourapp.com/callback',
+});
+```
+
+**Step 3: Create the SDK client**
+
+```typescript
+import { createFreelo, getProjects } from '@freeloapp/js-sdk';
+
+createFreelo({
+  auth: {
+    type: 'oauth',
+    accessToken: tokens.accessToken,
+    refreshToken: tokens.refreshToken,
+    clientId: 'your-client-id',
+    expiresAt: tokens.expiresAt,
+    onTokenRefreshed: (newTokens) => {
+      // Persist new tokens (localStorage, database, etc.)
+      localStorage.setItem('freelo_tokens', JSON.stringify(newTokens));
+    },
+  },
+  userAgent: 'YourApp/1.0',
+});
+
+// Use the SDK normally — token refresh happens automatically
+const { data: projects } = await getProjects();
+```
+
+The SDK refreshes tokens proactively (30s before expiry) and reactively (on 401 responses). Concurrent requests share a single refresh call.
+
+**Additional OAuth utilities:**
+
+```typescript
+import {
+  refreshAccessToken,    // Manually refresh a token
+  revokeToken,           // Revoke an access or refresh token
+  discoverOAuthServer,   // Fetch OAuth server metadata (RFC 8414)
+} from '@freeloapp/js-sdk';
+```
 
 ## Configuration
 
@@ -77,32 +175,29 @@ Create multiple client instances for different users:
 ```typescript
 import { createFreelo, getProjects } from '@freeloapp/js-sdk';
 
-// Default client
-const defaultClient = createFreelo({
+// Basic Auth client
+const basicClient = createFreelo({
   auth: { type: 'basic', email: 'admin@company.com', apiKey: 'admin-key' },
   userAgent: 'MyApp/1.0',
 });
 
-// Per-user client
-const userClient = createFreelo({
-  auth: { type: 'basic', email: user.email, apiKey: user.apiKey },
-  userAgent: 'MyApp/1.0',
-});
-
-// Bearer token auth (JWT, PASETO, etc.)
+// Bearer token client
 const tokenClient = createFreelo({
   auth: { type: 'bearer', token: 'your-jwt-token' },
   userAgent: 'MyApp/1.0',
 });
 
-// Use default client
-const { data: adminProjects } = await getProjects();
+// OAuth client
+const oauthClient = createFreelo({
+  auth: { type: 'oauth', accessToken: '...', refreshToken: '...', clientId: '...' },
+  userAgent: 'MyApp/1.0',
+});
 
-// Use per-user client
-const { data: userProjects } = await getProjects({ client: userClient });
+// Use default client (last one created)
+const { data: projects } = await getProjects();
 
-// Use token-based client
-const { data: tokenProjects } = await getProjects({ client: tokenClient });
+// Or pass client explicitly
+const { data: adminProjects } = await getProjects({ client: basicClient });
 ```
 
 ## API Reference

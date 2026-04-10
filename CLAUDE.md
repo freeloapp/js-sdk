@@ -11,6 +11,7 @@ This is the official JavaScript/TypeScript SDK for [Freelo.io](https://app.freel
 - **Source Code**: `src/` - SDK source files
   - `src/generated/` - Auto-generated code (do not edit manually)
   - `src/freelo.ts` - `createFreelo()` configuration function
+  - `src/oauth.ts` - OAuth 2.1 PKCE auth: types, PKCE helpers, token exchange/refresh/revoke, discovery, auto-refresh logic
   - `src/errors.ts` - Error utility functions
   - `src/utils/` - Pagination, currency, date helpers
 - **Tests**: `test/` - Test files
@@ -19,7 +20,7 @@ This is the official JavaScript/TypeScript SDK for [Freelo.io](https://app.freel
 ## API Information
 
 - **Base URL**: `https://api.freelo.io/v1`
-- **Authentication**: Basic Auth (email + API key) or Bearer token (JWT/PASETO)
+- **Authentication**: Basic Auth (email + API key), Bearer token (JWT/PASETO), or OAuth 2.1 (PKCE + auto-refresh via `identity.freelo.io`)
 - **Rate Limiting**: 25 requests per minute (429 status when exceeded, wait 60s)
 - **Response Format**: JSON (UTF-8)
 - **API Documentation**: https://freelo.docs.apiary.io/

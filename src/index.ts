@@ -48,6 +48,32 @@ export type * from './generated/types.gen.js';
 export { isFreeloError, isRateLimited, isUnauthorized, isNotFound } from './errors.js';
 export type { FreeloErrorResponse } from './errors.js';
 
+// OAuth utilities — tree-shakeable
+export {
+  generateCodeVerifier,
+  generateCodeChallenge,
+  generatePKCEChallenge,
+  buildAuthorizationUrl,
+  exchangeCode,
+  refreshAccessToken,
+  revokeToken,
+  discoverOAuthServer,
+  OAuthTokenError,
+  DEFAULT_OAUTH_ISSUER,
+} from './oauth.js';
+
+export type {
+  OAuthAuth,
+  OAuthTokens,
+  PKCEChallenge,
+  AuthorizationUrlParams,
+  TokenExchangeParams,
+  TokenResponse,
+  RefreshTokenParams,
+  RevokeTokenParams,
+  OAuthServerMetadata,
+} from './oauth.js';
+
 // Utility functions — tree-shakeable
 export {
   currencyToApi,

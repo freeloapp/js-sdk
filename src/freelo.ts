@@ -2,6 +2,8 @@ import { createClient } from './generated/client';
 import type { Client } from './generated/client';
 import { client as defaultClient } from './generated/client.gen';
 import type { HttpMethod } from './generated/core/types.gen';
+import type { OAuthAuth } from './oauth.js';
+import { maybeRefreshToken, tryRefreshToken } from './oauth.js';
 
 /** Basic Auth using email + API key. */
 export interface BasicAuth {
@@ -17,7 +19,7 @@ export interface BearerAuth {
 }
 
 /** Supported authentication methods. */
-export type FreeloAuth = BasicAuth | BearerAuth;
+export type FreeloAuth = BasicAuth | BearerAuth | OAuthAuth;
 
 export interface FreeloConfig {
   /** Authentication credentials. */
@@ -39,6 +41,8 @@ function resolveAuthHeader(auth: FreeloAuth): string {
       return `Basic ${btoa(`${auth.email}:${auth.apiKey}`)}`;
     case 'bearer':
       return `Bearer ${auth.token}`;
+    case 'oauth':
+      return `Bearer ${auth.accessToken}`;
   }
 }
 
@@ -46,12 +50,22 @@ function resolveAuthHeader(auth: FreeloAuth): string {
  * Apply shared interceptors (auth, user-agent, logging, rate-limit) to a client.
  */
 function applyInterceptors(target: Client, config: FreeloConfig): void {
-  // Auth + User-Agent
-  target.interceptors.request.use((request) => {
-    request.headers.set('Authorization', resolveAuthHeader(config.auth));
-    request.headers.set('User-Agent', config.userAgent);
-    return request;
-  });
+  // Auth + User-Agent (with proactive OAuth refresh)
+  if (config.auth.type === 'oauth') {
+    const oauthAuth = config.auth;
+    target.interceptors.request.use(async (request) => {
+      await maybeRefreshToken(oauthAuth);
+      request.headers.set('Authorization', resolveAuthHeader(config.auth));
+      request.headers.set('User-Agent', config.userAgent);
+      return request;
+    });
+  } else {
+    target.interceptors.request.use((request) => {
+      request.headers.set('Authorization', resolveAuthHeader(config.auth));
+      request.headers.set('User-Agent', config.userAgent);
+      return request;
+    });
+  }
 
   // Logging
   if (config.logging) {
@@ -74,6 +88,29 @@ function applyInterceptors(target: Client, config: FreeloConfig): void {
     }
     return response;
   });
+
+  // OAuth reactive refresh: retry once on 401
+  if (config.auth.type === 'oauth') {
+    const oauthAuth = config.auth;
+    target.interceptors.response.use(async (response, request, options) => {
+      if (response.status !== 401) return response;
+
+      const refreshed = await tryRefreshToken(oauthAuth);
+      if (!refreshed) return response;
+
+      // Retry the original request with the new token
+      const headers = new Headers(request.headers);
+      headers.set('Authorization', `Bearer ${oauthAuth.accessToken}`);
+      const retryRequest = new Request(request.url, {
+        method: request.method,
+        headers,
+        body: options.body !== undefined ? JSON.stringify(options.body) : undefined,
+        redirect: 'follow',
+      });
+      const _fetch = options.fetch ?? globalThis.fetch;
+      return _fetch(retryRequest);
+    });
+  }
 }
 
 /**
