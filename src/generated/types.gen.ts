@@ -32,6 +32,12 @@ export type TaskBasic = {
     name?: string;
 };
 
+export type TaskRelation = {
+    type?: 'blocked_by' | 'blocks' | 'related_to' | 'duplicate_of';
+    related_task_id?: number;
+    related_task_name?: string;
+};
+
 export type TaskWork = {
     id?: number;
     reported?: string;
@@ -148,6 +154,7 @@ export type TasklistFull = TasklistBasic & {
 };
 
 export type TasklistDetail = TasklistBasic & {
+    project_id?: number;
     date_add?: string;
     date_edited_at?: string;
     tasks?: Array<{
@@ -709,9 +716,14 @@ export type GetProjectsResponse = GetProjectsResponses[keyof GetProjectsResponse
 export type CreateProjectData = {
     body: {
         name: string;
+        /**
+         * Currency used for budgets and invoicing in this project. Cannot be changed afterwards.
+         */
         currency_iso: 'CZK' | 'EUR' | 'USD';
         /**
-         * ID of user assigned as owner
+         * ID of user assigned as owner. Must be an owner-eligible user in the caller's account.
+         * If omitted, the authenticated caller becomes the owner.
+         *
          */
         project_owner_id?: number;
     };
@@ -1120,12 +1132,25 @@ export type EditProjectLabelResponses = {
 export type EditProjectLabelResponse = EditProjectLabelResponses[keyof EditProjectLabelResponses];
 
 export type AddProjectLabelToProjectData = {
+    /**
+     * Provide **either** `id` (to reference an existing label) **or** `name` + `is_private` (to fetch-or-create). See endpoint description — `id` takes precedence and other fields are ignored when present.
+     *
+     */
     body: {
+        /**
+         * Label name. Used only when `id` is omitted.
+         */
         name?: string;
+        /**
+         * Hex color or named color from the server enum. Used only when `id` is omitted.
+         */
         color?: string;
+        /**
+         * Whether the label is private to its owner. Used only when `id` is omitted. Required in data mode.
+         */
         is_private?: boolean;
         /**
-         * ID of existing label
+         * ID of an existing label. When present, `name`/`color`/`is_private` are ignored.
          */
         id?: number;
     };
@@ -1146,10 +1171,17 @@ export type AddProjectLabelToProjectResponses = {
 export type AddProjectLabelToProjectResponse = AddProjectLabelToProjectResponses[keyof AddProjectLabelToProjectResponses];
 
 export type RemoveProjectLabelFromProjectData = {
+    /**
+     * Same mutually-exclusive ID-or-data selection rule as `/add-to-project`: when `id` is present, name/color/is_private are ignored.
+     *
+     */
     body: {
         name?: string;
         color?: string;
         is_private?: boolean;
+        /**
+         * ID of the label to detach. When present, `name`/`color`/`is_private` are ignored.
+         */
         id?: number;
     };
     path: {
@@ -1188,7 +1220,13 @@ export type GetPinnedItemsResponse = GetPinnedItemsResponses[keyof GetPinnedItem
 
 export type PinItemToProjectData = {
     body: {
+        /**
+         * Full URL to pin. If the URL matches an internal Freelo resource, the endpoint is idempotent (see description).
+         */
         link: string;
+        /**
+         * Optional display label. If omitted, a default is derived from the target.
+         */
         title?: string;
     };
     path: {
@@ -1502,6 +1540,39 @@ export type GetFinishedTasksResponses = {
 
 export type GetFinishedTasksResponse = GetFinishedTasksResponses[keyof GetFinishedTasksResponses];
 
+export type FindTaskRelationsBulkData = {
+    body: {
+        /**
+         * List of task IDs (1–100 items).
+         */
+        task_ids: Array<number>;
+    };
+    path?: never;
+    query?: never;
+    url: '/tasks/relations';
+};
+
+export type FindTaskRelationsBulkErrors = {
+    /**
+     * Invalid request body
+     */
+    400: unknown;
+};
+
+export type FindTaskRelationsBulkResponses = {
+    /**
+     * Relations grouped by task ID
+     */
+    200: {
+        tasks?: Array<{
+            task_id?: number;
+            relations?: Array<TaskRelation>;
+        }>;
+    };
+};
+
+export type FindTaskRelationsBulkResponse = FindTaskRelationsBulkResponses[keyof FindTaskRelationsBulkResponses];
+
 export type DeleteTaskData = {
     body?: never;
     path: {
@@ -1617,6 +1688,15 @@ export type MoveTaskData = {
     body?: {
         work_reports_action?: 'move_to_target_project' | 'keep_on_origin_project';
         custom_fields_action?: 'nothing' | 'delete_what_cant_be_keep' | 'move_to_comments_what_cant_be_keep' | 'delete_all' | 'move_to_comments_all';
+        /**
+         * Optional multi-project task context for moving a specific project instance
+         */
+        multi_project_task?: {
+            /**
+             * ID of the source tasklist identifying which project instance to move
+             */
+            source_tasklist_id?: number;
+        };
     };
     path: {
         task_id: number;
@@ -1634,6 +1714,106 @@ export type MoveTaskResponses = {
 };
 
 export type MoveTaskResponse = MoveTaskResponses[keyof MoveTaskResponses];
+
+export type AssignTaskToProjectData = {
+    body: {
+        /**
+         * Target tasklist ID (the project is derived from it)
+         */
+        tasklist_id: number;
+    };
+    path: {
+        task_id: number;
+    };
+    query?: never;
+    url: '/task/{task_id}/projects';
+};
+
+export type AssignTaskToProjectErrors = {
+    /**
+     * Forbidden
+     */
+    403: unknown;
+    /**
+     * Task or tasklist not found
+     */
+    404: unknown;
+};
+
+export type AssignTaskToProjectResponses = {
+    /**
+     * Task assigned to project
+     */
+    200: {
+        task?: {
+            id?: number;
+            uuid?: string;
+        };
+    };
+};
+
+export type AssignTaskToProjectResponse = AssignTaskToProjectResponses[keyof AssignTaskToProjectResponses];
+
+export type GetTaskRelationsData = {
+    body?: never;
+    path: {
+        task_id: number;
+    };
+    query?: never;
+    url: '/task/{task_id}/relations';
+};
+
+export type GetTaskRelationsErrors = {
+    /**
+     * Forbidden
+     */
+    403: unknown;
+    /**
+     * Task not found
+     */
+    404: unknown;
+};
+
+export type GetTaskRelationsResponses = {
+    /**
+     * Task relations
+     */
+    200: {
+        relations?: Array<TaskRelation>;
+    };
+};
+
+export type GetTaskRelationsResponse = GetTaskRelationsResponses[keyof GetTaskRelationsResponses];
+
+export type RemoveTaskFromProjectData = {
+    body?: never;
+    path: {
+        task_id: number;
+        project_id: number;
+    };
+    query?: never;
+    url: '/task/{task_id}/projects/{project_id}';
+};
+
+export type RemoveTaskFromProjectErrors = {
+    /**
+     * Forbidden
+     */
+    403: unknown;
+    /**
+     * Task or project not found
+     */
+    404: unknown;
+};
+
+export type RemoveTaskFromProjectResponses = {
+    /**
+     * Task removed from project
+     */
+    200: SuccessResponse;
+};
+
+export type RemoveTaskFromProjectResponse = RemoveTaskFromProjectResponses[keyof RemoveTaskFromProjectResponses];
 
 export type GetTaskDescriptionData = {
     body?: never;

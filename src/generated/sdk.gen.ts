@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskData, ActivateTaskResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskData, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTasklistData, GetTasklistResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UploadFileData, UploadFileResponses } from './types.gen';
+import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskData, ActivateTaskResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskData, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UploadFileData, UploadFileResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -33,9 +33,21 @@ export const getUsersMe = <ThrowOnError extends boolean = false>(options?: Optio
 });
 
 /**
- * Get all own active projects
+ * Get own active projects
  *
- * Collection of all own (active) projects including active tasklists
+ * Returns active projects **owned** by the authenticated user (not projects they were only invited to), each with its active tasklists eagerly loaded.
+ *
+ * **Use cases:**
+ * - Primary project picker in dashboards / onboarding — show projects the user owns and manages
+ * - Populating a "my projects" widget without paging (this endpoint is **not** paginated)
+ * - Bulk tooling that needs owner-scoped projects before branching into tasklists
+ *
+ * **Behavior notes:**
+ * - Scope is owner-only. Projects where the user is only a worker / guest are **not** returned — use `GET /all-projects` or `GET /invited-projects` for those.
+ * - Filters only projects in the **active** state (state_id=1). Archived / template projects are excluded — use `/archived-projects` or `/template-projects`.
+ * - Response is a flat array (not paginated). For large accounts consider `GET /all-projects` with paging.
+ * - Tasklists embedded in each project also include only active tasklists.
+ *
  */
 export const getProjects = <ThrowOnError extends boolean = false>(options?: Options<GetProjectsData, ThrowOnError>) => (options?.client ?? client).get<GetProjectsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -45,6 +57,19 @@ export const getProjects = <ThrowOnError extends boolean = false>(options?: Opti
 
 /**
  * Create project
+ *
+ * Creates a new active project. The authenticated user becomes the project **author** automatically. If `project_owner_id` is omitted, the author is also the owner; otherwise the referenced user must already exist.
+ *
+ * **Use cases:**
+ * - Provisioning a new project from an integration (e.g. after a deal closes in CRM)
+ * - Bulk-creating projects when onboarding a client
+ * - Delegating ownership: the API caller creates the project and immediately assigns a different owner via `project_owner_id`
+ *
+ * **Side effects:**
+ * - Business-account captains are auto-invited as commanders/workers (via `BusinessAccountCaptainProjectInviter`).
+ * - Emits `project_owner_assigner` and `project_commander_promote` events (webhooks, notifications).
+ * - If `project_owner_id` does not map to an owner-eligible user, the request fails with `400` (`project_owner_id X is not valid`) — the business rule is enforced by `IProjectCreator`.
+ *
  */
 export const createProject = <ThrowOnError extends boolean = false>(options: Options<CreateProjectData, ThrowOnError>) => (options.client ?? client).post<CreateProjectResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -57,9 +82,22 @@ export const createProject = <ThrowOnError extends boolean = false>(options: Opt
 });
 
 /**
- * Get all projects (owned and invited)
+ * Get all accessible projects (owned + invited)
  *
- * Paginated collection of all (owned and invited) projects
+ * Paginated collection of all projects the authenticated user can see — both owned and those they were invited to, filtered by state and tag.
+ *
+ * **Use cases:**
+ * - Primary project list for end-user UI where both owned and invited projects are shown
+ * - Backfills / syncing to external systems that need every project regardless of ownership
+ * - Narrow search by state (active / archived / template) combined with tag and owner filters
+ *
+ * **Behavior notes:**
+ * - Pagination is **required** for large accounts — use `p` parameter; page size is fixed server-side.
+ * - `states_ids[]` accepts any combination of `1=active`, `2=archived`, `3=template`. When omitted, the server applies a default (typically active only) — always pass it explicitly if you need archived/templates.
+ * - `tags[]` matches any of the specified tags; pass the literal string `"without"` to get projects **without** any tag (this is a magic value, not a real tag name).
+ * - `users_ids[]` filters by project **owner** only, not by workers.
+ * - Default ordering is `date_add asc`.
+ *
  */
 export const getAllProjects = <ThrowOnError extends boolean = false>(options?: Options<GetAllProjectsData, ThrowOnError>) => (options?.client ?? client).get<GetAllProjectsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -68,9 +106,19 @@ export const getAllProjects = <ThrowOnError extends boolean = false>(options?: O
 });
 
 /**
- * Get invited projects
+ * Get projects where I am a worker (not owner)
  *
- * Paginated collection of all invited projects
+ * Paginated list of active projects where the authenticated user is a worker — i.e. they were **invited** to the project, not its owner. Each project includes its active tasklists.
+ *
+ * **Use cases:**
+ * - "Projects shared with me" view, separating them from my own projects
+ * - Freelancer dashboards that show only client work
+ * - Cross-account collaboration views
+ *
+ * **Behavior notes:**
+ * - Returns only **active** projects. Archived invited projects do not appear here.
+ * - Ordering and filtering parameters are **not** accepted — only pagination.
+ *
  */
 export const getInvitedProjects = <ThrowOnError extends boolean = false>(options?: Options<GetInvitedProjectsData, ThrowOnError>) => (options?.client ?? client).get<GetInvitedProjectsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -81,7 +129,18 @@ export const getInvitedProjects = <ThrowOnError extends boolean = false>(options
 /**
  * Get archived projects
  *
- * Paginated collection of all archived projects
+ * Paginated list of projects the authenticated user can see that are in the **archived** state.
+ *
+ * **Use cases:**
+ * - Archive browser UI (read-only view of finished work)
+ * - Exporting historical project data for reporting / accounting
+ * - Restoring an archived project — find its ID here, then call `POST /project/{id}/activate`
+ *
+ * **Behavior notes:**
+ * - Includes both owned and invited archived projects.
+ * - Each project comes with its tasklists embedded (active and archived tasklists alike — the project's archived state does not restrict the embedded tasklists).
+ * - Only pagination parameters are accepted.
+ *
  */
 export const getArchivedProjects = <ThrowOnError extends boolean = false>(options?: Options<GetArchivedProjectsData, ThrowOnError>) => (options?.client ?? client).get<GetArchivedProjectsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -90,9 +149,20 @@ export const getArchivedProjects = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Get template projects
+ * Get project templates
  *
- * Paginated collection of all template projects
+ * Paginated list of **project templates** (projects in state 3 — template) the caller can use as a source for new projects via `POST /project/create-from-template/{template_id}`.
+ *
+ * **Use cases:**
+ * - Populating a "create from template" picker in a client UI
+ * - Syncing templates to an external project-provisioning tool
+ * - Reporting on which template tags are in use
+ *
+ * **Behavior notes:**
+ * - The returned templates can be picked for copying regardless of whether the caller owns them, as long as they have view access.
+ * - `users_ids[]` filters by template **owner**, not by invitees.
+ * - Default order: `date_add asc`.
+ *
  */
 export const getTemplateProjects = <ThrowOnError extends boolean = false>(options?: Options<GetTemplateProjectsData, ThrowOnError>) => (options?.client ?? client).get<GetTemplateProjectsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -101,9 +171,20 @@ export const getTemplateProjects = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Get user's projects
+ * Get projects of another user
  *
- * Paginated collection of user's projects
+ * Paginated list of projects where the given `user_id` is the **owner**, intersected with what the caller has permission to see.
+ *
+ * **Use cases:**
+ * - Viewing teammate's workload before reassigning tasks
+ * - HR / PM views showing all projects a specific person owns
+ * - Filtering projects by owner in cross-functional reporting
+ *
+ * **Behavior notes:**
+ * - The caller sees only projects they themselves have access to — if the target user owns projects the caller can't see, they are silently omitted.
+ * - `states_ids[]` combines states (1=active, 2=archived, 3=template). Omitting returns the server default.
+ * - Default order: `date_add desc` (newest first).
+ *
  */
 export const getUserProjects = <ThrowOnError extends boolean = false>(options: Options<GetUserProjectsData, ThrowOnError>) => (options.client ?? client).get<GetUserProjectsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -112,7 +193,19 @@ export const getUserProjects = <ThrowOnError extends boolean = false>(options: O
 });
 
 /**
- * Delete project
+ * Delete project (soft-delete)
+ *
+ * Marks the project as deleted. The project disappears from all listings, but is retained in the database.
+ *
+ * **Use cases:**
+ * - Removing a test / mistakenly-created project
+ * - Permanent cleanup when archiving is not enough (e.g. client contract terminated)
+ *
+ * **Behavior notes:**
+ * - This is a **soft-delete** — the project row stays, but `deletedAt` is set. `POST /project/{id}/activate` restores it (the activate endpoint un-archives and un-deletes).
+ * - Side effects: cascades to tasks/tasklists that inherit the deletion; running timetrackings may be stopped server-side; webhooks fire.
+ * - Requires the caller to have project delete permissions (usually owner / commander).
+ *
  */
 export const deleteProject = <ThrowOnError extends boolean = false>(options: Options<DeleteProjectData, ThrowOnError>) => (options.client ?? client).delete<DeleteProjectResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -121,7 +214,20 @@ export const deleteProject = <ThrowOnError extends boolean = false>(options: Opt
 });
 
 /**
- * Get project
+ * Get project detail
+ *
+ * Returns full detail of a single project — metadata, tasklists (filtered by caller's ACL), date-edited timestamp, the caller's hourly rate on the project, and current budget / spent totals.
+ *
+ * **Use cases:**
+ * - Opening the project detail page in a UI
+ * - Pulling budget vs. spent numbers for reporting
+ * - Retrieving the list of tasklists the caller can see before drilling into tasks
+ *
+ * **Behavior notes:**
+ * - Embedded tasklists respect the caller's ACL (tasklists the caller is not authorized for are filtered out).
+ * - Budget / spent numbers are computed on the fly for the **calling** user's view — different users may see different totals depending on their hourly rates and worker relationships.
+ * - Works for any project state (active, archived, template) as long as the caller has access.
+ *
  */
 export const getProject = <ThrowOnError extends boolean = false>(options: Options<GetProjectData, ThrowOnError>) => (options.client ?? client).get<GetProjectResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -132,7 +238,17 @@ export const getProject = <ThrowOnError extends boolean = false>(options: Option
 /**
  * Get project workers
  *
- * Paginated collection of all project workers
+ * Paginated list of all users (workers + owner + guests) assigned to the given project.
+ *
+ * **Use cases:**
+ * - Worker picker when assigning tasks / time estimates / work reports
+ * - Validating that an email is already a member before calling `POST /users/manage-workers`
+ * - Audit / export of project membership
+ *
+ * **Behavior notes:**
+ * - Returns basic user data only — it is **not** filtered by ACL-tasklist membership (a worker assigned only to some tasklists still appears in the full list).
+ * - Deleted (former) workers do not appear.
+ *
  */
 export const getProjectWorkers = <ThrowOnError extends boolean = false>(options: Options<GetProjectWorkersData, ThrowOnError>) => (options.client ?? client).get<GetProjectWorkersResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -142,6 +258,19 @@ export const getProjectWorkers = <ThrowOnError extends boolean = false>(options:
 
 /**
  * Archive project
+ *
+ * Moves an active project into the **archived** state (state_id=2). Archived projects are hidden from the default lists but are still readable and can be reactivated via `POST /project/{id}/activate`.
+ *
+ * **Use cases:**
+ * - Completing a client engagement and removing it from active views
+ * - Freezing a project at year-end without losing data
+ *
+ * **Behavior notes:**
+ * - No request body is expected.
+ * - Archiving is idempotent: calling it on an already archived project succeeds (200) without side effects.
+ * - Archiving **does not** stop running timetrackings automatically — check timetracking state separately if needed.
+ * - Requires project-admin level permission (owner / commander).
+ *
  */
 export const archiveProject = <ThrowOnError extends boolean = false>(options: Options<ArchiveProjectData, ThrowOnError>) => (options.client ?? client).post<ArchiveProjectResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -150,7 +279,19 @@ export const archiveProject = <ThrowOnError extends boolean = false>(options: Op
 });
 
 /**
- * Activate project
+ * Activate (unarchive / undelete) project
+ *
+ * Restores a project into the **active** state. Works as a single entry point for both "unarchive" and "undelete".
+ *
+ * **Use cases:**
+ * - Re-opening an archived project for follow-up work
+ * - Recovering a project that was soft-deleted by mistake
+ *
+ * **Behavior notes (non-obvious):**
+ * - The endpoint inspects the project's current state and performs the appropriate transition: if archived → unarchive; if deleted → undelete; otherwise no-op returning 200.
+ * - Can fail with `PlanExceededException` — restoring a project counts against the caller's plan limits and may be refused if the plan is already at its project cap.
+ * - Requires project-admin permission.
+ *
  */
 export const activateProject = <ThrowOnError extends boolean = false>(options: Options<ActivateProjectData, ThrowOnError>) => (options.client ?? client).post<ActivateProjectResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -159,7 +300,20 @@ export const activateProject = <ThrowOnError extends boolean = false>(options: O
 });
 
 /**
- * Remove project workers by IDs
+ * Remove workers from project by user IDs
+ *
+ * Removes one or more users (by their internal user IDs) from the project's worker list.
+ *
+ * **Use cases:**
+ * - Off-boarding teammates from a specific project
+ * - Cleaning up external collaborators after an engagement ends
+ * - Batch deprovisioning as part of automated HR flows
+ *
+ * **Behavior notes:**
+ * - All given IDs are checked at once by the remove-workers ACL checker — if the caller lacks rights to remove any single user, the whole request fails (no partial removal).
+ * - The project **owner** cannot be removed via this endpoint; attempting to do so results in an error.
+ * - Removing a user also cleans up their task assignments and ACL tasklists in this project.
+ *
  */
 export const removeProjectWorkersByIds = <ThrowOnError extends boolean = false>(options: Options<RemoveProjectWorkersByIdsData, ThrowOnError>) => (options.client ?? client).post<RemoveProjectWorkersByIdsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -172,7 +326,18 @@ export const removeProjectWorkersByIds = <ThrowOnError extends boolean = false>(
 });
 
 /**
- * Remove project workers by emails
+ * Remove workers from project by email
+ *
+ * Same behavior as `/remove-workers/by-ids`, but the caller references workers by their email instead of user ID. Useful when IDs are not available (e.g. integration receives emails from CRM).
+ *
+ * **Use cases:**
+ * - Removing invited externals by their email address
+ * - Integrations that sync membership with email-based identity sources
+ *
+ * **Behavior notes:**
+ * - Every email **must** belong to a user currently in the project — otherwise the request fails (pre-check via `IProjectWorkersByEmailChecker`). No partial success.
+ * - Emails are resolved to user IDs server-side and then the ID-based ACL check is run. Same "owner cannot be removed" rule applies.
+ *
  */
 export const removeProjectWorkersByEmails = <ThrowOnError extends boolean = false>(options: Options<RemoveProjectWorkersByEmailsData, ThrowOnError>) => (options.client ?? client).post<RemoveProjectWorkersByEmailsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -185,7 +350,22 @@ export const removeProjectWorkersByEmails = <ThrowOnError extends boolean = fals
 });
 
 /**
- * Create project from template
+ * Create project from a template
+ *
+ * Clones a project template (state_id=3) into a brand-new active project, copying its tasklists, tasks, subtasks, and optionally shifting floating due-dates based on `preset_date_from`.
+ *
+ * **Use cases:**
+ * - Spinning up a standardized client-onboarding project
+ * - Mass-provisioning projects from a shared blueprint
+ * - Kick-starting recurring engagements
+ *
+ * **Behavior notes (non-obvious):**
+ * - `currency_iso` is optional — if omitted, the server derives it from the caller's locale (CZ → CZK, EN → USD, etc.) via `LanguageCurrencyMapper`. Pass it explicitly if you need a predictable result.
+ * - `project_owner_id` defaults to the authenticated caller if not provided. The user must be owner-eligible; otherwise `400 InvalidArgumentException`.
+ * - `preset_date_from` shifts any "relative" due dates defined in the template (e.g. "+3 days") to absolute dates anchored at this value.
+ * - `users_ids` is a list of users **from the template's member list** you want to carry over as invitees; it is validated against the template's membership, not arbitrary user IDs.
+ * - `name` defaults to the template's name (often with a suffix applied in front-end flows) — pass it to override.
+ *
  */
 export const createProjectFromTemplate = <ThrowOnError extends boolean = false>(options: Options<CreateProjectFromTemplateData, ThrowOnError>) => (options.client ?? client).post<CreateProjectFromTemplateResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -198,7 +378,17 @@ export const createProjectFromTemplate = <ThrowOnError extends boolean = false>(
 });
 
 /**
- * Find available project labels
+ * Get project labels usable by caller
+ *
+ * Returns all project labels (tags) the authenticated user can assign — their own private labels plus public labels from projects they participate in.
+ *
+ * **Use cases:**
+ * - Populating a label picker before calling `/project-labels/add-to-project/{projectId}`
+ * - Showing the caller which labels already exist so they don't create a duplicate
+ *
+ * **Behavior notes:**
+ * - Response field is `label` (singular) — it is an array. The tag's `tag` entity property is exposed as `name` in API shape (the TagNameKeyReplacer maps it).
+ *
  */
 export const findAvailableProjectLabels = <ThrowOnError extends boolean = false>(options?: Options<FindAvailableProjectLabelsData, ThrowOnError>) => (options?.client ?? client).get<FindAvailableProjectLabelsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -207,7 +397,18 @@ export const findAvailableProjectLabels = <ThrowOnError extends boolean = false>
 });
 
 /**
- * Delete project label
+ * Delete project label (global)
+ *
+ * Removes the label entirely — it is detached from all projects it was attached to and the tag entity itself is deleted.
+ *
+ * **Use cases:**
+ * - Cleaning up unused / obsolete labels
+ * - Consolidating duplicates (delete one, re-attach projects to the other)
+ *
+ * **Behavior notes:**
+ * - This is a **hard delete of the global label**, not a "detach from one project". To just unlink a label from a single project use `POST /project-labels/remove-from-project/{projectId}`.
+ * - ACL applies: only the owner of a private label (or a user passing `IProjectTagAclChecker`) can delete it.
+ *
  */
 export const deleteProjectLabel = <ThrowOnError extends boolean = false>(options: Options<DeleteProjectLabelData, ThrowOnError>) => (options.client ?? client).delete<DeleteProjectLabelResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -217,6 +418,18 @@ export const deleteProjectLabel = <ThrowOnError extends boolean = false>(options
 
 /**
  * Edit project label
+ *
+ * Updates an existing project label identified by path parameter `labelId`. Renames it, changes its color, and/or toggles private/public visibility.
+ *
+ * **Use cases:**
+ * - Recoloring / renaming a label across all projects that use it
+ * - Flipping a label from private (owner-only) to public once a team is ready to share it
+ *
+ * **Behavior notes:**
+ * - The label is global — the edit propagates to **every project** where the label is attached.
+ * - ACL: only the label's owner (or a user passing the `IProjectTagAclChecker`) may edit private labels. Editing public labels requires the relevant project-manager permission.
+ * - All fields in the body are optional; omit a field to leave it unchanged.
+ *
  */
 export const editProjectLabel = <ThrowOnError extends boolean = false>(options: Options<EditProjectLabelData, ThrowOnError>) => (options.client ?? client).post<EditProjectLabelResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -229,7 +442,23 @@ export const editProjectLabel = <ThrowOnError extends boolean = false>(options: 
 });
 
 /**
- * Add project label to project
+ * Attach label to project (fetch-or-create)
+ *
+ * Attaches a project label to the given project. The request body selects the label in **one of two mutually exclusive modes**:
+ *
+ * 1. **By ID** — pass `id` of an existing label. In this mode `name`, `color` and `is_private` are **ignored** (even if sent).
+ * 2. **By data** — pass `name` + `is_private` (and optionally `color`). The server looks up an existing label owned by the correct user with the same data and re-uses it; if none exists, it **creates a new label** and attaches it.
+ *
+ * > Non-standard behavior: the presence of `id` completely overrides the other fields. Sending `{id: 123, name: "typo", color: "#ff0000"}` will attach label 123 and silently ignore the name/color. If you want a new label with a specific name, omit `id`.
+ *
+ * **Use cases:**
+ * - Organizing projects by client / status / priority using a shared label
+ * - Bulk-tagging projects during an import
+ *
+ * **Behavior notes:**
+ * - Attaching a label that is already on the project swallows the `UniqueConstraintViolationException` and returns 200 (idempotent).
+ * - ACL: private labels can only be attached by their owner; public labels require the caller to be a project manager of the target project.
+ *
  */
 export const addProjectLabelToProject = <ThrowOnError extends boolean = false>(options: Options<AddProjectLabelToProjectData, ThrowOnError>) => (options.client ?? client).post<AddProjectLabelToProjectResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -242,7 +471,19 @@ export const addProjectLabelToProject = <ThrowOnError extends boolean = false>(o
 });
 
 /**
- * Remove project label from project
+ * Detach label from project
+ *
+ * Detaches a label from a single project. The label itself continues to exist and remains attached to other projects.
+ *
+ * **Use cases:**
+ * - Re-categorizing a project without deleting the label from the workspace
+ * - Bulk cleanup of mis-applied labels
+ *
+ * **Behavior notes (non-obvious):**
+ * - Request body follows the same two-mode rule as `/add-to-project`: if `id` is present, `name`/`color`/`is_private` are **ignored**; otherwise the server looks the label up by data (name + is_private + owner).
+ * - In data mode (no `id`), the label is matched by owner + data; in ID mode, any referenced label is targeted.
+ * - If the label is not attached to the project, `ITagForRemoveFromProjectFetcher` throws `NotFoundException` → HTTP 404.
+ *
  */
 export const removeProjectLabelFromProject = <ThrowOnError extends boolean = false>(options: Options<RemoveProjectLabelFromProjectData, ThrowOnError>) => (options.client ?? client).post<RemoveProjectLabelFromProjectResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -255,7 +496,18 @@ export const removeProjectLabelFromProject = <ThrowOnError extends boolean = fal
 });
 
 /**
- * Get pinned items in project
+ * Get pinned items of project
+ *
+ * Returns all pinned items (pinned links, tasks, documents, files, project-links, directories) attached to the given project, filtered by the caller's ACL.
+ *
+ * **Use cases:**
+ * - Rendering the "pinned" sidebar of a project detail page
+ * - Exporting quick-access resources for reporting / documentation
+ *
+ * **Behavior notes:**
+ * - The result is an ACL-filtered list — pinned items whose target (a file, a task, a document) the caller cannot see are omitted silently.
+ * - The response is a flat array, not paginated.
+ *
  */
 export const getPinnedItems = <ThrowOnError extends boolean = false>(options: Options<GetPinnedItemsData, ThrowOnError>) => (options.client ?? client).get<GetPinnedItemsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -264,7 +516,19 @@ export const getPinnedItems = <ThrowOnError extends boolean = false>(options: Op
 });
 
 /**
- * Pin item to project
+ * Pin an external link to project
+ *
+ * Pins a user-supplied external URL to the project. The returned item is either the newly created pin or — if an equivalent internal pin (same task / document / file / project-link / directory) already exists — the pre-existing one.
+ *
+ * **Use cases:**
+ * - Quick-attach of reference material (spec doc, drive link) to a project
+ * - Programmatic pinning from integrations (e.g. Slack → Freelo bot)
+ *
+ * **Behavior notes (non-obvious):**
+ * - The endpoint accepts an **external link** (schema shown here), but in the internal code path it is a dispatcher: if the URL is recognized as an internal Freelo resource (task, document, file, project-link, project-directory), the PinnedItemCreator performs a **fetch-or-create** — returning the existing internal pin if one already exists for that target, instead of creating a duplicate. So a `POST` with the same internal resource is idempotent.
+ * - For purely external URLs, each POST creates a new row even if the same URL was pinned before.
+ * - `title` is optional; when omitted the server derives a display name from the link target.
+ *
  */
 export const pinItemToProject = <ThrowOnError extends boolean = false>(options: Options<PinItemToProjectData, ThrowOnError>) => (options.client ?? client).post<PinItemToProjectResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -278,6 +542,17 @@ export const pinItemToProject = <ThrowOnError extends boolean = false>(options: 
 
 /**
  * Delete pinned item
+ *
+ * Removes a single pinned item from its project. The underlying target (task / document / file / link) is **not** affected — only the pin is deleted.
+ *
+ * **Use cases:**
+ * - Un-pinning outdated references
+ * - Cleanup flows after a resource was moved / renamed
+ *
+ * **Behavior notes:**
+ * - ACL: the caller must have rights to modify pinned items in the owning project (usually worker+).
+ * - Returns 404 if the pinned item does not exist or the caller has no access to its project.
+ *
  */
 export const deletePinnedItem = <ThrowOnError extends boolean = false>(options: Options<DeletePinnedItemData, ThrowOnError>) => (options.client ?? client).delete<DeletePinnedItemResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -286,7 +561,18 @@ export const deletePinnedItem = <ThrowOnError extends boolean = false>(options: 
 });
 
 /**
- * Create tasklist
+ * Create tasklist in project
+ *
+ * Creates a new tasklist inside the given project. The tasklist inherits project-level ACL and becomes visible to all project workers unless the tasklist's own ACL is narrowed later.
+ *
+ * **Use cases:**
+ * - Creating a new phase / milestone inside a project
+ * - Bulk-provisioning tasklists from an external system (imported project structure)
+ *
+ * **Behavior notes:**
+ * - Requires the caller to be a project manager or higher — otherwise `AclForbiddenException` / `RoleActionForbiddenException`.
+ * - `budget` is optional and uses the stringified-currency format (e.g. "100000" = 1000.00 of the project's currency).
+ *
  */
 export const createTasklist = <ThrowOnError extends boolean = false>(options: Options<CreateTasklistData, ThrowOnError>) => (options.client ?? client).post<CreateTasklistResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -299,9 +585,19 @@ export const createTasklist = <ThrowOnError extends boolean = false>(options: Op
 });
 
 /**
- * Get all tasklists
+ * Get all tasklists (across projects)
  *
- * Paginated collection of all tasklists
+ * Paginated list of tasklists visible to the caller, across all accessible projects. Can be filtered to a subset of projects via `projects_ids[]`.
+ *
+ * **Use cases:**
+ * - Cross-project reporting (e.g. "all tasklists touching client X")
+ * - Building a global tasklist picker in tooling
+ * - Dashboards that aggregate progress across a portfolio
+ *
+ * **Behavior notes:**
+ * - ACL is applied — tasklists the caller can't see are filtered out, even if `projects_ids[]` includes their project.
+ * - Default order: `date_add asc`.
+ *
  */
 export const getAllTasklists = <ThrowOnError extends boolean = false>(options?: Options<GetAllTasklistsData, ThrowOnError>) => (options?.client ?? client).get<GetAllTasklistsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -310,7 +606,18 @@ export const getAllTasklists = <ThrowOnError extends boolean = false>(options?: 
 });
 
 /**
- * Get assignable workers for tasklist
+ * List users who can be assigned tasks in this tasklist
+ *
+ * Returns the workers who are allowed to be set as `worker` on tasks inside this tasklist — i.e. the intersection of project membership and the tasklist's ACL (if the tasklist is ACL-restricted).
+ *
+ * **Use cases:**
+ * - Populating the assignee picker when creating / editing a task
+ * - Validating `worker_id` before calling `POST /tasks` or `POST /task/{id}`
+ *
+ * **Behavior notes:**
+ * - If the tasklist is NOT ACL-restricted, the result equals the project's full worker list.
+ * - If the tasklist IS ACL-restricted, only users explicitly granted tasklist ACL (plus the project owner/commander) appear.
+ *
  */
 export const getAssignableWorkers = <ThrowOnError extends boolean = false>(options: Options<GetAssignableWorkersData, ThrowOnError>) => (options.client ?? client).get<GetAssignableWorkersResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -319,7 +626,18 @@ export const getAssignableWorkers = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
- * Get tasklist
+ * Get tasklist detail
+ *
+ * Returns metadata for a single tasklist — name, budget, parent project reference, and the latest `date_edited` / `date_add` audit timestamps.
+ *
+ * **Use cases:**
+ * - Opening a tasklist detail view
+ * - Re-fetching metadata after an edit to confirm the state
+ * - Reading budget for reporting purposes
+ *
+ * **Behavior notes:**
+ * - Performs both a tasklist fetch (ACL-checked) and a project fetch (ACL-checked). If the caller has no access to either, returns 404.
+ *
  */
 export const getTasklist = <ThrowOnError extends boolean = false>(options: Options<GetTasklistData, ThrowOnError>) => (options.client ?? client).get<GetTasklistResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -328,7 +646,21 @@ export const getTasklist = <ThrowOnError extends boolean = false>(options: Optio
 });
 
 /**
- * Create tasklist from template
+ * Copy a tasklist from a project template
+ *
+ * Copies a specific tasklist from a **project template** into either a brand-new project or an existing target. Path parameter `template_id` identifies the source project template; body `tasklist_id` identifies which tasklist inside that template to copy.
+ *
+ * **Use cases:**
+ * - Re-using a standardized tasklist (e.g. "QA checklist") across projects
+ * - Seeding a new client project with a curated subset of blueprints
+ *
+ * **Behavior notes (non-obvious):**
+ * - Body field `tasklist_id` is **required** — it's the source tasklist's ID inside the template project referenced by path `template_id`. Mixing path + body IDs like this is deliberate.
+ * - If `target_project_id` is **not** provided, a new project is created as the target (copying from the template).
+ * - If `target_tasklist_id` is provided together with `target_project_id`, tasks are copied into that existing tasklist instead of a fresh one.
+ * - `preset_date_from` shifts floating due-dates relative to this date (same semantics as project template copy).
+ * - `users_ids` lists which template members to invite into the target — must be a subset of the template's members.
+ *
  */
 export const createTasklistFromTemplate = <ThrowOnError extends boolean = false>(options: Options<CreateTasklistFromTemplateData, ThrowOnError>) => (options.client ?? client).post<CreateTasklistFromTemplateResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -341,7 +673,19 @@ export const createTasklistFromTemplate = <ThrowOnError extends boolean = false>
 });
 
 /**
- * Get tasks in tasklist
+ * Get active tasks in a tasklist
+ *
+ * Returns all **active** tasks in the specified tasklist, ordered by the requested criterion. To fetch finished tasks use `GET /tasklist/{tasklist_id}/finished-tasks`.
+ *
+ * **Use cases:**
+ * - Rendering the task board for a given tasklist
+ * - Iterating tasks for bulk operations (assign, move, etc.)
+ * - Feeding integrations that mirror the task state
+ *
+ * **Behavior notes:**
+ * - Response is a flat (non-paginated) array. For very large tasklists, consider `GET /all-tasks` with filters for pagination.
+ * - ACL-filtered: if the tasklist is ACL-restricted and the caller has no access to it, 404.
+ *
  */
 export const getTasksInTasklist = <ThrowOnError extends boolean = false>(options: Options<GetTasksInTasklistData, ThrowOnError>) => (options.client ?? client).get<GetTasksInTasklistResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -350,7 +694,20 @@ export const getTasksInTasklist = <ThrowOnError extends boolean = false>(options
 });
 
 /**
- * Create task
+ * Create task in tasklist
+ *
+ * Creates a new task in the given tasklist. The authenticated caller becomes the task's author; `worker` defaults to a value derived from the tasklist's default-worker rules if not supplied.
+ *
+ * **Use cases:**
+ * - Creating a ticket from an integration (Sentry → Freelo, Slack → Freelo, etc.)
+ * - Programmatic task provisioning
+ * - Migrating tasks from another system
+ *
+ * **Behavior notes:**
+ * - The assignee (`worker`) must be one of the tasklist's `assignable-workers` (see that endpoint). A user outside the ACL scope results in `WorkerHasNoAccessToTasklistException` → 403.
+ * - `tracking_users_ids` defaults to the assignee + author if omitted (via `TaskDataDefaultTrackingUsersFiller`).
+ * - Creates a `task_created` event (→ webhooks, notifications, calendar sync).
+ *
  */
 export const createTask = <ThrowOnError extends boolean = false>(options: Options<CreateTaskData, ThrowOnError>) => (options.client ?? client).post<CreateTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -363,9 +720,23 @@ export const createTask = <ThrowOnError extends boolean = false>(options: Option
 });
 
 /**
- * Get all tasks
+ * Get all tasks (paginated, filterable)
  *
- * Paginated collection of all tasks
+ * Paginated global task search. Combines fulltext search (via Elasticsearch), structural filters (projects, tasklists, worker, state), label filters, and date-range filters.
+ *
+ * **Use cases:**
+ * - Primary task search / dashboard filter
+ * - Reporting queries ("all tasks due next week for worker X")
+ * - Cross-project views (e.g. "all open tasks with label blocker")
+ *
+ * **Behavior notes (non-obvious):**
+ * - `search_query` is a fulltext match on the task name through Elasticsearch — it prefilters the task set before other filters are applied; supplying only `search_query` without any `projects_ids[]` restricts across all visible projects.
+ * - `with_label` is a single-value legacy alias for `with_labels[]` — when both are sent, `with_label` is merged into the array (no preemption). `with_label` is deprecated; prefer `with_labels[]`.
+ * - `state_id` filters by task state — omit to get tasks in all states the caller can see (typically active + finished; depends on ACL).
+ * - `no_due_date=true` returns only tasks without a due date; combining with `due_date_range` is effectively contradictory and the range is ignored.
+ * - `finished_overdue=true` filters for tasks finished **after** their due date — a reporting lens for delivery SLAs.
+ * - `worker_id` filters by assignee only (not by tracking users).
+ *
  */
 export const getAllTasks = <ThrowOnError extends boolean = false>(options?: Options<GetAllTasksData, ThrowOnError>) => (options?.client ?? client).get<GetAllTasksResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -374,7 +745,19 @@ export const getAllTasks = <ThrowOnError extends boolean = false>(options?: Opti
 });
 
 /**
- * Get finished tasks in tasklist
+ * Get finished tasks in a tasklist
+ *
+ * Paginated list of **finished** (closed) tasks inside a given tasklist. Optionally narrow by a fulltext search of the task name.
+ *
+ * **Use cases:**
+ * - Archive / history view of what's been completed in a tasklist
+ * - Retrospective reports on delivered scope
+ * - Finding a specific closed task by name for reactivation
+ *
+ * **Behavior notes:**
+ * - `search_query` is an Elasticsearch-backed fulltext match on the task name; when omitted, all finished tasks in the tasklist are returned (paginated).
+ * - Active tasks are **not** included — use `/project/{pid}/tasklist/{tid}/tasks` for those.
+ *
  */
 export const getFinishedTasks = <ThrowOnError extends boolean = false>(options: Options<GetFinishedTasksData, ThrowOnError>) => (options.client ?? client).get<GetFinishedTasksResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -383,7 +766,37 @@ export const getFinishedTasks = <ThrowOnError extends boolean = false>(options: 
 });
 
 /**
- * Delete task
+ * Find task relations in bulk
+ *
+ * Returns relations for a list of tasks. Each item in the response contains the task ID
+ * and its relations (types: `blocked_by`, `blocks`, `related_to`, `duplicate_of`).
+ * Tasks the caller cannot access are silently omitted from the response.
+ *
+ */
+export const findTaskRelationsBulk = <ThrowOnError extends boolean = false>(options: Options<FindTaskRelationsBulkData, ThrowOnError>) => (options.client ?? client).post<FindTaskRelationsBulkResponses, FindTaskRelationsBulkErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/tasks/relations',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Delete task (soft-delete)
+ *
+ * Soft-deletes a task. It disappears from listings and cannot be reactivated via `/activate` (activation only un-finishes a finished task, it does **not** undelete).
+ *
+ * **Use cases:**
+ * - Removing spam / mistaken tasks
+ * - Cleaning up a noisy tasklist
+ *
+ * **Behavior notes:**
+ * - Cascades to subtasks (they are also hidden).
+ * - Emits `task_deleted` event — webhooks and notifications fire.
+ * - Requires delete permission (owner / commander / author, per role rules).
+ *
  */
 export const deleteTask = <ThrowOnError extends boolean = false>(options: Options<DeleteTaskData, ThrowOnError>) => (options.client ?? client).delete<DeleteTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -392,7 +805,21 @@ export const deleteTask = <ThrowOnError extends boolean = false>(options: Option
 });
 
 /**
- * Get task
+ * Get task detail
+ *
+ * Returns full task detail — metadata, labels, worker, tracking users, due dates, subtasks count, time estimates, custom field values, and (for non-commanders) computed spent minutes and cost.
+ *
+ * **Use cases:**
+ * - Opening a task in the UI
+ * - Fetching every detail before an edit (for diffing)
+ * - Pulling full context for AI / reporting pipelines
+ *
+ * **Behavior notes (non-obvious):**
+ * - For multi-project tasks, the response contains a `multi_project_task` block mapping the task across its projects and may expose a `parent_task_id` if this is a subtask linked to a multi-project parent.
+ * - Spent minutes (`minutes`) and `cost.amount` are only included when the caller is **not** a project commander (commanders see account-wide billing elsewhere).
+ * - Labels include labels inherited from a multi-project parent.
+ * - `copied_from_task` references the origin task if the task was created from a template or as a multi-project copy.
+ *
  */
 export const getTask = <ThrowOnError extends boolean = false>(options: Options<GetTaskData, ThrowOnError>) => (options.client ?? client).get<GetTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -401,7 +828,29 @@ export const getTask = <ThrowOnError extends boolean = false>(options: Options<G
 });
 
 /**
- * Edit task
+ * Edit task (partial update)
+ *
+ * Partially updates a task. Only the fields listed below are editable through this endpoint — any other key in the body is **silently ignored** (the facade uses `array_intersect_key` against a fixed whitelist).
+ *
+ * **Editable fields:** `name`, `worker`, `due_date`, `due_date_end`, `labels`, `priority_enum`, `tracking_users_ids`, `add_tracking_users_ids`, `remove_tracking_users_ids`.
+ *
+ * **Use cases:**
+ * - Reassigning a task
+ * - Changing priority / due date
+ * - Renaming or relabeling from an integration
+ * - Adjusting tracking users (add / remove / replace)
+ *
+ * **Behavior notes (non-obvious):**
+ * - **`worker_id` accepted as alias for `worker`:** the facade contains a make.com-compatibility HACK — if the body has `worker_id`, it is copied into `worker`. This is undocumented elsewhere but is the same field.
+ * - **Tracking users have three mutually-exclusive update shapes:**
+ * - `tracking_users_ids` **replaces** the full set (pass `[]` to clear all).
+ * - `add_tracking_users_ids` **merges** the given IDs into the current set.
+ * - `remove_tracking_users_ids` **removes** the given IDs from the current set.
+ * Mixing `tracking_users_ids` (replace) with add/remove in one call is accepted but the final state is determined by the facade's order of operations — keep it to one shape per call to be deterministic.
+ * - **Labels must reference existing labels or be fully-formed new label DTOs** — the behavior matches the task-labels add-to-task semantics.
+ * - The endpoint responds with the task's full detail (same shape as `GET /task/{id}`).
+ * - Note the HTTP method: `POST` is used for edits here (historical REST shape), not `PUT`/`PATCH`.
+ *
  */
 export const editTask = <ThrowOnError extends boolean = false>(options: Options<EditTaskData, ThrowOnError>) => (options.client ?? client).post<EditTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -414,7 +863,18 @@ export const editTask = <ThrowOnError extends boolean = false>(options: Options<
 });
 
 /**
- * Activate task
+ * Reopen a finished task
+ *
+ * Moves a task from the **finished** state back to **active**. Use to reverse a `finish` operation.
+ *
+ * **Use cases:**
+ * - Reopening a task that was closed prematurely
+ * - Reverting an incorrect "finish" action triggered by an integration
+ *
+ * **Behavior notes (non-obvious):**
+ * - Only works on finished tasks. On an active task, returns 200 without changes. On a **deleted** task, returns 404 (this endpoint does **not** un-delete — it's not symmetric with the project activate endpoint).
+ * - Emits `task_activated` event / webhooks.
+ *
  */
 export const activateTask = <ThrowOnError extends boolean = false>(options: Options<ActivateTaskData, ThrowOnError>) => (options.client ?? client).post<ActivateTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -423,7 +883,19 @@ export const activateTask = <ThrowOnError extends boolean = false>(options: Opti
 });
 
 /**
- * Finish task
+ * Mark task as finished
+ *
+ * Closes a task — moves it to the **finished** state.
+ *
+ * **Use cases:**
+ * - Closing a task via an integration (e.g. Zapier "when ticket closed → finish Freelo task")
+ * - Bulk-closing tasks after a release
+ *
+ * **Behavior notes:**
+ * - Any running timetracking **on this specific task** is stopped as part of the finish flow.
+ * - Emits `task_finished` event / webhooks.
+ * - Requires the caller to be the assignee, author, or a project manager (Role rules). Otherwise `RoleActionForbiddenException` → 403.
+ *
  */
 export const finishTask = <ThrowOnError extends boolean = false>(options: Options<FinishTaskData, ThrowOnError>) => (options.client ?? client).post<FinishTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -432,7 +904,21 @@ export const finishTask = <ThrowOnError extends boolean = false>(options: Option
 });
 
 /**
- * Move task to another tasklist
+ * Move task to another tasklist (optionally cross-project)
+ *
+ * Moves a task into a different tasklist. Target tasklist may belong to the same or a different project.
+ *
+ * **Use cases:**
+ * - Re-phasing a task (moving from "Backlog" to "In progress" tasklist)
+ * - Escalating a task between projects (e.g. support → engineering)
+ * - Re-organizing multi-project tasks
+ *
+ * **Behavior notes (non-obvious):**
+ * - For **multi-project tasks**, the optional body field `multi_project_task.source_tasklist_id` picks which project-instance to move. When omitted (or set to the primary task's own tasklist), the cross-project move flow runs and applies `work_reports_action` / `custom_fields_action` rules. When it points to a **child task's** tasklist, only that child is moved within its own project, and `work_reports_action` / `custom_fields_action` are **ignored**.
+ * - `work_reports_action` decides what happens to existing work reports on cross-project moves: `move_to_target_project` (default) rebinds them, `keep_on_origin_project` leaves them tied to the origin.
+ * - `custom_fields_action` controls custom-field-value handling when the target project does not have the same custom fields — destructive options (`delete_*`) lose data; `move_to_comments_*` preserves it as a comment.
+ * - Required field on multi-project: if the caller has no ACL on the source tasklist's project, 403.
+ *
  */
 export const moveTask = <ThrowOnError extends boolean = false>(options: Options<MoveTaskData, ThrowOnError>) => (options.client ?? client).post<MoveTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -445,7 +931,74 @@ export const moveTask = <ThrowOnError extends boolean = false>(options: Options<
 });
 
 /**
+ * Assign task to an additional project (make it multi-project)
+ *
+ * Promotes a single-project task into a multi-project task (UVVP) by creating a **child task** in another project, linked to the same logical parent.
+ *
+ * **Use cases:**
+ * - Sharing a ticket across departments (e.g. one ticket visible in Sales and Engineering projects)
+ * - Cross-team visibility for long-running initiatives
+ *
+ * **Behavior notes:**
+ * - Target project is **derived from the `tasklist_id`** — you pass the tasklist, not the project. The target tasklist must belong to a project the caller has access to, otherwise 403.
+ * - Subsequent content (comments, worker) operations on the parent and child task may diverge depending on the multi-project architecture (see project docs `docs/feature/multi-project-tasks.md`).
+ *
+ */
+export const assignTaskToProject = <ThrowOnError extends boolean = false>(options: Options<AssignTaskToProjectData, ThrowOnError>) => (options.client ?? client).post<AssignTaskToProjectResponses, AssignTaskToProjectErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/task/{task_id}/projects',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get task relations
+ *
+ * Returns all relations for a task (types: `blocked_by`, `blocks`, `related_to`, `duplicate_of`).
+ * Relations to tasks the caller cannot access are filtered out.
+ *
+ */
+export const getTaskRelations = <ThrowOnError extends boolean = false>(options: Options<GetTaskRelationsData, ThrowOnError>) => (options.client ?? client).get<GetTaskRelationsResponses, GetTaskRelationsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/task/{task_id}/relations',
+    ...options
+});
+
+/**
+ * Remove task from a secondary project
+ *
+ * Reverses a prior "assign to project" call by deleting the child task that belonged to the specified secondary project. The primary task continues to exist.
+ *
+ * **Use cases:**
+ * - Revoking cross-team visibility once a handoff is done
+ * - Cleanup after an accidental multi-project assignment
+ *
+ * **Behavior notes:**
+ * - Attempting to remove a task from its **primary** project (the one where it was originally created) is not allowed — that requires `DELETE /task/{task_id}` instead. The endpoint returns 403 `AclException` in that case.
+ * - Returns 404 if the task is not present in the given project at all.
+ *
+ */
+export const removeTaskFromProject = <ThrowOnError extends boolean = false>(options: Options<RemoveTaskFromProjectData, ThrowOnError>) => (options.client ?? client).delete<RemoveTaskFromProjectResponses, RemoveTaskFromProjectErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/task/{task_id}/projects/{project_id}',
+    ...options
+});
+
+/**
  * Get task description
+ *
+ * Returns the task's description — the first "pinned" comment that serves as the canonical rich-text body of the task.
+ *
+ * **Use cases:**
+ * - Loading the long-form body in a task detail view
+ * - Extracting the description for reporting or AI summarization
+ *
+ * **Behavior notes:**
+ * - If the task has no description yet, the response is still 200 but fields may be empty / null — use the edit endpoint to create one.
+ *
  */
 export const getTaskDescription = <ThrowOnError extends boolean = false>(options: Options<GetTaskDescriptionData, ThrowOnError>) => (options.client ?? client).get<GetTaskDescriptionResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -454,9 +1007,19 @@ export const getTaskDescription = <ThrowOnError extends boolean = false>(options
 });
 
 /**
- * Edit task description
+ * Create or overwrite task description (upsert)
  *
- * Can also be used to create a new task description
+ * Creates the task description if none exists, or **overwrites** the existing one — there is no "append" or "history" behavior. File attachments given in `files` are attached to the description comment.
+ *
+ * **Use cases:**
+ * - Filling a task body from a ticketing integration
+ * - Editing the task's main description in a UI
+ * - Attaching files that belong to the task body (not to a separate comment)
+ *
+ * **Behavior notes (non-obvious):**
+ * - Upsert semantics: first call creates, subsequent call **replaces** the content entirely. Any previous content is lost — not stored in history.
+ * - `files` expects already-uploaded file UUIDs (see `POST /file/upload`).
+ *
  */
 export const editTaskDescription = <ThrowOnError extends boolean = false>(options: Options<EditTaskDescriptionData, ThrowOnError>) => (options.client ?? client).post<EditTaskDescriptionResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -469,7 +1032,14 @@ export const editTaskDescription = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Delete task reminder
+ * Clear caller's task reminder
+ *
+ * Removes the calling user's personal reminder for the given task.
+ *
+ * **Behavior notes:**
+ * - Only the caller's own reminder is deleted — reminders set by other users are unaffected.
+ * - Idempotent: calling with no reminder present returns 200.
+ *
  */
 export const deleteTaskReminder = <ThrowOnError extends boolean = false>(options: Options<DeleteTaskReminderData, ThrowOnError>) => (options.client ?? client).delete<DeleteTaskReminderResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -478,7 +1048,19 @@ export const deleteTaskReminder = <ThrowOnError extends boolean = false>(options
 });
 
 /**
- * Create task reminder
+ * Set reminder on task (for caller)
+ *
+ * Schedules a **personal** reminder for the calling user on a specific task. The reminder fires a notification to the caller at `remind_at`.
+ *
+ * **Use cases:**
+ * - "Ping me about this task at 9 AM tomorrow"
+ * - Snoozing a task for later follow-up
+ *
+ * **Behavior notes (non-obvious):**
+ * - Reminders are **per-user** — this endpoint sets a reminder for the caller only. Other tracking users are not affected.
+ * - Calling this endpoint on a task that already has a reminder by the caller **overwrites** the existing `remind_at` (upsert behavior).
+ * - `remind_at` is expected in ISO 8601; the server normalizes it internally.
+ *
  */
 export const createTaskReminder = <ThrowOnError extends boolean = false>(options: Options<CreateTaskReminderData, ThrowOnError>) => (options.client ?? client).post<CreateTaskReminderResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -491,7 +1073,14 @@ export const createTaskReminder = <ThrowOnError extends boolean = false>(options
 });
 
 /**
- * Delete public link to task
+ * Revoke public share link for a task
+ *
+ * Deletes the task's public link, immediately invalidating any previously shared URL.
+ *
+ * **Use cases:**
+ * - Rotating a compromised link
+ * - Ending external sharing when a client engagement ends
+ *
  */
 export const deletePublicLinkToTask = <ThrowOnError extends boolean = false>(options: Options<DeletePublicLinkToTaskData, ThrowOnError>) => (options.client ?? client).delete<DeletePublicLinkToTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -500,7 +1089,18 @@ export const deletePublicLinkToTask = <ThrowOnError extends boolean = false>(opt
 });
 
 /**
- * Get public link to task
+ * Get (or create) a public share link for a task
+ *
+ * Returns a public, unauthenticated URL that lets anyone with the link view the task. If no public link exists yet, one is **created on-the-fly** and returned.
+ *
+ * **Use cases:**
+ * - Sharing a task with a client who has no Freelo account
+ * - Embedding a shareable link in a status update
+ *
+ * **Behavior notes (non-obvious):**
+ * - This is a **GET that creates** — first call to this endpoint creates the link; subsequent calls return the same URL. To invalidate, use `DELETE /public-link/task/{task_id}`.
+ * - The URL exposes the task's content read-only to anyone holding it. Rotating is done by DELETE + GET (creates a new URL).
+ *
  */
 export const getPublicLinkToTask = <ThrowOnError extends boolean = false>(options: Options<GetPublicLinkToTaskData, ThrowOnError>) => (options.client ?? client).get<GetPublicLinkToTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -509,7 +1109,20 @@ export const getPublicLinkToTask = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Create task from template
+ * Create task by copying from a template task
+ *
+ * Copies a single task out of a project template into a target tasklist. Mirrors the structure of the tasklist / project template copy endpoints.
+ *
+ * **Use cases:**
+ * - Adding a standard boilerplate task (e.g. "Kickoff checklist") to an existing project
+ * - Cloning a canonical bug-report template
+ *
+ * **Behavior notes (non-obvious):**
+ * - Body field `task_id` is **required** — it identifies the source task inside the template referenced by path `template_id`.
+ * - If `target_tasklist_id` is omitted, the copied task lands in the **same tasklist ID** it had in the template — which only works if `target_project_id` (or an auto-created project) has a tasklist with that ID. Safer to always pass both.
+ * - `preset_date_from` shifts floating due-dates (same as other template endpoints).
+ * - `users_ids` is a list of template members to invite into the destination.
+ *
  */
 export const createTaskFromTemplate = <ThrowOnError extends boolean = false>(options: Options<CreateTaskFromTemplateData, ThrowOnError>) => (options.client ?? client).post<CreateTaskFromTemplateResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -522,7 +1135,14 @@ export const createTaskFromTemplate = <ThrowOnError extends boolean = false>(opt
 });
 
 /**
- * Delete total time estimate
+ * Remove the task's total time estimate
+ *
+ * Clears the total time estimate for the task.
+ *
+ * **Behavior notes:**
+ * - Per-user estimates are **not** removed by this call — delete them separately.
+ * - Idempotent: calling on a task without an estimate returns 200.
+ *
  */
 export const deleteTotalTimeEstimate = <ThrowOnError extends boolean = false>(options: Options<DeleteTotalTimeEstimateData, ThrowOnError>) => (options.client ?? client).delete<DeleteTotalTimeEstimateResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -531,7 +1151,18 @@ export const deleteTotalTimeEstimate = <ThrowOnError extends boolean = false>(op
 });
 
 /**
- * Set total time estimate
+ * Create or update the task's total time estimate (upsert)
+ *
+ * Sets the total expected effort for a task (aggregated across the team). If a total estimate already exists, it is **updated**; otherwise a new one is created.
+ *
+ * **Use cases:**
+ * - Capturing the team-wide effort budget for capacity planning
+ * - Refreshing an estimate after re-scoping
+ *
+ * **Behavior notes:**
+ * - Upsert semantics (`TimeEstimateFacade::createOrUpdate`). Calling this endpoint multiple times is safe.
+ * - Per-user estimates are managed separately via `/task/{id}/users-time-estimates/{user_id}` — the total is not automatically derived from per-user sums.
+ *
  */
 export const setTotalTimeEstimate = <ThrowOnError extends boolean = false>(options: Options<SetTotalTimeEstimateData, ThrowOnError>) => (options.client ?? client).post<SetTotalTimeEstimateResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -544,7 +1175,14 @@ export const setTotalTimeEstimate = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
- * Delete user time estimate
+ * Remove per-user time estimate
+ *
+ * Clears the per-user time estimate of the given user on this task.
+ *
+ * **Behavior notes:**
+ * - The task's total estimate is unaffected.
+ * - Idempotent: calling on a missing estimate returns 200.
+ *
  */
 export const deleteUserTimeEstimate = <ThrowOnError extends boolean = false>(options: Options<DeleteUserTimeEstimateData, ThrowOnError>) => (options.client ?? client).delete<DeleteUserTimeEstimateResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -553,7 +1191,19 @@ export const deleteUserTimeEstimate = <ThrowOnError extends boolean = false>(opt
 });
 
 /**
- * Set user time estimate
+ * Set per-user time estimate on a task (upsert)
+ *
+ * Upserts a **per-user** time estimate — how much effort the given `user_id` is expected to spend on this task.
+ *
+ * **Use cases:**
+ * - Project-manager capacity planning (assigning hours to each teammate)
+ * - Feeding a billing estimate where each worker has a different rate
+ *
+ * **Behavior notes:**
+ * - Upsert semantics (`TimeEstimateUserFacade::createOrUpdate`).
+ * - Does **not** automatically update the total time estimate — manage totals separately via `/task/{id}/total-time-estimate`.
+ * - The `user_id` must be an assignable worker of the task's tasklist; otherwise 403 / 404 depending on ACL.
+ *
  */
 export const setUserTimeEstimate = <ThrowOnError extends boolean = false>(options: Options<SetUserTimeEstimateData, ThrowOnError>) => (options.client ?? client).post<SetUserTimeEstimateResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -566,7 +1216,18 @@ export const setUserTimeEstimate = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Get subtasks in task
+ * Get subtasks (taskchecks) of a task
+ *
+ * Paginated list of subtasks ("taskchecks") under the given task. Subtasks come in two flavors — **smart taskchecks** (full tasks with their own worker, due date, comments) and **simple taskchecks** (checklist items with just a label). The response represents both uniformly.
+ *
+ * **Use cases:**
+ * - Rendering the subtask checklist inside a task view
+ * - Iterating subtasks for completion reporting
+ *
+ * **Behavior notes:**
+ * - Use the `states_ids[]` filter (if supported by the schema) to narrow by active / finished subtasks.
+ * - Subtasks returned are ACL-filtered by the parent task's tasklist rules.
+ *
  */
 export const getSubtasksInTask = <ThrowOnError extends boolean = false>(options: Options<GetSubtasksInTaskData, ThrowOnError>) => (options.client ?? client).get<GetSubtasksInTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -575,7 +1236,16 @@ export const getSubtasksInTask = <ThrowOnError extends boolean = false>(options:
 });
 
 /**
- * Create subtask
+ * Create subtask (smart or simple, auto-fallback)
+ *
+ * Creates a subtask under the given task. The endpoint automatically picks the best representation.
+ *
+ * **Behavior notes (non-obvious):**
+ * - The server first attempts to create a **smart taskcheck** — a full-featured subtask with worker, due date, tracking users, etc.
+ * - If the parent task is not eligible for smart taskchecks (e.g. it's a multi-project parent, or a nested smart taskcheck), the code catches `SmartTaskcheckCanNotBeCreatedException` and silently falls back to creating a **simple taskcheck** (a checkbox item with just a name). The body you sent may be partially discarded in that case — extra fields like `worker`, `due_date`, `tracking_users_ids` are ignored for simple taskchecks.
+ * - `tracking_users_ids` is **ACL-filtered** — user IDs without access to the parent task's tasklist are silently removed from the set via `ITrackingUsersIdsPrepender::prependWithAcl()`.
+ * - If you need deterministic smart-taskcheck creation, verify the parent task's eligibility first (e.g. make sure it's not already a taskcheck itself).
+ *
  */
 export const createSubtask = <ThrowOnError extends boolean = false>(options: Options<CreateSubtaskData, ThrowOnError>) => (options.client ?? client).post<CreateSubtaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -588,7 +1258,20 @@ export const createSubtask = <ThrowOnError extends boolean = false>(options: Opt
 });
 
 /**
- * Create task labels
+ * Bulk-create task labels in the caller's workspace
+ *
+ * Creates task-label definitions (not assignments). Use this before `/task-labels/add-to-task/{taskId}` when you want to provision a set of labels upfront.
+ *
+ * **Use cases:**
+ * - Seeding a shared label palette during onboarding
+ * - Importing labels from another system
+ *
+ * **Behavior notes (non-obvious):**
+ * - This is a **fetch-or-create** — labels with an existing matching name are **re-used**, not duplicated. The endpoint only creates those that don't already exist.
+ * - The label is scoped to the caller's account and available across their accessible projects via the "task-labels-used" relation.
+ * - If the caller has **no projects at all**, the "used" relation is silently skipped (no `NoProjectsException` bubbles up to the caller).
+ * - The response does not explicitly report which labels were new vs. reused — query `/project-labels/find-available` or the task detail to verify.
+ *
  */
 export const createTaskLabels = <ThrowOnError extends boolean = false>(options: Options<CreateTaskLabelsData, ThrowOnError>) => (options.client ?? client).post<CreateTaskLabelsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -601,9 +1284,24 @@ export const createTaskLabels = <ThrowOnError extends boolean = false>(options: 
 });
 
 /**
- * Add task labels to task
+ * Attach labels to task (UUID or name+color)
  *
- * Supports two input modes per label: (1) UUID only — assigns an existing label by UUID as-is. (2) Name-based — provide name (required), optionally color and uuid. If color is omitted it defaults to #77787a (gray). If uuid is omitted it is auto-generated. An existing label is reused when both name AND color match; otherwise a new label is created.
+ * Assigns one or more task labels to the given task. Labels can be addressed by UUID (existing) or by name/color (fetch-or-create).
+ *
+ * **Two input modes per label:**
+ * 1. **UUID only** — assigns an existing label by UUID as-is.
+ * 2. **Name-based** — provide `name` (required), optionally `color` and `uuid`. If `color` is omitted it defaults to `#77787a` (gray). If `uuid` is omitted it is auto-generated. An existing label is **reused when both name AND color match**; otherwise a new label is created.
+ *
+ * **Use cases:**
+ * - Tagging a task with a known label from the palette (UUID mode — reliable, no ambiguity)
+ * - Quick-labeling by name from an integration without pre-creating labels (name mode — fetch-or-create)
+ *
+ * **Behavior notes (non-obvious):**
+ * - Name+color matching is **case-sensitive**. `"bug"` and `"Bug"` are different labels.
+ * - If you pass a UUID that doesn't match any existing label, `CannotCreateWithProvidedUuidException` is thrown.
+ * - When labels are actually added (vs. already present), a `task_labels_change` event is emitted (→ webhooks, audit log).
+ * - Calling with an empty array short-circuits — no event, no ACL check, 200 response.
+ * - Bad colors return 400 with `Unsupported color (X) provided.` using the server's color enum.
  *
  */
 export const addTaskLabelsToTask = <ThrowOnError extends boolean = false>(options: Options<AddTaskLabelsToTaskData, ThrowOnError>) => (options.client ?? client).post<AddTaskLabelsToTaskResponses, unknown, ThrowOnError>({
@@ -617,9 +1315,23 @@ export const addTaskLabelsToTask = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Remove task labels from task
+ * Detach labels from task
  *
- * Supports three input modes per label: (1) UUID — removes the label identified by UUID. (2) Name only — removes all labels with that name regardless of color. (3) Name + color — removes the label matching both name and color.
+ * Removes one or more task labels from the given task. The label definitions themselves are **not** deleted globally — they remain available for reuse.
+ *
+ * **Three input modes per label:**
+ * 1. **UUID** — removes the label identified by UUID.
+ * 2. **Name only** — removes all labels with that name regardless of color (can affect multiple labels).
+ * 3. **Name + color** — removes only the label matching **both** name and color.
+ *
+ * **Use cases:**
+ * - Cleanup after a relabeling operation
+ * - Removing a mis-assigned label
+ *
+ * **Behavior notes (non-obvious):**
+ * - **Name-only mode is aggressive** — it removes every label with that name, even if they have different colors. Use name+color or UUID if you want precision.
+ * - Emits a `task_labels_change` event only if the task's label set actually changed.
+ * - An empty `labels` array short-circuits: no ACL check, no event, 200.
  *
  */
 export const removeTaskLabelsFromTask = <ThrowOnError extends boolean = false>(options: Options<RemoveTaskLabelsFromTaskData, ThrowOnError>) => (options.client ?? client).post<RemoveTaskLabelsFromTaskResponses, unknown, ThrowOnError>({
@@ -633,9 +1345,20 @@ export const removeTaskLabelsFromTask = <ThrowOnError extends boolean = false>(o
 });
 
 /**
- * Create comment
+ * Add a comment to a task
  *
- * If task has no comments, it will create description instead of comment
+ * Posts a new comment on the given task. Text is passed as `content` (HTML / plain text); attachments are passed as `files` (referencing previously uploaded file UUIDs).
+ *
+ * **Use cases:**
+ * - Logging progress or questions on a task
+ * - Posting automated status updates from integrations
+ * - Attaching supporting files to a task body
+ *
+ * **Behavior notes (non-obvious):**
+ * - **If the task has no comments yet, this call creates the task's description instead of a regular comment** (the `ICommentIsDescriptionFiller` auto-flips `is_description=true` on the first comment). From the second comment onward this endpoint behaves like a normal comment.
+ * - Subsequent calls are always regular comments; the description is managed separately via `/task/{id}/description`.
+ * - Fires notifications to the task's tracking users and a `comment_created` event.
+ *
  */
 export const createComment = <ThrowOnError extends boolean = false>(options: Options<CreateCommentData, ThrowOnError>) => (options.client ?? client).post<CreateCommentResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -648,7 +1371,19 @@ export const createComment = <ThrowOnError extends boolean = false>(options: Opt
 });
 
 /**
- * Edit comment
+ * Edit an existing comment
+ *
+ * Overwrites the text and / or attachments of an existing comment.
+ *
+ * **Use cases:**
+ * - Correcting typos in a posted comment
+ * - Updating a status comment with new info
+ *
+ * **Behavior notes:**
+ * - `files` replaces the full attachment set — pass the complete list of file UUIDs you want attached, not a delta.
+ * - ACL: only the comment's author can edit (or project owner / commander depending on role rules). Otherwise 404 `NotFoundException` is returned (not 403, to avoid leaking the existence of inaccessible comments).
+ * - The method used is `POST` for historical reasons, not `PUT`/`PATCH`.
+ *
  */
 export const editComment = <ThrowOnError extends boolean = false>(options: Options<EditCommentData, ThrowOnError>) => (options.client ?? client).post<EditCommentResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -661,9 +1396,20 @@ export const editComment = <ThrowOnError extends boolean = false>(options: Optio
 });
 
 /**
- * Get all comments
+ * Get all comments (paginated, filterable)
  *
- * Paginated collection of all comments
+ * Global comment feed across all accessible projects / tasks / files / docs / links. Supports filtering by `type` (task comments, document comments, etc.).
+ *
+ * **Use cases:**
+ * - Activity-feed widgets
+ * - Auditing recent comments across a portfolio
+ * - Extracting comment history for AI summarization
+ *
+ * **Behavior notes:**
+ * - Response is ACL-filtered — only comments on entities the caller can read are returned.
+ * - Default order: `date_add desc` (newest first).
+ * - `type=all` is the default and combines every comment category; narrow down as needed.
+ *
  */
 export const getAllComments = <ThrowOnError extends boolean = false>(options?: Options<GetAllCommentsData, ThrowOnError>) => (options?.client ?? client).get<GetAllCommentsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -672,9 +1418,19 @@ export const getAllComments = <ThrowOnError extends boolean = false>(options?: O
 });
 
 /**
- * Start time tracking
+ * Start a time tracking session
  *
- * Starts a new time tracking session for the authenticated user. Only one session can be active at a time per user. All parameters are optional — you can start tracking without specifying a task.
+ * Starts a new timer ("work running") for the authenticated caller. Each user may have **at most one** active session at any time.
+ *
+ * **Use cases:**
+ * - User begins working on a task
+ * - Integration starts timer when a ticket moves to "in progress"
+ *
+ * **Behavior notes (non-obvious):**
+ * - Only one running session per user — attempting to start while one is already running returns HTTP **409 Conflict** with message `"Timetracking is already running."`. Call `/timetracking/stop` first (or `/timetracking/edit` to reassign the current session).
+ * - All body fields are **optional**. `task_id` is nullable — you can track general work not tied to a specific task.
+ * - `date_reported` defaults to "now" (server time) if not provided. Passing an explicit `date_reported` backdates the session's start time.
+ * - Returns the UUID of the newly created running-work record.
  *
  */
 export const startTimeTracking = <ThrowOnError extends boolean = false>(options?: Options<StartTimeTrackingData, ThrowOnError>) => (options?.client ?? client).post<StartTimeTrackingResponses, StartTimeTrackingErrors, ThrowOnError>({
@@ -688,9 +1444,18 @@ export const startTimeTracking = <ThrowOnError extends boolean = false>(options?
 });
 
 /**
- * Stop time tracking
+ * Stop the running time tracking session
  *
- * Stops the currently running time tracking session for the authenticated user. The session is converted into a work report with calculated minutes. No request body is needed — the endpoint always stops the current user's active session.
+ * Stops the caller's currently running timer and converts it into a finalized **work report**. Returns the resulting work report.
+ *
+ * **Use cases:**
+ * - User ends work on a task
+ * - Integration stops timer on ticket closure
+ *
+ * **Behavior notes:**
+ * - No request body. The endpoint always targets the caller's own active session (one per user).
+ * - Returns HTTP **409 Conflict** with `"Timetracking is not running."` when no session is active.
+ * - The produced work report inherits the task, note, and `date_reported` set at start / edit time. Minutes are computed from the start time to now.
  *
  */
 export const stopTimeTracking = <ThrowOnError extends boolean = false>(options?: Options<StopTimeTrackingData, ThrowOnError>) => (options?.client ?? client).post<StopTimeTrackingResponses, StopTimeTrackingErrors, ThrowOnError>({
@@ -700,9 +1465,20 @@ export const stopTimeTracking = <ThrowOnError extends boolean = false>(options?:
 });
 
 /**
- * Edit time tracking
+ * Edit the running time tracking session
  *
- * Edits the currently running time tracking session for the authenticated user. Allows changing the assigned task or note on an active session. No session ID is needed — there can only be one active session per user.
+ * Updates the caller's currently running session — typically used to switch the tracked task or change the note mid-flight without losing elapsed time.
+ *
+ * **Use cases:**
+ * - Switching context (another task) without stopping + starting
+ * - Fixing a wrong `note` entered at start
+ * - Reassigning general (no-task) tracking to a task
+ *
+ * **Behavior notes:**
+ * - There is no session ID — the endpoint always targets the caller's single active session.
+ * - Returns HTTP **409 Conflict** with `"Timetracking is not running."` if no session is active.
+ * - Setting `task_id=null` disassociates the session from any task (continues as general work).
+ * - Elapsed minutes are preserved; only the tracked task / note change.
  *
  */
 export const editTimeTracking = <ThrowOnError extends boolean = false>(options?: Options<EditTimeTrackingData, ThrowOnError>) => (options?.client ?? client).post<EditTimeTrackingResponses, EditTimeTrackingErrors, ThrowOnError>({
@@ -716,9 +1492,18 @@ export const editTimeTracking = <ThrowOnError extends boolean = false>(options?:
 });
 
 /**
- * Get time tracking status
+ * Get current time tracking status
  *
- * Returns the currently running time tracking session for the authenticated user. If no session is active, returns 204 No Content.
+ * Returns the caller's currently running session with task context, note, labels, billability, and cost info.
+ *
+ * **Use cases:**
+ * - Polling whether the user is currently tracking time
+ * - Rendering a "you are tracking X since HH:MM" indicator
+ * - Verifying state before issuing a `/timetracking/edit` / `/stop`
+ *
+ * **Behavior notes (non-obvious):**
+ * - **Returns HTTP 204 No Content** when no session is active — **not 404 and not a 200 with empty body**. Callers must treat 204 as a valid "nothing running" state.
+ * - `cost`, `is_cost_fixed`, `is_billable`, `project_setting` reflect what would land in a work report if stopped right now.
  *
  */
 export const getTimeTrackingStatus = <ThrowOnError extends boolean = false>(options?: Options<GetTimeTrackingStatusData, ThrowOnError>) => (options?.client ?? client).get<GetTimeTrackingStatusResponses, unknown, ThrowOnError>({
@@ -728,7 +1513,21 @@ export const getTimeTrackingStatus = <ThrowOnError extends boolean = false>(opti
 });
 
 /**
- * Get work reports
+ * Get work reports (paginated, filterable)
+ *
+ * Returns work reports — finalized time entries — filtered by project, user, task, label, or date.
+ *
+ * **Use cases:**
+ * - Time-sheet exports
+ * - Billing calculations (combine with `currency` filter)
+ * - Utilization reporting per user
+ *
+ * **Behavior notes (non-obvious):**
+ * - `currency` defaults to `CZK` if not specified — costs are converted to the chosen currency for comparability across projects. Always pass it explicitly if mixing multiple currencies.
+ * - `with_own_taskless=true` **automatically scopes the query to the caller's own user** — i.e. it implicitly adds caller to `users_ids[]`. If you need all users' taskless reports, you need elevated permissions and a different endpoint (not exposed here).
+ * - `tasks_labels[]` accepts label UUIDs, not names or IDs.
+ * - `date_edited_from` returns reports with `date_edited >= value` — useful for incremental sync.
+ *
  */
 export const getWorkReports = <ThrowOnError extends boolean = false>(options?: Options<GetWorkReportsData, ThrowOnError>) => (options?.client ?? client).get<GetWorkReportsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -737,7 +1536,21 @@ export const getWorkReports = <ThrowOnError extends boolean = false>(options?: O
 });
 
 /**
- * Create work report
+ * Log a work report on a task
+ *
+ * Creates a finalized work report (time entry) directly on a task — bypassing the timetracking flow. Useful for retroactively logging work.
+ *
+ * **Use cases:**
+ * - Logging hours after the fact (Monday morning timesheet entry)
+ * - Importing time data from external timesheet systems
+ * - Manual adjustments on behalf of another worker
+ *
+ * **Behavior notes:**
+ * - `worker_id` defaults to the caller if omitted. To log time for a different user, the caller must be the project's owner / commander / have reporting rights; otherwise `WorkerHasNoAccessToTasklistException` → 400.
+ * - `date_reported` defaults to today if omitted; pass an explicit date to backdate.
+ * - `cost` uses the string currency-amount format (e.g. `"100025"` = 1000.25). If omitted, the server derives it from the worker's hourly rate × minutes.
+ * - 400 `WorkReportCanNotBeCreatedException` fires if the combination (project state, tasklist ACL) disallows logging time.
+ *
  */
 export const createWorkReport = <ThrowOnError extends boolean = false>(options: Options<CreateWorkReportData, ThrowOnError>) => (options.client ?? client).post<CreateWorkReportResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -750,7 +1563,18 @@ export const createWorkReport = <ThrowOnError extends boolean = false>(options: 
 });
 
 /**
- * Delete work report
+ * Delete a work report
+ *
+ * Permanently removes a work report.
+ *
+ * **Use cases:**
+ * - Correcting duplicate entries
+ * - Removing a report logged by mistake
+ *
+ * **Behavior notes:**
+ * - ACL: only the report author or project admin (owner / commander) can delete. Unauthorized callers get 400 with `UserCannotDeleteWorkReport` message (not 403).
+ * - If the report is tied to a project that has been **marked as invoiced**, the deletion may be refused — invoices freeze underlying reports.
+ *
  */
 export const deleteWorkReport = <ThrowOnError extends boolean = false>(options: Options<DeleteWorkReportData, ThrowOnError>) => (options.client ?? client).delete<DeleteWorkReportResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -759,7 +1583,20 @@ export const deleteWorkReport = <ThrowOnError extends boolean = false>(options: 
 });
 
 /**
- * Edit work report
+ * Edit an existing work report
+ *
+ * Updates minutes, cost, date, note, or re-targets the report at a different task.
+ *
+ * **Use cases:**
+ * - Fixing a mistyped duration
+ * - Reassigning a work report to the correct task
+ * - Adjusting billable cost manually
+ *
+ * **Behavior notes:**
+ * - `task_id` can be changed to **re-parent** the report to a different task — ACL is re-checked against the new task.
+ * - ACL rules: the report author and the project owner/commander can edit; other users get `NotFoundException` (hiding existence).
+ * - If the report's parent project has been marked as invoiced, edits may be blocked — see `/issued-invoice/{id}/mark-as-invoiced`.
+ *
  */
 export const editWorkReport = <ThrowOnError extends boolean = false>(options: Options<EditWorkReportData, ThrowOnError>) => (options.client ?? client).post<EditWorkReportResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -772,7 +1609,18 @@ export const editWorkReport = <ThrowOnError extends boolean = false>(options: Op
 });
 
 /**
- * Get issued invoices
+ * List issued invoices (paginated)
+ *
+ * Returns a paginated list of invoice draft groups ("issued invoices") — each representing a set of work reports grouped for billing on a project in a date range.
+ *
+ * **Use cases:**
+ * - Displaying an invoicing queue in a client-facing UI
+ * - Exporting unbilled-but-ready batches to an external accounting tool
+ *
+ * **Behavior notes:**
+ * - Scope: only invoices from projects the caller has billing access to.
+ * - Filtering by `date_range` narrows to invoices whose reporting period overlaps the range (not by `date_issued`).
+ *
  */
 export const getIssuedInvoices = <ThrowOnError extends boolean = false>(options?: Options<GetIssuedInvoicesData, ThrowOnError>) => (options?.client ?? client).get<GetIssuedInvoicesResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -781,7 +1629,14 @@ export const getIssuedInvoices = <ThrowOnError extends boolean = false>(options?
 });
 
 /**
- * Get issued invoice detail
+ * Get an issued invoice detail
+ *
+ * Full detail of a single issued invoice — total amount, currency, period, linked project, and metadata.
+ *
+ * **Use cases:**
+ * - Opening an invoice in the billing UI
+ * - Fetching metadata to pre-fill an external accounting entry
+ *
  */
 export const getIssuedInvoiceDetail = <ThrowOnError extends boolean = false>(options: Options<GetIssuedInvoiceDetailData, ThrowOnError>) => (options.client ?? client).get<GetIssuedInvoiceDetailResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -790,7 +1645,18 @@ export const getIssuedInvoiceDetail = <ThrowOnError extends boolean = false>(opt
 });
 
 /**
- * Download issued invoice reports
+ * Download invoice's work reports as CSV
+ *
+ * Streams a **CSV download** of all work reports included in the invoice. Content-Type is `text/csv`.
+ *
+ * **Use cases:**
+ * - Attaching the work-report backup to a physical invoice
+ * - Manual review before marking invoiced
+ *
+ * **Behavior notes:**
+ * - This is a file download — the body is not JSON. Response framework sets a Content-Disposition header with a server-chosen filename.
+ * - For programmatic access prefer `/reports-json` which returns structured data.
+ *
  */
 export const downloadIssuedInvoiceReports = <ThrowOnError extends boolean = false>(options: Options<DownloadIssuedInvoiceReportsData, ThrowOnError>) => (options.client ?? client).get<DownloadIssuedInvoiceReportsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -799,7 +1665,14 @@ export const downloadIssuedInvoiceReports = <ThrowOnError extends boolean = fals
 });
 
 /**
- * Get issued invoice reports as JSON
+ * Get invoice's work reports as JSON
+ *
+ * Returns the work reports composing the invoice as a JSON array — programmatic equivalent of the `/reports` CSV endpoint.
+ *
+ * **Use cases:**
+ * - Feeding invoice data into an external accounting or BI system
+ * - Rendering a detail breakdown in a custom UI
+ *
  */
 export const getIssuedInvoiceReportsJson = <ThrowOnError extends boolean = false>(options: Options<GetIssuedInvoiceReportsJsonData, ThrowOnError>) => (options.client ?? client).get<GetIssuedInvoiceReportsJsonResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -808,7 +1681,19 @@ export const getIssuedInvoiceReportsJson = <ThrowOnError extends boolean = false
 });
 
 /**
- * Mark issued invoice as invoiced
+ * Mark invoice as actually invoiced (via external app)
+ *
+ * Records that an external invoicing tool (Fakturoid, iDoklad, etc.) has issued the real invoice. Associates the invoice with the external URL + subject and freezes the underlying work reports so they can't be edited or re-billed.
+ *
+ * **Use cases:**
+ * - After creating an invoice in an external accounting tool, close the loop in Freelo
+ * - Prevent accidental re-invoicing of already billed work
+ *
+ * **Behavior notes (non-obvious):**
+ * - This action is **not reversible** via API. Once marked, the underlying work reports are effectively frozen — edit / delete calls on those reports may be refused.
+ * - `url` is stored verbatim; it should point to the external invoice detail.
+ * - `subject` is the display title shown in Freelo's billing UI.
+ *
  */
 export const markAsInvoiced = <ThrowOnError extends boolean = false>(options: Options<MarkAsInvoicedData, ThrowOnError>) => (options.client ?? client).post<MarkAsInvoicedResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -821,7 +1706,19 @@ export const markAsInvoiced = <ThrowOnError extends boolean = false>(options: Op
 });
 
 /**
- * Get all users (coworkers)
+ * Get all coworkers visible to caller
+ *
+ * Paginated list of users the authenticated caller shares at least one project with — effectively their "coworkers book".
+ *
+ * **Use cases:**
+ * - Populating an assignee picker outside of a project context
+ * - Building a company-wide people directory scoped to the caller's network
+ * - Resolving email → user ID for offline users
+ *
+ * **Behavior notes:**
+ * - Does **not** return the caller themselves.
+ * - Users with whom the caller only shares archived / deleted projects may still appear; the repository filters by membership, not by state.
+ *
  */
 export const getAllUsers = <ThrowOnError extends boolean = false>(options?: Options<GetAllUsersData, ThrowOnError>) => (options?.client ?? client).get<GetAllUsersResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -830,7 +1727,14 @@ export const getAllUsers = <ThrowOnError extends boolean = false>(options?: Opti
 });
 
 /**
- * Find users who promoted me as project manager
+ * List users who made me their project manager
+ *
+ * Returns the list of users (project owners) who have promoted the authenticated caller to be **their** project manager. Use to discover on whose behalf the caller may act across projects.
+ *
+ * **Use cases:**
+ * - UI "Acting on behalf of" selector for PMs managing multiple clients
+ * - Scoping automations to users the caller has delegated authority for
+ *
  */
 export const getProjectManagerOf = <ThrowOnError extends boolean = false>(options?: Options<GetProjectManagerOfData, ThrowOnError>) => (options?.client ?? client).get<GetProjectManagerOfResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -839,7 +1743,23 @@ export const getProjectManagerOf = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Invite users to projects
+ * Invite users (by email or ID) to one or more projects
+ *
+ * Invites existing users (by `users_ids`) and/or external people (by `emails`) to one or more projects. Emails for users who don't exist yet trigger user creation.
+ *
+ * **Use cases:**
+ * - Onboarding a batch of new teammates to a shared project
+ * - Granting access to an existing teammate in additional projects
+ * - Programmatic project invitations from an HR / CRM integration
+ *
+ * **Behavior notes (non-obvious):**
+ * - Exactly one of `emails` or `users_ids` must be non-empty. Sending both empty → `400` with message "At least one of the following fields must be filled: emails, users_ids".
+ * - When `users_ids` is non-empty, `projects_ids` **must** also be non-empty (you can't invite an existing user to "nothing"). For email-only invitations, `projects_ids` is still required logically because invites target projects.
+ * - Emails that do not match any existing user trigger **user creation** — the new users are returned in `newly_created_users`. This is the primary way to provision external collaborators.
+ * - `acl_tasklists` scopes the invitation to a subset of tasklists in the target projects (ACL workers). Omit to grant full project access.
+ * - The endpoint enforces `api_only_invite=true` internally — plan-limit side effects match the same flow as email-based invites from the UI. Exceeding the account's user-seat plan throws `PlanExceededException` (429/403 depending on context).
+ * - The `removed_users_from_projects` key in the response is populated only when some ACL adjustment implicitly removed workers (e.g. narrowing tasklist ACLs). It is not used for "deletion" requests.
+ *
  */
 export const inviteUsersToProjects = <ThrowOnError extends boolean = false>(options: Options<InviteUsersToProjectsData, ThrowOnError>) => (options.client ?? client).post<InviteUsersToProjectsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -852,7 +1772,17 @@ export const inviteUsersToProjects = <ThrowOnError extends boolean = false>(opti
 });
 
 /**
- * Disable out of office
+ * Disable user's out-of-office
+ *
+ * Clears the user's OOO window. Idempotent — calling on a user who is not OOO returns 200.
+ *
+ * **Use cases:**
+ * - Ending OOO early when the user returns sooner than planned
+ * - Cleanup flows after a scheduled OOO has elapsed
+ *
+ * **Behavior notes:**
+ * - Same ACL as GET/POST on this path: caller must be the target user or a valid coworker.
+ *
  */
 export const disableOutOfOffice = <ThrowOnError extends boolean = false>(options: Options<DisableOutOfOfficeData, ThrowOnError>) => (options.client ?? client).delete<DisableOutOfOfficeResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -861,7 +1791,18 @@ export const disableOutOfOffice = <ThrowOnError extends boolean = false>(options
 });
 
 /**
- * Get out of office status
+ * Get out-of-office status of a user
+ *
+ * Returns the out-of-office (OOO) period set for the given user, or `null` if they are not currently marked as away.
+ *
+ * **Use cases:**
+ * - Showing OOO badge next to assignees
+ * - Letting automations re-route assignments while the user is away
+ *
+ * **Behavior notes:**
+ * - The caller must be the **target user themselves** or a valid coworker (share at least one project). Otherwise 404 — the endpoint does **not** differentiate "not found" from "not authorized" to avoid user enumeration.
+ * - Dates are returned in UTC.
+ *
  */
 export const getOutOfOffice = <ThrowOnError extends boolean = false>(options: Options<GetOutOfOfficeData, ThrowOnError>) => (options.client ?? client).get<GetOutOfOfficeResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -870,7 +1811,20 @@ export const getOutOfOffice = <ThrowOnError extends boolean = false>(options: Op
 });
 
 /**
- * Enable out of office
+ * Enable / overwrite user's out-of-office
+ *
+ * Sets or overwrites the out-of-office window for the given user.
+ *
+ * **Use cases:**
+ * - Self-service: user sets their own vacation
+ * - HR / PM sets a coworker's OOO on their behalf
+ *
+ * **Behavior notes:**
+ * - ACL: caller must be the target user or a valid coworker (same rule as GET).
+ * - Calling this on a user who already has an OOO **overwrites** the existing window (not appended).
+ * - `date_to` must be `>= date_from`, otherwise 400.
+ * - Dates are stored normalized to UTC.
+ *
  */
 export const enableOutOfOffice = <ThrowOnError extends boolean = false>(options: Options<EnableOutOfOfficeData, ThrowOnError>) => (options.client ?? client).post<EnableOutOfOfficeResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -883,7 +1837,22 @@ export const enableOutOfOffice = <ThrowOnError extends boolean = false>(options:
 });
 
 /**
- * Get all notifications
+ * Get my notifications (paginated, filterable)
+ *
+ * Paginated list of notifications addressed to the authenticated caller.
+ *
+ * **Use cases:**
+ * - Rendering the notifications dropdown
+ * - Digest / email summaries
+ * - Integrations that mirror Freelo activity into Slack / Teams
+ *
+ * **Behavior notes:**
+ * - Notifications are **always scoped to the caller** — there is no way to read another user's notifications through this endpoint.
+ * - `users_ids[]` filters by **authors** of the notification-triggering events, not recipients.
+ * - `teams_uuids[]` filters by the team context of the notification (e.g. all notifications from Team X).
+ * - `only_unread=true` is useful for badge counters.
+ * - Default order: `date_add desc` (newest first).
+ *
  */
 export const getAllNotifications = <ThrowOnError extends boolean = false>(options?: Options<GetAllNotificationsData, ThrowOnError>) => (options?.client ?? client).get<GetAllNotificationsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -892,7 +1861,18 @@ export const getAllNotifications = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Mark notification as read
+ * Mark a notification as read
+ *
+ * Marks a single notification (addressed to the caller) as read.
+ *
+ * **Use cases:**
+ * - Acknowledging an item from the bell dropdown
+ * - Auto-read flow in an integration when a user interacts with the linked entity
+ *
+ * **Behavior notes:**
+ * - Idempotent — calling on an already-read notification returns 200.
+ * - 404 if the notification does not exist **or** does not belong to the caller.
+ *
  */
 export const markNotificationAsRead = <ThrowOnError extends boolean = false>(options: Options<MarkNotificationAsReadData, ThrowOnError>) => (options.client ?? client).post<MarkNotificationAsReadResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -901,7 +1881,17 @@ export const markNotificationAsRead = <ThrowOnError extends boolean = false>(opt
 });
 
 /**
- * Mark notification as unread
+ * Mark a notification as unread
+ *
+ * Reverts a previous "read" on a notification — re-surfaces it in the unread feed.
+ *
+ * **Use cases:**
+ * - Restoring a notification the user wants to revisit
+ * - Bulk "unread" automation after a snooze
+ *
+ * **Behavior notes:**
+ * - Idempotent; 404 if notification does not belong to caller.
+ *
  */
 export const markNotificationAsUnread = <ThrowOnError extends boolean = false>(options: Options<MarkNotificationAsUnreadData, ThrowOnError>) => (options.client ?? client).post<MarkNotificationAsUnreadResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -910,7 +1900,20 @@ export const markNotificationAsUnread = <ThrowOnError extends boolean = false>(o
 });
 
 /**
- * Get all events
+ * Get activity events (audit log)
+ *
+ * Paginated activity feed across projects, tasks, users, and event types the caller has access to. This is effectively the audit / history log.
+ *
+ * **Use cases:**
+ * - Activity timeline UI
+ * - Webhook-like polling for "what changed since last sync"
+ * - Reconstructing a project's history
+ *
+ * **Behavior notes (non-obvious):**
+ * - The caller's accessible `projects_ids`, `users_ids`, and allowed event types are **injected implicitly** into the filter as a safety net. Requests filtered for projects / users / types the caller can't see are silently constrained; you won't see data you shouldn't, even if you pass the IDs explicitly.
+ * - Use `/events-types` (see `Events:findTypes` in the router) to discover valid `events_types[]` values.
+ * - Default order: `date desc` (newest first). No sort-by-type support.
+ *
  */
 export const getAllEvents = <ThrowOnError extends boolean = false>(options?: Options<GetAllEventsData, ThrowOnError>) => (options?.client ?? client).get<GetAllEventsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -919,7 +1922,18 @@ export const getAllEvents = <ThrowOnError extends boolean = false>(options?: Opt
 });
 
 /**
- * Download file
+ * Download a file by UUID
+ *
+ * Streams the raw file content (any MIME type) identified by UUID. ACL-checked: the caller must have access to a project the file belongs to.
+ *
+ * **Use cases:**
+ * - Rendering an attachment preview in a client
+ * - Proxying file downloads through an integration
+ *
+ * **Behavior notes:**
+ * - Content-Type is derived from the stored MIME type. Content-Disposition header carries the original filename.
+ * - Returns 404 if the file does not exist, was deleted, or the caller has no access to any project it is attached to.
+ *
  */
 export const downloadFile = <ThrowOnError extends boolean = false>(options: Options<DownloadFileData, ThrowOnError>) => (options.client ?? client).get<DownloadFileResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -928,10 +1942,19 @@ export const downloadFile = <ThrowOnError extends boolean = false>(options: Opti
 });
 
 /**
- * Upload file
+ * Upload a file (multipart)
  *
- * Upload a file (max 100MB). The returned UUID can be used in comment content
- * as `<a data-freelo-uuid="uuid">caption</a>`.
+ * Uploads a single file (**max 100 MB**). Returns a UUID that can be referenced from other endpoints.
+ *
+ * **Use cases:**
+ * - Attaching an image to a comment: embed `<a data-freelo-uuid="{uuid}">caption</a>` in the comment content
+ * - Attaching files to a task description via `POST /task/{id}/description`
+ * - Pinning files to a project
+ *
+ * **Behavior notes:**
+ * - The upload does **not** automatically attach the file anywhere — it produces a UUID you then reference.
+ * - `multipart/form-data` is mandatory; JSON body is rejected.
+ * - Size / content-type checks come from `FileUploadChecker`; oversize or forbidden types return 400.
  *
  */
 export const uploadFile = <ThrowOnError extends boolean = false>(options: Options<UploadFileData, ThrowOnError>) => (options.client ?? client).post<UploadFileResponses, unknown, ThrowOnError>({
@@ -946,9 +1969,18 @@ export const uploadFile = <ThrowOnError extends boolean = false>(options: Option
 });
 
 /**
- * Get all documents and files
+ * List docs, files, links, and directories (paginated)
  *
- * Returns items from directories (directory, link, file, document)
+ * Global listing of **all four types of project assets** — directories, links, files, and documents — across accessible projects. Use `type` to narrow to a single category.
+ *
+ * **Use cases:**
+ * - Building a cross-project "library" search
+ * - Export / backup of non-task assets
+ *
+ * **Behavior notes:**
+ * - ACL-filtered by the caller's visible projects.
+ * - Without `projects_ids[]`, spans every project the caller can see.
+ *
  */
 export const getAllDocsAndFiles = <ThrowOnError extends boolean = false>(options?: Options<GetAllDocsAndFilesData, ThrowOnError>) => (options?.client ?? client).get<GetAllDocsAndFilesResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -957,7 +1989,17 @@ export const getAllDocsAndFiles = <ThrowOnError extends boolean = false>(options
 });
 
 /**
- * Get all states
+ * List all state definitions (active/archived/template/deleted…)
+ *
+ * Returns the reference list of entity states used across Freelo (projects, tasks, tasklists) — a static enumeration you can use to interpret numeric state IDs in other endpoints.
+ *
+ * **Use cases:**
+ * - Translating state IDs returned by list endpoints into human-readable names in a UI
+ * - Building filter pickers that use `state_id` (tasks) or `states_ids[]` (projects)
+ *
+ * **Behavior notes:**
+ * - This is a global lookup; response is the same for every caller. Cache aggressively on the client.
+ *
  */
 export const getAllStates = <ThrowOnError extends boolean = false>(options?: Options<GetAllStatesData, ThrowOnError>) => (options?.client ?? client).get<GetAllStatesResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -966,7 +2008,14 @@ export const getAllStates = <ThrowOnError extends boolean = false>(options?: Opt
 });
 
 /**
- * Get custom field types
+ * List supported custom-field types
+ *
+ * Returns the catalog of custom-field type definitions (e.g. text, number, enum) available for use in `POST /custom-field/create/{project_id}`. Response includes the UUID of each type — that's the value you pass in `type` when creating a custom field.
+ *
+ * **Use cases:**
+ * - Populating a type picker in a custom-field creation UI
+ * - Validating `type` UUIDs before sending a create request
+ *
  */
 export const getCustomFieldTypes = <ThrowOnError extends boolean = false>(options?: Options<GetCustomFieldTypesData, ThrowOnError>) => (options?.client ?? client).get<GetCustomFieldTypesResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -975,7 +2024,20 @@ export const getCustomFieldTypes = <ThrowOnError extends boolean = false>(option
 });
 
 /**
- * Create custom field
+ * Define a custom field on a project
+ *
+ * Creates a custom-field definition (column) on the specified project. Tasks in this project then expose this field in their custom field values.
+ *
+ * **Use cases:**
+ * - Adding "Estimated points", "Client ID", "Severity" fields to projects
+ * - Structured metadata for reporting
+ *
+ * **Behavior notes (non-obvious):**
+ * - Caller must be a **project commander** of the target project. Otherwise `UserIsNotProjectCommander` → 403.
+ * - `type` is a **UUID referencing a predefined type** from `GET /custom-field/get-types` (text / number / enum). Invalid UUIDs → 404.
+ * - If `uuid` is provided in the body it is honored (useful for reproducible provisioning); otherwise the server generates one.
+ * - Plan limits apply — creating a field beyond the account's allowance throws `PlanExceededException` (typically 402/429).
+ *
  */
 export const createCustomField = <ThrowOnError extends boolean = false>(options: Options<CreateCustomFieldData, ThrowOnError>) => (options.client ?? client).post<CreateCustomFieldResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -988,7 +2050,14 @@ export const createCustomField = <ThrowOnError extends boolean = false>(options:
 });
 
 /**
- * Rename custom field
+ * Rename a custom field
+ *
+ * Changes the display name of an existing custom field.
+ *
+ * **Behavior notes:**
+ * - ACL: caller must be project commander of the field's project; otherwise 403.
+ * - The field's UUID / type are immutable via this endpoint; only `name` changes.
+ *
  */
 export const renameCustomField = <ThrowOnError extends boolean = false>(options: Options<RenameCustomFieldData, ThrowOnError>) => (options.client ?? client).post<RenameCustomFieldResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1001,7 +2070,17 @@ export const renameCustomField = <ThrowOnError extends boolean = false>(options:
 });
 
 /**
- * Delete custom field
+ * Soft-delete custom field
+ *
+ * Marks a custom-field definition as deleted. Existing task values of this field are preserved but hidden; can be restored via `/custom-field/restore/{uuid}`.
+ *
+ * **Use cases:**
+ * - Retiring an obsolete field without losing historical data
+ *
+ * **Behavior notes:**
+ * - Soft-delete; use `/restore` to undo.
+ * - ACL: requires project commander of the field's project.
+ *
  */
 export const deleteCustomField = <ThrowOnError extends boolean = false>(options: Options<DeleteCustomFieldData, ThrowOnError>) => (options.client ?? client).delete<DeleteCustomFieldResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1010,7 +2089,14 @@ export const deleteCustomField = <ThrowOnError extends boolean = false>(options:
 });
 
 /**
- * Restore custom field
+ * Restore a soft-deleted custom field
+ *
+ * Reverses a prior `/custom-field/delete`. Previously preserved values become visible again.
+ *
+ * **Behavior notes:**
+ * - 404 if the custom field doesn't exist or was never soft-deleted.
+ * - ACL: requires project commander.
+ *
  */
 export const restoreCustomField = <ThrowOnError extends boolean = false>(options: Options<RestoreCustomFieldData, ThrowOnError>) => (options.client ?? client).post<RestoreCustomFieldResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1019,7 +2105,21 @@ export const restoreCustomField = <ThrowOnError extends boolean = false>(options
 });
 
 /**
- * Add or edit custom field value
+ * Upsert scalar custom-field value on a task
+ *
+ * Sets the value of a **non-enum** (text / number) custom field on a task. Upsert semantics — if the task already has a value for this `custom_field_uuid`, it is updated; otherwise a new value is created.
+ *
+ * **Use cases:**
+ * - Syncing structured metadata from an external system into Freelo tasks
+ * - Allowing a user to set / change a custom field value without knowing whether one already exists
+ *
+ * **Behavior notes (non-obvious):**
+ * - Matching key for upsert is the **pair (`task_id`, `custom_field_uuid`)**, not a UUID. Callers cannot specify the resulting value's UUID — it is generated server-side on create and preserved on update.
+ * - The task and the custom field must belong to the **same project** — otherwise HTTP 409 Conflict with `"Custom field is in the different project than the task."`.
+ * - For enum-typed custom fields, use `/custom-field/add-or-edit-enum-value` instead. Using this endpoint on an enum field produces unexpected `checker` validation errors.
+ * - Writes a custom-field-value-history row on every call (even no-op updates). Use sparingly for heavy polling loads.
+ * - Response is wrapped: `{ "custom_field_value": { ... } }`.
+ *
  */
 export const addOrEditCustomFieldValue = <ThrowOnError extends boolean = false>(options: Options<AddOrEditCustomFieldValueData, ThrowOnError>) => (options.client ?? client).post<AddOrEditCustomFieldValueResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1032,7 +2132,21 @@ export const addOrEditCustomFieldValue = <ThrowOnError extends boolean = false>(
 });
 
 /**
- * Assign or edit enum option
+ * Upsert enum custom-field value on a task
+ *
+ * Sets the value of an **enum-typed** custom field on a task by referencing one of the field's predefined enum options (by UUID). Upsert semantics — creates or updates based on the (`task_id`, `customFieldUuid`) pair.
+ *
+ * **Use cases:**
+ * - Selecting a dropdown / status value on a task programmatically
+ * - Bulk-updating categorical fields during data imports
+ *
+ * **Behavior notes (non-obvious):**
+ * - `value` is the **UUID of an enum option** (fetched from `/custom-field-enum/get-for-custom-field/{uuid}`), **not** the display string.
+ * - Field name casing mismatch: body uses camelCase `customFieldUuid` (unlike the scalar endpoint which uses snake_case `custom_field_uuid`). Matches the server's internal data key.
+ * - Same cross-project rule applies: custom field and task must be in the same project; otherwise 409.
+ * - If the enum option UUID does not exist or belongs to a different custom field, 404 with "Enum was not found.".
+ * - Response uses the camelCase key `customFieldEnum` for the value wrapper.
+ *
  */
 export const addOrEditEnumValue = <ThrowOnError extends boolean = false>(options: Options<AddOrEditEnumValueData, ThrowOnError>) => (options.client ?? client).post<AddOrEditEnumValueResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1045,7 +2159,17 @@ export const addOrEditEnumValue = <ThrowOnError extends boolean = false>(options
 });
 
 /**
- * Delete custom field value
+ * Remove a custom-field value from a task
+ *
+ * Deletes the specific custom-field value by its UUID. The field definition itself and other tasks' values are unaffected.
+ *
+ * **Use cases:**
+ * - Clearing a field on a task (differentiating "no value" from "empty string")
+ *
+ * **Behavior notes:**
+ * - A history row is written capturing the previous value.
+ * - 404 if the value UUID doesn't exist or belongs to a deleted custom field.
+ *
  */
 export const deleteCustomFieldValue = <ThrowOnError extends boolean = false>(options: Options<DeleteCustomFieldValueData, ThrowOnError>) => (options.client ?? client).delete<DeleteCustomFieldValueResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1054,7 +2178,17 @@ export const deleteCustomFieldValue = <ThrowOnError extends boolean = false>(opt
 });
 
 /**
- * Get enum options for custom field
+ * List enum options of a custom field
+ *
+ * Returns the list of enum options (dropdown values) defined for an enum-typed custom field. Use the returned `uuid`s as `value` in `/custom-field/add-or-edit-enum-value`.
+ *
+ * **Use cases:**
+ * - Populating a dropdown picker in a UI
+ * - Resolving display labels to option UUIDs when importing
+ *
+ * **Behavior notes:**
+ * - Only non-deleted options are returned; soft-deleted options are filtered out.
+ *
  */
 export const getEnumOptionsForCustomField = <ThrowOnError extends boolean = false>(options: Options<GetEnumOptionsForCustomFieldData, ThrowOnError>) => (options.client ?? client).get<GetEnumOptionsForCustomFieldResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1063,7 +2197,19 @@ export const getEnumOptionsForCustomField = <ThrowOnError extends boolean = fals
 });
 
 /**
- * Create enum option
+ * Add an option to an enum custom field
+ *
+ * Creates a new enum option (dropdown value) on an enum-typed custom field.
+ *
+ * **Use cases:**
+ * - Extending a "Status" dropdown with a new option ("Blocked", "In review")
+ * - Importing categorical data from an external system
+ *
+ * **Behavior notes:**
+ * - Caller-supplied `uuid` is respected if present; otherwise server-generated.
+ * - Calling on a non-enum custom field produces a validation error.
+ * - ACL: project commander.
+ *
  */
 export const createEnumOption = <ThrowOnError extends boolean = false>(options: Options<CreateEnumOptionData, ThrowOnError>) => (options.client ?? client).post<CreateEnumOptionResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1076,7 +2222,17 @@ export const createEnumOption = <ThrowOnError extends boolean = false>(options: 
 });
 
 /**
- * Edit enum option
+ * Rename an enum option
+ *
+ * Updates the display `value` (label) of an enum option. The option's UUID is preserved, so any existing task values referencing it continue to work.
+ *
+ * **Use cases:**
+ * - Fixing a typo in a dropdown value across all tasks using it
+ * - Re-labeling a status category
+ *
+ * **Behavior notes:**
+ * - Only `value` is editable via this endpoint; the order and type are managed elsewhere.
+ *
  */
 export const editEnumOption = <ThrowOnError extends boolean = false>(options: Options<EditEnumOptionData, ThrowOnError>) => (options.client ?? client).post<EditEnumOptionResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1089,9 +2245,18 @@ export const editEnumOption = <ThrowOnError extends boolean = false>(options: Op
 });
 
 /**
- * Delete enum option
+ * Delete an unused enum option (safe)
  *
- * Delete unused enum option. Returns error if enum is in use.
+ * Removes an enum option **only if no tasks currently reference it**.
+ *
+ * **Use cases:**
+ * - Safe cleanup of never-used options
+ * - Quality gating: if this succeeds, no data loss happened
+ *
+ * **Behavior notes (non-obvious):**
+ * - If the option is in use by any task value, the delete is **refused** with a `UserVisibleErrorMessageException`. To delete anyway (and null out the referencing values), use `/custom-field-enum/force-delete/{id}`.
+ * - Even non-used soft-deleted references may block deletion — inspect carefully.
+ *
  */
 export const deleteEnumOption = <ThrowOnError extends boolean = false>(options: Options<DeleteEnumOptionData, ThrowOnError>) => (options.client ?? client).delete<DeleteEnumOptionResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1100,9 +2265,19 @@ export const deleteEnumOption = <ThrowOnError extends boolean = false>(options: 
 });
 
 /**
- * Force delete enum option
+ * Force-delete enum option (destructive)
  *
- * Delete enum option even if it is being used
+ * Deletes the enum option even if it is currently used by task values. Referencing task values are cleared.
+ *
+ * **Use cases:**
+ * - Cleanup after a renamed / merged option that can't be resolved with a regular delete
+ * - Workspace housekeeping when preserving data in tasks is not required
+ *
+ * **Behavior notes (non-obvious):**
+ * - **Destructive:** any task value that referenced this option is cleared. The `custom_field_value_history` row is kept for audit, but the current value becomes null/empty.
+ * - There is no undo. Prefer `/custom-field-enum/delete` when in doubt.
+ * - ACL: project commander.
+ *
  */
 export const forceDeleteEnumOption = <ThrowOnError extends boolean = false>(options: Options<ForceDeleteEnumOptionData, ThrowOnError>) => (options.client ?? client).delete<ForceDeleteEnumOptionResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1111,7 +2286,18 @@ export const forceDeleteEnumOption = <ThrowOnError extends boolean = false>(opti
 });
 
 /**
- * Find custom fields by project
+ * List custom fields of a project
+ *
+ * Returns all custom-field definitions configured on a project, plus a boolean indicating whether the caller is the project's commander (relevant for the admin-level mutation endpoints in this tag).
+ *
+ * **Use cases:**
+ * - Rendering the custom-field columns on a task board
+ * - Deciding in UI whether to show "Create custom field" button (based on `is_commander`)
+ *
+ * **Behavior notes:**
+ * - Soft-deleted custom fields are excluded.
+ * - Includes enum fields with their options embedded.
+ *
  */
 export const findCustomFieldsByProject = <ThrowOnError extends boolean = false>(options: Options<FindCustomFieldsByProjectData, ThrowOnError>) => (options.client ?? client).get<FindCustomFieldsByProjectResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1120,7 +2306,17 @@ export const findCustomFieldsByProject = <ThrowOnError extends boolean = false>(
 });
 
 /**
- * Create note
+ * Create a note in a project
+ *
+ * Creates a project-level **note** (a Document entity internally — notes and documents share the same storage and presenter). Notes are rich-text blocks attached to the project rather than to a task.
+ *
+ * **Use cases:**
+ * - Capturing meeting minutes on a project
+ * - Storing shared reference docs without needing a separate doc tool
+ *
+ * **Behavior notes (non-obvious):**
+ * - Internally handled by `DocumentPresenter` — the `/note*` paths are aliases of `/document*`. The response shape is a Document. `name` maps to the note title, `content` to the body.
+ *
  */
 export const createNote = <ThrowOnError extends boolean = false>(options: Options<CreateNoteData, ThrowOnError>) => (options.client ?? client).post<CreateNoteResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1133,7 +2329,13 @@ export const createNote = <ThrowOnError extends boolean = false>(options: Option
 });
 
 /**
- * Delete note
+ * Delete a note
+ *
+ * Soft-deletes the note. It is hidden from listings but retained in the database for audit.
+ *
+ * **Behavior notes:**
+ * - Response returns the (now-deleted) note's state for confirmation. This is a quirk — most delete endpoints return a SuccessResponse; this one returns the Note.
+ *
  */
 export const deleteNote = <ThrowOnError extends boolean = false>(options: Options<DeleteNoteData, ThrowOnError>) => (options.client ?? client).delete<DeleteNoteResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1142,7 +2344,13 @@ export const deleteNote = <ThrowOnError extends boolean = false>(options: Option
 });
 
 /**
- * Get note
+ * Get a note detail
+ *
+ * Fetches a single note by ID. As with create, notes are backed by the Document entity.
+ *
+ * **Behavior notes:**
+ * - ACL-checked via the note's project.
+ *
  */
 export const getNote = <ThrowOnError extends boolean = false>(options: Options<GetNoteData, ThrowOnError>) => (options.client ?? client).get<GetNoteResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1151,7 +2359,13 @@ export const getNote = <ThrowOnError extends boolean = false>(options: Options<G
 });
 
 /**
- * Edit note
+ * Edit a note
+ *
+ * Updates an existing note's title (`name`) and / or body (`content`).
+ *
+ * **Behavior notes:**
+ * - Overwrites content — there is no history / diff tracking exposed via the API.
+ *
  */
 export const editNote = <ThrowOnError extends boolean = false>(options: Options<EditNoteData, ThrowOnError>) => (options.client ?? client).post<EditNoteResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
@@ -1164,7 +2378,24 @@ export const editNote = <ThrowOnError extends boolean = false>(options: Options<
 });
 
 /**
- * Search using Elasticsearch
+ * Fulltext search across Freelo (Elasticsearch)
+ *
+ * Unified fulltext search powered by Elasticsearch. Supports entity-type scoping (task, subtask, project, tasklist, file, comment), structural narrowing (projects, tasklists, workers, authors), state and due-date filtering.
+ *
+ * **Use cases:**
+ * - Global search bar in the UI
+ * - Content-discovery integrations ("find comments about Sentry issue 123")
+ * - Reporting that starts from a text query ("find all tasks mentioning keyword X in last quarter")
+ *
+ * **Behavior notes (non-obvious):**
+ * - `POST` method despite being a read — request bodies are JSON because query filters are too complex for query strings.
+ * - `search_query` is **required**. Passing only filters without a text query is not supported here; use tag-specific list endpoints (like `/all-tasks`) for filter-only queries.
+ * - `state_ids` defaults to `["active"]` — pass explicit states if you also want archived / finished / template results.
+ * - `entity_type` narrows to a single category; omit for mixed results.
+ * - ACL-filtered — Elasticsearch returns only documents the caller can read based on project membership.
+ * - `lang` influences analyzer / stemming — defaults to account language.
+ * - Query length is capped; `ElasticsearchQueryLengthExceededException` → 400 with a UserVisibleErrorMessage.
+ *
  */
 export const search = <ThrowOnError extends boolean = false>(options: Options<SearchData, ThrowOnError>) => (options.client ?? client).post<SearchResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
