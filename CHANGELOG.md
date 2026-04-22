@@ -5,6 +5,41 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0](https://github.com/freeloapp/js-sdk/compare/js-sdk-v2.2.0...js-sdk-v3.0.0) (2026-04-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* rewrite SDK v2.0.0 with Hey API auto-generated client
+
+### Added
+
+* add dynamic credential support with setCredentials and withCredentials ([33cdfa3](https://github.com/freeloapp/js-sdk/commit/33cdfa35d422809c5cb1974784e1dcc051a024b1))
+* add low-level call() method for arbitrary API endpoints ([79cf737](https://github.com/freeloapp/js-sdk/commit/79cf73792863d553f9956c03a88d2605d55f3666))
+* add low-level call() method for arbitrary API endpoints ([de493c6](https://github.com/freeloapp/js-sdk/commit/de493c61eb8ad4168e67dd0d5562e24c896f50e7))
+* add main Freelo client class with unified API access ([f41b5ca](https://github.com/freeloapp/js-sdk/commit/f41b5cae9d6ecaa1bacc68816662ed654253a03f))
+* add OAuth 2.1 authentication with PKCE and auto-refresh ([f6d9cc6](https://github.com/freeloapp/js-sdk/commit/f6d9cc6bd1932e93c11ad52f86b30a336b0f5257))
+* add TypeScript type definitions for Freelo API ([22349f1](https://github.com/freeloapp/js-sdk/commit/22349f16f8be8baaa2b4e06659907d94a4bebf02))
+* add utility functions for pagination, dates, and currency ([7379816](https://github.com/freeloapp/js-sdk/commit/7379816b8b4b5b9bd713929974ed93f849ae7e76))
+* implement API resource classes for all Freelo endpoints ([ba6b1b8](https://github.com/freeloapp/js-sdk/commit/ba6b1b8c5b89afe86535e159a0df15304625b59f))
+* implement HTTP client with rate limiting support ([6211905](https://github.com/freeloapp/js-sdk/commit/62119058db139e5422f9978929ac3eb05d9d1f56))
+* rewrite SDK v2.0.0 with Hey API auto-generated client ([ed47bc1](https://github.com/freeloapp/js-sdk/commit/ed47bc1c2ad1a6e5ef4574fd69d2eacb26288c61))
+* support multiple auth methods via discriminated union ([f28f752](https://github.com/freeloapp/js-sdk/commit/f28f752c3bdfd28f5e4f20283385533f50f4b83a))
+
+
+### Fixed
+
+* update repository URLs from GitLab to GitHub ([7de77cd](https://github.com/freeloapp/js-sdk/commit/7de77cde68c8ce346226b73fbf3adcffb29c2b80))
+* use shields.io for npm version badge ([03c0467](https://github.com/freeloapp/js-sdk/commit/03c0467b5f82fef030f1237a607283a4be389c56))
+
+
+### Changed
+
+* add Freelo API OpenAPI specification ([ebccab7](https://github.com/freeloapp/js-sdk/commit/ebccab72922b85a959a47068d3029a6a0541e294))
+* add README, CHANGELOG, and LICENSE ([7a80c7d](https://github.com/freeloapp/js-sdk/commit/7a80c7da112a357548d3e12ee382a3a63a1d6924))
+* add usage examples for various frameworks ([18dec6f](https://github.com/freeloapp/js-sdk/commit/18dec6f25ffe57688290b0d53ef60a7d7ed23eac))
+* add v2.2.0 changelog entry ([0a9931f](https://github.com/freeloapp/js-sdk/commit/0a9931fda3bc003db73ffcaa56ed61ff70d8d6d7))
+
 ## [2.2.0] - 2026-04-22
 
 ### Added
