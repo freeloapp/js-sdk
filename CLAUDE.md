@@ -67,3 +67,12 @@ npm run typecheck  # Check TypeScript types
 - Export both ESM and CommonJS
 - All exports must be tree-shakeable (individual named functions, no namespace objects)
 - Follow semantic versioning
+
+## Releases
+
+Releases are fully automated by [release-please](https://github.com/googleapis/release-please) — do NOT bump `package.json` version or edit `CHANGELOG.md` manually.
+
+- Commit with [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `chore:`, `docs:`, `perf:`, `refactor:`, `!` or `BREAKING CHANGE:` for breaking).
+- On push to `main`, `.github/workflows/release-please.yml` opens / updates a "Release PR" that bumps version + appends `CHANGELOG.md` based on accumulated commits.
+- Merging the Release PR creates a git tag + GitHub release; `.github/workflows/publish.yml` then detects the version change and publishes to npm.
+- Config: `release-please-config.json`, current-version manifest: `.release-please-manifest.json`.
