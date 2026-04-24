@@ -29,3 +29,7 @@ coverage/
 
 # Misc
 *.tgz
+
+# Claude Code runtime artifacts (settings.json is kept tracked)
+.claude/*.lock
+.claude/settings.local.json
