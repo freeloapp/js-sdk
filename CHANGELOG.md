@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0](https://github.com/freeloapp/js-sdk/compare/js-sdk-v2.2.0...js-sdk-v2.3.0) (2026-04-24)
+
+
+### Added
+
+* add custom default headers via FreeloConfig.headers ([78ea0b7](https://github.com/freeloapp/js-sdk/commit/78ea0b785b7d451e7af8f30f995891f29e6ff906))
+
 ## [2.2.0] - 2026-04-22
 
 ### Added
