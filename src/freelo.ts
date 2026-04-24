@@ -30,6 +30,18 @@ export interface FreeloConfig {
   baseUrl?: string;
   /** Enable request/response logging to console. */
   logging?: boolean;
+  /**
+   * Default headers applied to every request. Useful for sending custom
+   * identification or tracking headers, or for environments where the
+   * `User-Agent` header cannot be set from JavaScript (e.g. browsers,
+   * embedded web views) and you need to pass a custom header instead.
+   *
+   * Per-request headers passed via `call()` or `{ headers }` options
+   * take precedence over these defaults. The built-in `Authorization`
+   * and `User-Agent` headers are not overridden — use `auth` and
+   * `userAgent` to control them.
+   */
+  headers?: Record<string, string>;
 }
 
 /**
@@ -50,10 +62,23 @@ function resolveAuthHeader(auth: FreeloAuth): string {
  * Apply shared interceptors (auth, user-agent, logging, rate-limit) to a client.
  */
 function applyInterceptors(target: Client, config: FreeloConfig): void {
+  // Apply configured default headers. Only fills in headers the caller
+  // didn't set per-request, so per-request headers always win. Runs before
+  // Authorization/User-Agent so those built-ins also always win.
+  const applyDefaultHeaders = (request: Request): void => {
+    if (!config.headers) return;
+    for (const [name, value] of Object.entries(config.headers)) {
+      if (!request.headers.has(name)) {
+        request.headers.set(name, value);
+      }
+    }
+  };
+
   // Auth + User-Agent (with proactive OAuth refresh)
   if (config.auth.type === 'oauth') {
     const oauthAuth = config.auth;
     target.interceptors.request.use(async (request) => {
+      applyDefaultHeaders(request);
       await maybeRefreshToken(oauthAuth);
       request.headers.set('Authorization', resolveAuthHeader(config.auth));
       request.headers.set('User-Agent', config.userAgent);
@@ -61,6 +86,7 @@ function applyInterceptors(target: Client, config: FreeloConfig): void {
     });
   } else {
     target.interceptors.request.use((request) => {
+      applyDefaultHeaders(request);
       request.headers.set('Authorization', resolveAuthHeader(config.auth));
       request.headers.set('User-Agent', config.userAgent);
       return request;
@@ -135,6 +161,20 @@ function applyInterceptors(target: Client, config: FreeloConfig): void {
  *
  * // Or pass client explicitly (multi-tenant)
  * const { data: other } = await getProjects({ client });
+ * ```
+ *
+ * @example
+ * ```ts
+ * // Send custom headers on every request — useful for tracing,
+ * // client identification, or environments that block setting
+ * // `User-Agent` from JavaScript.
+ * createFreelo({
+ *   auth: { type: 'bearer', token: '...' },
+ *   userAgent: 'MyApp/1.0',
+ *   headers: {
+ *     'X-Custom-Header': 'custom-value',
+ *   },
+ * });
  * ```
  */
 export function createFreelo(config: FreeloConfig): Client {

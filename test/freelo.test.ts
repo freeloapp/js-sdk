@@ -107,6 +107,113 @@ describe('createFreelo', () => {
     );
   });
 
+  it('applies configured default headers to every request', async () => {
+    mockFetch.mockImplementation(() =>
+      Promise.resolve(
+        new Response(JSON.stringify([]), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' },
+        }),
+      ),
+    );
+
+    const client = createFreelo({
+      auth: { type: 'basic', email: 'test@example.com', apiKey: 'test-key' },
+      userAgent: 'ms_teams/1.0',
+      headers: {
+        userAgentMS: 'ms_teams1.0',
+        'X-Custom': 'value',
+      },
+    });
+
+    await client.get({ url: '/projects' });
+    await client.get({ url: '/tasks' });
+
+    expect(mockFetch).toHaveBeenCalledTimes(2);
+    for (const call of mockFetch.mock.calls) {
+      const request = call[0] as Request;
+      expect(request.headers.get('userAgentMS')).toBe('ms_teams1.0');
+      expect(request.headers.get('X-Custom')).toBe('value');
+      // User-Agent from `userAgent` still wins when not overridden in headers
+      expect(request.headers.get('User-Agent')).toBe('ms_teams/1.0');
+    }
+  });
+
+  it('per-request headers override configured default headers', async () => {
+    mockFetch.mockResolvedValue(
+      new Response(JSON.stringify([]), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+
+    const client = createFreelo({
+      auth: { type: 'basic', email: 'test@example.com', apiKey: 'test-key' },
+      userAgent: 'Test/1.0',
+      headers: { 'X-Custom': 'default' },
+    });
+
+    await client.get({
+      url: '/projects',
+      headers: { 'X-Custom': 'override' },
+    });
+
+    const request = mockFetch.mock.calls[0][0] as Request;
+    expect(request.headers.get('X-Custom')).toBe('override');
+  });
+
+  it('config headers do not override built-in User-Agent or Authorization', async () => {
+    mockFetch.mockResolvedValue(
+      new Response(JSON.stringify([]), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+
+    const client = createFreelo({
+      auth: { type: 'basic', email: 'test@example.com', apiKey: 'test-key' },
+      userAgent: 'Test/1.0',
+      headers: {
+        'User-Agent': 'ShouldBeIgnored/2.0',
+        Authorization: 'Bearer should-be-ignored',
+      },
+    });
+
+    await client.get({ url: '/projects' });
+
+    const request = mockFetch.mock.calls[0][0] as Request;
+    expect(request.headers.get('User-Agent')).toBe('Test/1.0');
+    expect(request.headers.get('Authorization')).toBe(
+      `Basic ${btoa('test@example.com:test-key')}`,
+    );
+  });
+
+  it('applies default headers on OAuth clients', async () => {
+    mockFetch.mockResolvedValue(
+      new Response(JSON.stringify([]), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+
+    const client = createFreelo({
+      auth: {
+        type: 'oauth',
+        accessToken: 'jwt',
+        refreshToken: 'refresh',
+        clientId: 'my-app',
+        expiresAt: Date.now() + 3600 * 1000,
+      },
+      userAgent: 'OAuthApp/1.0',
+      headers: { userAgentMS: 'ms_teams1.0' },
+    });
+
+    await client.get({ url: '/projects' });
+
+    const request = mockFetch.mock.calls[0][0] as Request;
+    expect(request.headers.get('userAgentMS')).toBe('ms_teams1.0');
+  });
+
   it('enables logging when configured', async () => {
     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
 

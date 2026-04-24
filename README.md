@@ -165,8 +165,31 @@ const client = createFreelo({
   userAgent: 'YourApp/1.0',      // Required: Identifies your application
   baseUrl: 'https://api.freelo.io/v1',  // Optional: API base URL
   logging: true,                 // Optional: Log requests to console
+  headers: {                     // Optional: default headers on every request
+    'X-Custom-Header': 'custom-value',
+  },
 });
 ```
+
+### Default headers
+
+Use the `headers` option when you need a header sent on every request —
+for example to add tracing or client-identification metadata, or when
+`User-Agent` cannot be set from JavaScript (browsers, embedded web
+views) and you need to identify the client via a custom header instead:
+
+```typescript
+createFreelo({
+  auth: { type: 'bearer', token: '...' },
+  userAgent: 'YourApp/1.0',
+  headers: {
+    'X-Custom-Header': 'custom-value',
+  },
+});
+```
+
+Per-request `headers` override these defaults. The built-in `Authorization`
+and `User-Agent` headers always win — use `auth` and `userAgent` to change them.
 
 ## Multi-Tenant / Per-Request Auth
 
