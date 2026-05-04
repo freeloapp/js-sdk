@@ -1,75 +1,183 @@
 /**
  * Date Utilities
- * Helpers for converting between API format and JavaScript Date objects
+ * Helpers for converting between API format and JavaScript Date objects.
  *
- * The Freelo API uses ISO 8601 date formats:
- * - Date only: "2024-01-15"
- * - Date with time: "2024-01-15T10:30:00+01:00"
+ * The Freelo API V1 transmits `date-time` fields (request and response) as
+ * naive ISO 8601 strings without a timezone designator (e.g.
+ * `"2024-01-15T10:30:00"`), interpreted as **Europe/Prague** local time
+ * (CET/CEST, observing DST). See the OpenAPI spec ("Timestamp Format").
+ *
+ * `fromApi()` and `toApiWithTime()` honor that contract regardless of the
+ * runtime's local timezone — the returned `Date` is the correct UTC instant,
+ * and the formatted string is always Prague wall time without an offset.
  *
  * @example
  * ```typescript
- * import { dates } from '@freeloapp/js-sdk';
+ * import { dateToApi, toApiWithTime, dateFromApi } from '@freeloapp/js-sdk';
  *
- * // Format for API (date only)
- * dates.toApi(new Date()); // "2024-01-15"
- *
- * // Format for API (with time)
- * dates.toApiWithTime(new Date()); // "2024-01-15T10:30:00+01:00"
- *
- * // Parse from API
- * dates.fromApi("2024-01-15T10:30:00+01:00"); // Date object
+ * dateToApi(new Date());                  // "2024-01-15"          (date only)
+ * toApiWithTime(new Date());              // "2024-01-15T10:30:00" (naive Prague)
+ * dateFromApi("2024-01-15T10:30:00");     // Date object (interpreted as Prague)
+ * dateFromApi("2024-01-15T10:30:00+01:00"); // Date object (offset honored)
  * ```
  */
 
+const NAIVE_DATETIME_RE = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d+))?$/;
+
+const PRAGUE_PART_FORMATTER = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'Europe/Prague',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: false,
+});
+
+const pad2 = (n: number): string => String(n).padStart(2, '0');
+
+function pragueOffsetMs(utcMs: number): number {
+  let year = 0;
+  let month = 1;
+  let day = 1;
+  let hour = 0;
+  let minute = 0;
+  let second = 0;
+  for (const p of PRAGUE_PART_FORMATTER.formatToParts(new Date(utcMs))) {
+    const v = Number(p.value);
+    switch (p.type) {
+      case 'year':
+        year = v;
+        break;
+      case 'month':
+        month = v;
+        break;
+      case 'day':
+        day = v;
+        break;
+      case 'hour':
+        hour = v % 24;
+        break;
+      case 'minute':
+        minute = v;
+        break;
+      case 'second':
+        second = v;
+        break;
+    }
+  }
+  return Date.UTC(year, month - 1, day, hour, minute, second) - utcMs;
+}
+
+function parsePragueNaive(s: string): Date {
+  const m = NAIVE_DATETIME_RE.exec(s);
+  if (!m) {
+    throw new Error(`Invalid date value: ${s}`);
+  }
+  let baseUtc = Date.UTC(
+    Number(m[1]),
+    Number(m[2]) - 1,
+    Number(m[3]),
+    Number(m[4]),
+    Number(m[5]),
+    Number(m[6])
+  );
+  const frac = m[7];
+  if (frac !== undefined) {
+    baseUtc += Math.round(parseFloat('0.' + frac) * 1000);
+  }
+  // Treat naive components as Prague wall time. Convert to UTC by subtracting
+  // Prague's offset at the resulting instant. The second pass settles the
+  // rare case where the first guess crossed a DST boundary.
+  const firstGuess = baseUtc - pragueOffsetMs(baseUtc);
+  return new Date(baseUtc - pragueOffsetMs(firstGuess));
+}
+
 /**
- * Convert a JavaScript Date to API date format (YYYY-MM-DD)
+ * Convert a JavaScript Date to API date format (YYYY-MM-DD).
+ *
  * @param date - The Date object to convert
  * @returns Date string in API format
  */
 export function toApi(date: Date): string {
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
+  const month = pad2(date.getMonth() + 1);
+  const day = pad2(date.getDate());
   return `${year}-${month}-${day}`;
 }
 
 /**
- * Convert a JavaScript Date to API datetime format (ISO 8601 with timezone)
+ * Convert a JavaScript Date to API datetime format — naive ISO 8601 in
+ * Europe/Prague local time, e.g. `"2024-01-15T10:30:00"`.
+ *
+ * This is the format Freelo API V1 accepts for `date-time` request fields.
+ * The result has no `Z` and no timezone offset; the server interprets it
+ * as Europe/Prague. Output is independent of the runtime's local timezone.
+ *
  * @param date - The Date object to convert
- * @returns ISO 8601 datetime string
+ * @returns Naive ISO 8601 string in Europe/Prague local time
  */
 export function toApiWithTime(date: Date): string {
-  return date.toISOString();
+  let year = 0;
+  let month = 1;
+  let day = 1;
+  let hour = 0;
+  let minute = 0;
+  let second = 0;
+  for (const p of PRAGUE_PART_FORMATTER.formatToParts(date)) {
+    const v = Number(p.value);
+    switch (p.type) {
+      case 'year':
+        year = v;
+        break;
+      case 'month':
+        month = v;
+        break;
+      case 'day':
+        day = v;
+        break;
+      case 'hour':
+        hour = v % 24;
+        break;
+      case 'minute':
+        minute = v;
+        break;
+      case 'second':
+        second = v;
+        break;
+    }
+  }
+  return `${year}-${pad2(month)}-${pad2(day)}T${pad2(hour)}:${pad2(minute)}:${pad2(second)}`;
 }
 
 /**
- * Convert a JavaScript Date to API datetime format with local timezone offset
+ * Alias of {@link toApiWithTime}. Kept for backward compatibility — the API's
+ * "local time" is Europe/Prague.
+ *
  * @param date - The Date object to convert
- * @returns ISO 8601 datetime string with local timezone
+ * @returns Naive ISO 8601 string in Europe/Prague local time
  */
 export function toApiWithLocalTime(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  const hours = String(date.getHours()).padStart(2, '0');
-  const minutes = String(date.getMinutes()).padStart(2, '0');
-  const seconds = String(date.getSeconds()).padStart(2, '0');
-
-  // Calculate timezone offset
-  const offset = date.getTimezoneOffset();
-  const offsetSign = offset <= 0 ? '+' : '-';
-  const offsetHours = String(Math.floor(Math.abs(offset) / 60)).padStart(2, '0');
-  const offsetMinutes = String(Math.abs(offset) % 60).padStart(2, '0');
-
-  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${offsetSign}${offsetHours}:${offsetMinutes}`;
+  return toApiWithTime(date);
 }
 
 /**
- * Parse an API date/datetime string to a JavaScript Date object
+ * Parse an API date/datetime string to a JavaScript Date object.
+ *
+ * Naive datetime strings (no `Z` and no `±HH:MM` offset, e.g.
+ * `"2024-01-15T10:30:00"`) are interpreted as Europe/Prague local time
+ * — that is what API V1 returns, regardless of the runtime's local
+ * timezone. Strings with an explicit offset (or date-only strings) are
+ * parsed via the standard `Date` constructor.
+ *
  * @param value - The API date string
  * @returns Date object
  */
 export function fromApi(value: string): Date {
+  if (NAIVE_DATETIME_RE.test(value)) {
+    return parsePragueNaive(value);
+  }
   const date = new Date(value);
   if (isNaN(date.getTime())) {
     throw new Error(`Invalid date value: ${value}`);
@@ -141,4 +249,3 @@ export function range(
     date_to: toApi(dateTo),
   };
 }
-

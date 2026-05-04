@@ -413,13 +413,19 @@ The API allows 25 requests per minute. When exceeded, you'll receive a 429 statu
 ### Date Utilities
 
 ```typescript
-import { dateToApi, dateFromApi, today, daysFromNow } from '@freeloapp/js-sdk';
+import { dateToApi, toApiWithTime, dateFromApi, today, daysFromNow } from '@freeloapp/js-sdk';
 
-dateToApi(new Date());       // "2024-01-15"
-dateFromApi('2024-01-15');   // Date object
-today();                     // Today in API format
-daysFromNow(7);              // 7 days from now
+dateToApi(new Date());                // "2024-01-15"           (date only)
+toApiWithTime(new Date());            // "2024-01-15T10:30:00"  (datetime)
+dateFromApi('2024-01-15T10:30:00');   // Date object
+today();                              // Today in API format
+daysFromNow(7);                       // 7 days from now
 ```
+
+The Freelo API V1 transmits `date-time` fields as **naive ISO 8601 strings without a timezone designator** (e.g. `"2024-01-15T10:30:00"`), interpreted as **Europe/Prague** local time (see the OpenAPI spec, "Timestamp Format"). The SDK handles this transparently regardless of the runtime's local timezone:
+
+- `dateFromApi(value)` interprets naive strings as Europe/Prague, so the resulting `Date` reflects the correct UTC instant. Strings with an explicit offset (`Z` or `±HH:MM`) are parsed as-is.
+- `toApiWithTime(date)` formats a `Date` as a naive Europe/Prague timestamp suitable for `date-time` request bodies. `toApiWithLocalTime(date)` is kept as an alias.
 
 ### Currency Utilities
 
