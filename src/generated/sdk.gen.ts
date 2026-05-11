@@ -770,7 +770,18 @@ export const getFinishedTasks = <ThrowOnError extends boolean = false>(options: 
  *
  * Returns relations for a list of tasks. Each item in the response contains the task ID
  * and its relations (types: `blocked_by`, `blocks`, `related_to`, `duplicate_of`).
- * Tasks the caller cannot access are silently omitted from the response.
+ *
+ * Tasks the caller cannot access (missing project ACL, insufficient plan, or the ID being
+ * a multi-project child) are silently omitted from the response — the endpoint never
+ * reports per-task 403/404. This mirrors the single-task GET which returns 404 for the
+ * same cases.
+ *
+ * Plan-gated types: `related_to` and `duplicate_of` require team features;
+ * `blocked_by` / `blocks` additionally require business features. On lower plans the
+ * corresponding items are simply missing from the per-task relation list.
+ *
+ * Duplicate task_ids are deduplicated internally; the response contains at most one
+ * entry per task.
  *
  */
 export const findTaskRelationsBulk = <ThrowOnError extends boolean = false>(options: Options<FindTaskRelationsBulkData, ThrowOnError>) => (options.client ?? client).post<FindTaskRelationsBulkResponses, FindTaskRelationsBulkErrors, ThrowOnError>({
@@ -959,6 +970,12 @@ export const assignTaskToProject = <ThrowOnError extends boolean = false>(option
  *
  * Returns all relations for a task (types: `blocked_by`, `blocks`, `related_to`, `duplicate_of`).
  * Relations to tasks the caller cannot access are filtered out.
+ *
+ * Relation type visibility depends on the project owner's plan: `related_to` and `duplicate_of`
+ * require team features; `blocked_by` and `blocks` additionally require business features.
+ * On lower plans the corresponding buckets are returned empty.
+ *
+ * Multi-project child task IDs are not queryable here — a direct child ID returns 404.
  *
  */
 export const getTaskRelations = <ThrowOnError extends boolean = false>(options: Options<GetTaskRelationsData, ThrowOnError>) => (options.client ?? client).get<GetTaskRelationsResponses, GetTaskRelationsErrors, ThrowOnError>({

@@ -40,6 +40,9 @@ export type TaskRelation = {
 
 export type TaskWork = {
     id?: number;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     reported?: string;
     minutes?: number;
     cost?: Currency;
@@ -79,14 +82,26 @@ export type ProjectBasic = {
 };
 
 export type ProjectWithTasklists = ProjectBasic & {
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_edited_at?: string;
     tasklists?: Array<TasklistBasic>;
     client?: Client;
 };
 
 export type ProjectFull = ProjectBasic & {
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_edited_at?: string;
     owner?: UserBasic;
     state?: State;
@@ -103,7 +118,13 @@ export type ProjectDetail = ProjectFull & {
         tasks?: Array<{
             id?: number;
             name?: string;
+            /**
+             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             */
             due_date?: string | null;
+            /**
+             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             */
             due_date_end?: string | null;
             worker?: UserBasic;
             parent_task_id?: number | null;
@@ -142,7 +163,13 @@ export type TasklistWithBudget = TasklistBasic & {
 };
 
 export type TasklistFull = TasklistBasic & {
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_edited_at?: string;
     state?: State;
     project?: ProjectBasic & {
@@ -155,12 +182,24 @@ export type TasklistFull = TasklistBasic & {
 
 export type TasklistDetail = TasklistBasic & {
     project_id?: number;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_edited_at?: string;
     tasks?: Array<{
         id?: number;
         name?: string;
+        /**
+         * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+         */
         due_date?: string | null;
+        /**
+         * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+         */
         due_date_end?: string | null;
         worker?: UserBasic;
         parent_task_id?: number | null;
@@ -216,9 +255,21 @@ export type UserTimeEstimate = {
 export type TaskSummary = {
     id?: number;
     name?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_edited_at?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date?: string | null;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date_end?: string | null;
     count_comments?: number;
     count_subtasks?: number;
@@ -242,13 +293,22 @@ export type TaskFull = TaskSummary & {
 };
 
 export type TaskFinished = TaskSummary & {
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_finished?: string;
     finished_by?: UserBasic;
 };
 
 export type TaskCreate = {
     name: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date_end?: string;
     worker?: number;
     priority_enum?: 'h' | 'm' | 'l';
@@ -264,8 +324,17 @@ export type TaskCreate = {
 export type TaskCreated = {
     id?: number;
     name?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date?: string | null;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date_end?: string | null;
     worker?: UserBasic;
     priority_enum?: string;
@@ -281,10 +350,25 @@ export type TaskCreated = {
 export type TaskDetail = {
     id?: number;
     name?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_edited_at?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date?: string | null;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date_end?: string | null;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_finished?: string | null;
     minutes?: number;
     priority_enum?: string;
@@ -306,7 +390,13 @@ export type TaskDetail = {
 
 export type SubtaskCreate = {
     name: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date_end?: string;
     worker?: number;
     priority_enum?: 'h' | 'm' | 'l';
@@ -321,8 +411,17 @@ export type Subtask = {
     id?: number;
     task_id?: number | null;
     name?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date?: string | null;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date_end?: string | null;
     count_comments?: number;
     count_subtasks?: number;
@@ -348,7 +447,13 @@ export type FileBasic = {
 export type FileFull = FileBasic & {
     caption?: string;
     description?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_edited_at?: string;
     state?: State;
 };
@@ -361,6 +466,9 @@ export type FileUpload = {
 export type Comment = {
     id?: number;
     content?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
     files?: Array<FileBasic>;
 };
@@ -376,7 +484,13 @@ export type CommentFull = {
     id?: number | null;
     uuid?: string | null;
     content?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_edited_at?: string;
     author?: UserBasic;
     task?: {
@@ -401,6 +515,9 @@ export type CommentFull = {
 
 export type WorkReport = {
     id?: number;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
     date_reported?: string;
     note?: string | null;
@@ -421,6 +538,9 @@ export type WorkReportExtended = WorkReport & {
 };
 
 export type WorkReportFull = WorkReport & {
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_edited_at?: string;
     task?: {
         id?: number;
@@ -442,6 +562,9 @@ export type WorkReportFull = WorkReport & {
 
 export type IssuedInvoice = {
     id?: number;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
     note?: string | null;
     currency?: 'CZK' | 'EUR' | 'USD';
@@ -480,6 +603,9 @@ export type IssuedInvoiceDetail = IssuedInvoice & {
 export type Notification = {
     id?: number;
     type?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_action?: string;
     author?: UserBasic;
     who?: UserBasic;
@@ -509,6 +635,9 @@ export type Notification = {
 
 export type Event = {
     id?: number;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_action?: string;
     type?: string;
     author?: UserBasic;
@@ -536,7 +665,13 @@ export type Event = {
         filename?: string;
         caption?: string;
     } | null;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date?: string | null;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     due_date_end?: string | null;
 };
 
@@ -546,6 +681,9 @@ export type FileItem = {
     author?: UserBasic;
     project?: ProjectBasic;
     directory_uuid?: string | null;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
     order?: number;
     type?: 'directory' | 'link' | 'file' | 'document';
@@ -567,6 +705,9 @@ export type CustomField = {
     project_id?: number;
     author_id?: number;
     name?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
     priority?: number;
 };
@@ -574,7 +715,13 @@ export type CustomField = {
 export type CustomFieldValue = {
     uuid?: string;
     value?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_edited_at?: string | null;
     author_id?: number;
     task_id?: number;
@@ -586,7 +733,13 @@ export type CustomFieldEnumValue = {
     task_id?: number;
     custom_field_uuid?: string;
     value?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_edited_at?: string | null;
     author_id?: number;
 };
@@ -604,18 +757,33 @@ export type CustomFieldWithValue = {
     project_id?: number;
     name?: string;
     priority?: number;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     field_date_add?: string;
     value_uuid?: string;
     value_author_id?: number;
     value?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     value_date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     value_date_edited_at?: string | null;
 };
 
 export type Note = {
     id?: number;
     name?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_add?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
     date_edited_at?: string;
     state?: State;
     content?: string;
@@ -1612,7 +1780,13 @@ export type GetTaskResponse = GetTaskResponses[keyof GetTaskResponses];
 export type EditTaskData = {
     body: {
         name?: string;
+        /**
+         * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+         */
         due_date?: string;
+        /**
+         * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+         */
         due_date_end?: string;
         worker?: number;
         /**
@@ -1765,11 +1939,11 @@ export type GetTaskRelationsData = {
 
 export type GetTaskRelationsErrors = {
     /**
-     * Forbidden
-     */
-    403: unknown;
-    /**
-     * Task not found
+     * Returned when the task does not exist, when the caller has no access to the task
+     * or its project, when the project owner's plan has no team features, or when the
+     * requested ID is a multi-project child. No separate 403 is emitted — access is
+     * indistinguishable from not-found by design.
+     *
      */
     404: unknown;
 };
@@ -1874,6 +2048,9 @@ export type DeleteTaskReminderResponse = DeleteTaskReminderResponses[keyof Delet
 
 export type CreateTaskReminderData = {
     body: {
+        /**
+         * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+         */
         remind_at: string;
     };
     path: {
@@ -1888,6 +2065,9 @@ export type CreateTaskReminderResponses = {
      * Reminder created
      */
     200: {
+        /**
+         * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+         */
         remind_at?: string;
         task?: {
             id?: number;
@@ -2346,7 +2526,7 @@ export type GetTimeTrackingStatusResponses = {
          */
         uuid?: string;
         /**
-         * Timestamp when the session was started (ISO 8601 / ATOM format)
+         * Timestamp when the session was started. Naive ISO8601 in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
          */
         date_reported?: string;
         /**
@@ -2717,7 +2897,13 @@ export type GetOutOfOfficeResponses = {
      */
     200: {
         out_of_office?: {
+            /**
+             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             */
             date_from?: string;
+            /**
+             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             */
             date_to?: string;
         } | null;
     };
@@ -2728,7 +2914,13 @@ export type GetOutOfOfficeResponse = GetOutOfOfficeResponses[keyof GetOutOfOffic
 export type EnableOutOfOfficeData = {
     body: {
         out_of_office: {
+            /**
+             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             */
             date_from: string;
+            /**
+             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             */
             date_to: string;
         };
     };
