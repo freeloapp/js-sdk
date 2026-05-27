@@ -1495,7 +1495,8 @@ export const stopTimeTracking = <ThrowOnError extends boolean = false>(options?:
  * - There is no session ID — the endpoint always targets the caller's single active session.
  * - Returns HTTP **409 Conflict** with `"Timetracking is not running."` if no session is active.
  * - Setting `task_id=null` disassociates the session from any task (continues as general work).
- * - Elapsed minutes are preserved; only the tracked task / note change.
+ * - All body fields are partial — only fields present in the payload are updated; omitted fields keep their current value.
+ * - Passing `date_reported` rewrites the session's start time (e.g. to backdate a forgotten timer). Elapsed duration on `/timetracking/stop` is computed from this value to "now".
  *
  */
 export const editTimeTracking = <ThrowOnError extends boolean = false>(options?: Options<EditTimeTrackingData, ThrowOnError>) => (options?.client ?? client).post<EditTimeTrackingResponses, EditTimeTrackingErrors, ThrowOnError>({
@@ -1725,7 +1726,7 @@ export const markAsInvoiced = <ThrowOnError extends boolean = false>(options: Op
 /**
  * Get all coworkers visible to caller
  *
- * Paginated list of users the authenticated caller shares at least one project with — effectively their "coworkers book".
+ * Paginated list of users the authenticated caller shares at least one **active** project with — effectively their current "coworkers book".
  *
  * **Use cases:**
  * - Populating an assignee picker outside of a project context
@@ -1733,8 +1734,9 @@ export const markAsInvoiced = <ThrowOnError extends boolean = false>(options: Op
  * - Resolving email → user ID for offline users
  *
  * **Behavior notes:**
- * - Does **not** return the caller themselves.
- * - Users with whom the caller only shares archived / deleted projects may still appear; the repository filters by membership, not by state.
+ * - Returns only **active sharing connections**: users who are currently workers or owners of at least one of the caller's active projects (workers' user accounts must also be in active state).
+ * - Archived / deleted / template projects are **not** considered when computing the result set.
+ * - Historical co-workers (people the caller used to share a project with but no longer does) are **not** returned. For a full historical view of past collaborators, use the Freelo web application.
  *
  */
 export const getAllUsers = <ThrowOnError extends boolean = false>(options?: Options<GetAllUsersData, ThrowOnError>) => (options?.client ?? client).get<GetAllUsersResponses, unknown, ThrowOnError>({

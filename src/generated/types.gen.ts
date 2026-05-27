@@ -55,8 +55,18 @@ export type State = {
 };
 
 export type UserBasic = {
-    id?: number;
-    fullname?: string;
+    id: number;
+    fullname: string;
+    /**
+     * Normalized form of `fullname` (whitespace stripped, diacritics removed) used as the visible text after `@` inside a mention span. Build a mention with:
+     * `<span data-freelo-mention="1" data-freelo-user-id="{id}">@{mention_key}</span>`
+     *
+     */
+    mention_key: string;
+};
+
+export type UserWithEmail = UserBasic & {
+    email: string;
 };
 
 export type Client = {
@@ -516,9 +526,12 @@ export type CommentFull = {
 export type WorkReport = {
     id?: number;
     /**
-     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     * Insertion timestamp of the work report (when the row was created in the DB). Naive ISO8601 in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
      */
     date_add?: string;
+    /**
+     * Start timestamp of the work session. Naive ISO8601 in Europe/Prague timezone (no offset). End time is derived as `date_reported + minutes`. See "Timestamp Format" in API description.
+     */
     date_reported?: string;
     note?: string | null;
     minutes?: number;
@@ -850,6 +863,16 @@ export type GetUsersMeResponses = {
              * ID of the authenticated user
              */
             id: number;
+            /**
+             * Email address of the authenticated user
+             */
+            email: string;
+            /**
+             * Normalized form of the authenticated user's `fullname` (whitespace stripped, diacritics removed) used in comments as the visible text after `@` inside a mention span. Build a mention with:
+             * `<span data-freelo-mention="1" data-freelo-user-id="{id}">@{mention_key}</span>`
+             *
+             */
+            mention_key: string;
         };
     };
 };
@@ -1120,7 +1143,7 @@ export type GetProjectWorkersResponses = {
      */
     200: PaginatedResponse & {
         data?: {
-            workers?: Array<UserBasic>;
+            workers?: Array<UserWithEmail>;
         };
     };
 };
@@ -1497,7 +1520,7 @@ export type GetAssignableWorkersResponses = {
     /**
      * Successful response
      */
-    200: Array<UserBasic>;
+    200: Array<UserWithEmail>;
 };
 
 export type GetAssignableWorkersResponse = GetAssignableWorkersResponses[keyof GetAssignableWorkersResponses];
@@ -1632,9 +1655,9 @@ export type GetAllTasksData = {
          */
         without_label?: string;
         /**
-         * Only tasks with no due date
+         * Only tasks with no due date. Pass `1` to enable, `0` to disable — string values like `true`/`false` are not accepted and silently fall back to the default.
          */
-        no_due_date?: boolean;
+        no_due_date?: 0 | 1;
         /**
          * Filter tasks with due date on or after this date
          */
@@ -1644,9 +1667,9 @@ export type GetAllTasksData = {
          */
         'due_date_range[date_to]'?: string;
         /**
-         * Only tasks finished after due date
+         * Only tasks finished after due date. Pass `1` to enable, `0` to disable — string values like `true`/`false` are not accepted and silently fall back to the default.
          */
-        finished_overdue?: boolean;
+        finished_overdue?: 0 | 1;
         /**
          * Filter tasks finished on or after this date
          */
@@ -2480,6 +2503,10 @@ export type EditTimeTrackingData = {
          * Updated note for the time tracking session.
          */
         note?: string | null;
+        /**
+         * New start timestamp for the running session (ISO 8601, e.g. `2026-05-07T09:00:00+02:00`). Used to correct or backdate the timer's start time. The work report produced by `/timetracking/stop` will compute its duration from this value.
+         */
+        date_reported?: string;
     };
     path?: never;
     query?: never;
@@ -2591,9 +2618,9 @@ export type GetWorkReportsData = {
         'date_add_range[date_to]'?: string;
         date_edited_from?: string;
         /**
-         * Include the authenticated user's work reports without an associated task. Automatically filters by the authenticated user.
+         * Include the authenticated user's work reports without an associated task. Automatically filters by the authenticated user. Pass `1` to enable, `0` to disable — string values like `true`/`false` are not accepted and silently fall back to the default. Mutually exclusive with `users_ids[]`.
          */
-        with_own_taskless?: boolean;
+        with_own_taskless?: 0 | 1;
         /**
          * Page number (starting from 0)
          */
@@ -2617,6 +2644,12 @@ export type GetWorkReportsResponse = GetWorkReportsResponses[keyof GetWorkReport
 
 export type CreateWorkReportData = {
     body: {
+        /**
+         * Start timestamp of the work session. Accepts either a full ISO 8601 datetime
+         * (`2026-05-08T08:00:00+02:00`) or a date-only string (`2026-05-08`).
+         * Datetime form records the exact start moment; date-only defaults to start of day.
+         *
+         */
         date_reported?: string;
         worker_id?: number;
         minutes: number;
@@ -2664,9 +2697,21 @@ export type EditWorkReportData = {
     body: {
         minutes?: number;
         cost?: string;
+        /**
+         * Start timestamp of the work session. Accepts either a full ISO 8601 datetime
+         * (`2026-05-08T08:00:00+02:00`) or a date-only string (`2026-05-08`).
+         * Datetime form records the exact start moment; date-only defaults to start of day.
+         *
+         */
         date_reported?: string;
-        note?: string;
-        task_id?: number;
+        /**
+         * Note for the work report. Pass `null` to clear an existing note. Empty string is rejected.
+         */
+        note?: string | null;
+        /**
+         * ID of the task this work report belongs to. Pass `null` to detach the report from its current task.
+         */
+        task_id?: number | null;
     };
     path: {
         work_report_id: number;
@@ -2805,7 +2850,7 @@ export type GetAllUsersResponses = {
      */
     200: PaginatedResponse & {
         data?: {
-            users?: Array<UserBasic>;
+            users?: Array<UserWithEmail>;
         };
     };
 };
@@ -2952,7 +2997,10 @@ export type GetAllNotificationsData = {
         'teams_uuids[]'?: Array<string>;
         order?: 'asc' | 'desc';
         'notification_types[]'?: Array<string>;
-        only_unread?: boolean;
+        /**
+         * Only return unread notifications. Pass `1` to enable, `0` to disable — string values like `true`/`false` are not accepted and silently fall back to the default.
+         */
+        only_unread?: 0 | 1;
         /**
          * Page number (starting from 0)
          */
