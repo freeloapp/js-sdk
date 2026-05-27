@@ -11,9 +11,12 @@ on:
       - 'src/generated/**'
   schedule:
     - cron: '0 6 * * 1' # Every Monday at 6:00 UTC
+  workflow_dispatch: {}
 
 jobs:
+  # On push / PR: fail fast if the committed generated code drifts from the spec.
   check:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,3 +26,46 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run generate:check
+
+  # On schedule / manual dispatch: regenerate from upstream spec and open a PR
+  # if anything changed, instead of just failing the run.
+  regenerate:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+
+      - name: Regenerate SDK from upstream spec
+        run: npm run generate
+
+      - name: Run checks against regenerated SDK
+        run: |
+          npm run lint
+          npm run typecheck
+          npm run test:run
+          npm run build
+
+      - name: Open PR if anything changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          branch: chore/update-api-spec
+          delete-branch: true
+          commit-message: 'fix: regenerate SDK from updated OpenAPI spec'
+          title: 'fix: regenerate SDK from updated OpenAPI spec'
+          body: |
+            Automated weekly refresh of the Freelo OpenAPI spec.
+
+            - `src/generated/**` regenerated from the upstream spec.
+            - Lint, typecheck, tests and build pass against the new client.
+
+            Review the diff for any breaking changes before merging.
