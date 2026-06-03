@@ -44,4 +44,4 @@ jobs:
 
       - name: Publish to npm
         if: steps.version-check.outputs.skip != 'true'
-        run: npm publish --access public --loglevel verbose
+        run: npm publish --access public
