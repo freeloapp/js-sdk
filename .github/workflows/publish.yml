@@ -13,11 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # No registry-url: it would inject an _authToken into .npmrc, which
+      # takes precedence over OIDC trusted publishing and breaks publish
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-          registry-url: https://registry.npmjs.org
 
       # Trusted publishing requires npm >= 11.5.1 (Node 20 ships older npm)
       - run: npm install -g npm@latest
