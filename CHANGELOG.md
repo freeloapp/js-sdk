@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.5.0](https://github.com/freeloapp/js-sdk/compare/js-sdk-v2.4.0...js-sdk-v2.5.0) (2026-06-08)
+
+
+### Added
+
+* regenerate SDK from latest production OpenAPI spec ([2797f2f](https://github.com/freeloapp/js-sdk/commit/2797f2ff74690d70a2309e746ac240f52bd52811))
+
+
+### Fixed
+
+* regenerate SDK from updated OpenAPI spec ([f53fdc1](https://github.com/freeloapp/js-sdk/commit/f53fdc1e94a11ef1ad7d48a1a6e07fe753470439))
+* regenerate SDK from updated OpenAPI spec ([31bcf2f](https://github.com/freeloapp/js-sdk/commit/31bcf2f330ee7d19a4b388fa40541c144b290e50))
+
 ## [2.4.0](https://github.com/freeloapp/js-sdk/compare/js-sdk-v2.3.2...js-sdk-v2.4.0) (2026-05-27)
 
 
