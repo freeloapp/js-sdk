@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskData, ActivateTaskResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskData, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UploadFileData, UploadFileResponses } from './types.gen';
+import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskcheckData, ActivateTaskcheckResponses, ActivateTaskData, ActivateTaskResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskcheckData, DeleteTaskcheckResponses, DeleteTaskData, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskcheckData, EditTaskcheckResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTasklistData, EditTasklistResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindAvailableTaskLabelsData, FindAvailableTaskLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskcheckData, FinishTaskcheckResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UploadFileData, UploadFileResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -92,7 +92,7 @@ export const createProject = <ThrowOnError extends boolean = false>(options: Opt
  * - Narrow search by state (active / archived / template) combined with tag and owner filters
  *
  * **Behavior notes:**
- * - Pagination is **required** for large accounts — use `p` parameter; page size is fixed server-side.
+ * - Pagination is **required** for large accounts — use `p` (or its alias `page`); page size is fixed server-side.
  * - `states_ids[]` accepts any combination of `1=active`, `2=archived`, `3=template`. When omitted, the server applies a default (typically active only) — always pass it explicitly if you need archived/templates.
  * - `tags[]` matches any of the specified tags; pass the literal string `"without"` to get projects **without** any tag (this is a magic value, not a real tag name).
  * - `users_ids[]` filters by project **owner** only, not by workers.
@@ -387,7 +387,7 @@ export const createProjectFromTemplate = <ThrowOnError extends boolean = false>(
  * - Showing the caller which labels already exist so they don't create a duplicate
  *
  * **Behavior notes:**
- * - Response field is `label` (singular) — it is an array. The tag's `tag` entity property is exposed as `name` in API shape (the TagNameKeyReplacer maps it).
+ * - Response field is `labels` — an array. The tag's `tag` entity property is exposed as `name` in API shape (the TagNameKeyReplacer maps it).
  *
  */
 export const findAvailableProjectLabels = <ThrowOnError extends boolean = false>(options?: Options<FindAvailableProjectLabelsData, ThrowOnError>) => (options?.client ?? client).get<FindAvailableProjectLabelsResponses, unknown, ThrowOnError>({
@@ -585,6 +585,36 @@ export const createTasklist = <ThrowOnError extends boolean = false>(options: Op
 });
 
 /**
+ * Edit tasklist
+ *
+ * Updates one or more fields of an existing tasklist. Every field is optional — only the keys present in the request body are applied.
+ *
+ * **Use cases:**
+ * - Renaming a tasklist, adjusting its budget / time fund
+ * - Reordering tasklists within a project (`priority` field)
+ * - Managing followers (`tracking_users_ids`) and the default worker
+ *
+ * **Behavior notes:**
+ * - `budget`: send `null` or `0` to clear it.
+ * - `time_budget_minutes`: send `null` to clear; values must be >= 0.
+ * - `priority`: new position (order) of the tasklist within the project, 1 = first. Other tasklists in the moved-over range shift by ±1 to fill the gap. Values past the end are clamped to the last position. Despite the name, this is positional ordering — not task importance (`priority_enum`).
+ *
+ * **Best-effort semantics:** the priority renumber runs outside the transaction that commits `name`, `budget`, `time_budget_minutes`, `tracking_users_ids` and `worker_id`. A failure of the priority renumber does NOT roll back the other fields. The response contains a `priorityApplied` flag — if `false`, the rest of the edit succeeded but the priority change did not; the client may retry the priority update separately.
+ * - `tracking_users_ids`: send `[]` to clear all followers. IDs of users without access to the tasklist are silently filtered out. Combine with `should_change_existing_tasks: true` to also propagate the change to every existing task.
+ * - `worker_id`: send `null` to clear the default worker.
+ *
+ */
+export const editTasklist = <ThrowOnError extends boolean = false>(options: Options<EditTasklistData, ThrowOnError>) => (options.client ?? client).post<EditTasklistResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/tasklist/{tasklist_id}/edit',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
  * Get all tasklists (across projects)
  *
  * Paginated list of tasklists visible to the caller, across all accessible projects. Can be filtered to a subset of projects via `projects_ids[]`.
@@ -736,6 +766,7 @@ export const createTask = <ThrowOnError extends boolean = false>(options: Option
  * - `no_due_date=true` returns only tasks without a due date; combining with `due_date_range` is effectively contradictory and the range is ignored.
  * - `finished_overdue=true` filters for tasks finished **after** their due date — a reporting lens for delivery SLAs.
  * - `worker_id` filters by assignee only (not by tracking users).
+ * - `my_priorities=1` returns only tasks the authenticated user has added to their priorities.
  *
  */
 export const getAllTasks = <ThrowOnError extends boolean = false>(options?: Options<GetAllTasksData, ThrowOnError>) => (options?.client ?? client).get<GetAllTasksResponses, unknown, ThrowOnError>({
@@ -911,6 +942,58 @@ export const activateTask = <ThrowOnError extends boolean = false>(options: Opti
 export const finishTask = <ThrowOnError extends boolean = false>(options: Options<FinishTaskData, ThrowOnError>) => (options.client ?? client).post<FinishTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/task/{task_id}/finish',
+    ...options
+});
+
+/**
+ * Delete a simple checklist item
+ *
+ * Soft-deletes a simple checklist item (a `tasks_checks` row with no smart-task counterpart). A smart taskcheck id returns 404 — use `DELETE /task/{task_id}` for those.
+ *
+ */
+export const deleteTaskcheck = <ThrowOnError extends boolean = false>(options: Options<DeleteTaskcheckData, ThrowOnError>) => (options.client ?? client).delete<DeleteTaskcheckResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/taskcheck/{taskcheck_id}',
+    ...options
+});
+
+/**
+ * Edit a simple checklist item
+ *
+ * Updates a simple checklist item (a `tasks_checks` row with no smart-task counterpart). Only `name` and `worker` are editable; sending `priority_enum`, `priority`, `due_date` or `due_date_end` returns 400. A smart taskcheck id (one whose checklist item has its own `tasks.id`) returns 404 — use `POST /task/{task_id}` for those.
+ *
+ */
+export const editTaskcheck = <ThrowOnError extends boolean = false>(options: Options<EditTaskcheckData, ThrowOnError>) => (options.client ?? client).post<EditTaskcheckResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/taskcheck/{taskcheck_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Mark a simple checklist item as finished
+ *
+ * Moves a simple checklist item to the **finished** state. A smart taskcheck id returns 404 — use `POST /task/{task_id}/finish` for those.
+ *
+ */
+export const finishTaskcheck = <ThrowOnError extends boolean = false>(options: Options<FinishTaskcheckData, ThrowOnError>) => (options.client ?? client).post<FinishTaskcheckResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/taskcheck/{taskcheck_id}/finish',
+    ...options
+});
+
+/**
+ * Reopen a finished simple checklist item
+ *
+ * Moves a simple checklist item from the **finished** state back to **active**. A smart taskcheck id returns 404 — use `POST /task/{task_id}/activate` for those.
+ *
+ */
+export const activateTaskcheck = <ThrowOnError extends boolean = false>(options: Options<ActivateTaskcheckData, ThrowOnError>) => (options.client ?? client).post<ActivateTaskcheckResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/taskcheck/{taskcheck_id}/activate',
     ...options
 });
 
@@ -1272,6 +1355,26 @@ export const createSubtask = <ThrowOnError extends boolean = false>(options: Opt
         'Content-Type': 'application/json',
         ...options.headers
     }
+});
+
+/**
+ * Get task labels usable by caller
+ *
+ * Returns all task labels usable by the authenticated user — labels attached to tasks across the caller's owned and invited projects in `ACTIVE`, `ARCHIVED`, or `TEMPLATE` state.
+ *
+ * **Use cases:**
+ * - Populating a label picker before calling `/task-labels/add-to-task/{task_id}`
+ * - Showing the caller which task labels already exist so they don't create a duplicate via the name+color fetch-or-create modes
+ *
+ * **Behavior notes:**
+ * - Sorted by `name` ascending.
+ * - If the caller has no accessible projects, returns `{ "labels": [] }`.
+ *
+ */
+export const findAvailableTaskLabels = <ThrowOnError extends boolean = false>(options?: Options<FindAvailableTaskLabelsData, ThrowOnError>) => (options?.client ?? client).get<FindAvailableTaskLabelsResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/task-labels/find-available',
+    ...options
 });
 
 /**
@@ -2399,21 +2502,70 @@ export const editNote = <ThrowOnError extends boolean = false>(options: Options<
 /**
  * Fulltext search across Freelo (Elasticsearch)
  *
- * Unified fulltext search powered by Elasticsearch. Supports entity-type scoping (task, subtask, project, tasklist, file, comment), structural narrowing (projects, tasklists, workers, authors), state and due-date filtering.
+ * Unified fulltext search powered by Elasticsearch. Combines a required text query with a rich set of filters: entity-type scope, structural narrowing (projects / tasklists / tasks / authors / workers), state, subtask flag, due-date range and sorting.
  *
- * **Use cases:**
+ * ## What you can filter on
+ *
+ * | Filter | Type | Effect |
+ * | --- | --- | --- |
+ * | `search_query` | string | Required fulltext query (2–200 chars after trim). Wrap a fragment in **double quotes** for an ordered exact-match phrase, e.g. `"sentry issue 123"`. |
+ * | `entity_type` | string | Narrow to **one** entity category. See **Entity types** table below. |
+ * | `exclude_entity_types` | array of string | Exclude one or more categories. Same value set as `entity_type`. Useful e.g. to search everything *except* comments. |
+ * | `state_ids` | array of string | Restrict by lifecycle state. Defaults to `["active"]` — pass explicit values to also get archived / finished / template results. See **State IDs** table below. |
+ * | `projects_ids` | array of int | Only hits inside (or attached to) these projects. |
+ * | `tasklists_ids` | array of int | Only hits inside (or attached to) these tasklists. |
+ * | `tasks_ids` | array of int | Only hits inside (or attached to) these tasks (e.g. comments / files of a given task). |
+ * | `authors_ids` | array of int | Filter by author/creator (`entityOwner`). |
+ * | `workers_ids` | array of int | Filter by assignee. Meaningful for tasks/subtasks only. |
+ * | `is_subtask` | bool | When `true`, restricts to smart-subtask documents (subtasks, checklist items and comments under a subtask). Default `false`. |
+ * | `due_date.date_from` / `due_date.date_to` | date (`YYYY-MM-DD`) | Restrict by due-date range. At least one of the two must be set when the `due_date` object is provided. |
+ * | `sort` | object | Optional `{ order_by, order }`. Only sort field currently supported is `last_updated`; `order` is `asc` or `desc`. Omitting `sort` returns results by relevance score. |
+ * | `lang` | string | Language used for the Elasticsearch analyzer / stemmer. `cs_cz` (default) or `en_us`. |
+ * | `page` / `limit` | int | Pagination — `page` is zero-based; `limit` default `100`. |
+ *
+ * ## Entity types (`entity_type` / `exclude_entity_types`)
+ *
+ * The seven accepted input values expand to one or more underlying Elasticsearch document types.
+ *
+ * | Input value | Matches ES document types |
+ * | --- | --- |
+ * | `task` | `task` (top-level tasks only — excludes smart subtasks) |
+ * | `subtask` | smart subtasks (`task` with `isSmart=true`) **and** `taskcheck` (checklist items) |
+ * | `taskcheck` | `taskcheck` (checklist items only) |
+ * | `project` | `project` |
+ * | `tasklist` | `tasklist` |
+ * | `file` | `file`, `link`, `note` |
+ * | `comment` | `task_comment`, `note_comment`, `file_comment`, `link_comment` |
+ *
+ *
+ * ## State IDs
+ *
+ * | Value | Meaning |
+ * | --- | --- |
+ * | `active` | Default — open / in-progress tasks, active projects/tasklists. |
+ * | `finished` | Tasks closed via *Finish*. |
+ * | `archived` | Archived projects / tasklists. |
+ * | `archived_finished` / `archived_unfinished` | Sub-states of archived for finer reporting. |
+ * | `template` | Project / tasklist templates only. |
+ * | `not_template` | Everything except templates. |
+ *
+ * State filtering also shapes which **parent entities** are required/forbidden — e.g. `["archived"]` forces results to belong to an archived project/tasklist; `["template"]` restricts to template projects/tasklists.
+ *
+ * ## Use cases
+ *
  * - Global search bar in the UI
  * - Content-discovery integrations ("find comments about Sentry issue 123")
  * - Reporting that starts from a text query ("find all tasks mentioning keyword X in last quarter")
+ * - "Search everywhere except comments" — `exclude_entity_types: ["comment"]`
+ * - "Find checklist items in this project" — `entity_type: "taskcheck"` + `projects_ids`
  *
- * **Behavior notes (non-obvious):**
- * - `POST` method despite being a read — request bodies are JSON because query filters are too complex for query strings.
- * - `search_query` is **required**. Passing only filters without a text query is not supported here; use tag-specific list endpoints (like `/all-tasks`) for filter-only queries.
- * - `state_ids` defaults to `["active"]` — pass explicit states if you also want archived / finished / template results.
- * - `entity_type` narrows to a single category; omit for mixed results.
+ * ## Behavior notes (non-obvious)
+ *
+ * - `POST` method despite being a read — request body is JSON because filters are too complex for query strings.
+ * - `search_query` is **required** (2–200 chars after trim). Passing only filters without a text query is not supported here — use tag-specific list endpoints (e.g. `/all-tasks`) for filter-only queries.
  * - ACL-filtered — Elasticsearch returns only documents the caller can read based on project membership.
- * - `lang` influences analyzer / stemming — defaults to account language.
- * - Query length is capped; `ElasticsearchQueryLengthExceededException` → 400 with a UserVisibleErrorMessage.
+ * - Query length over 200 chars → `400` with a user-visible message (`ElasticsearchQueryLengthExceededException`).
+ * - Unknown `entity_type` / `exclude_entity_types` / `lang` value → `400` with a user-visible message listing accepted values.
  *
  */
 export const search = <ThrowOnError extends boolean = false>(options: Options<SearchData, ThrowOnError>) => (options.client ?? client).post<SearchResponses, unknown, ThrowOnError>({
