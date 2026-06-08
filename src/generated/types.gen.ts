@@ -292,6 +292,10 @@ export type TaskSummary = {
 };
 
 export type TaskFull = TaskSummary & {
+    /**
+     * Task kind discriminator: `task` = top-level task, `subtask` = smart subtask (has its own task id).
+     */
+    type?: 'task' | 'subtask';
     state?: State;
     project?: ProjectBasic & {
         state?: State;
@@ -299,6 +303,10 @@ export type TaskFull = TaskSummary & {
     tasklist?: TasklistBasic & {
         state?: State;
     };
+    /**
+     * Task priority level: 'h' = high, 'm' = medium, 'l' = low.
+     */
+    priority_enum?: 'h' | 'm' | 'l';
     custom_fields?: Array<CustomFieldWithValue>;
 };
 
@@ -419,6 +427,10 @@ export type SubtaskCreate = {
 
 export type Subtask = {
     id?: number;
+    /**
+     * Subtask kind discriminator: `subtask` = smart subtask (has its own `task_id`), `taskcheck` = simple checklist item (`task_id` is null). On the public API a `taskcheck` supports read, create, edit (name/worker only), finish, activate and delete via the `/api/v1/taskcheck/{taskcheck_id}*` endpoints.
+     */
+    type?: 'subtask' | 'taskcheck';
     task_id?: number | null;
     name?: string;
     /**
@@ -806,31 +818,118 @@ export type Note = {
     comments?: Array<CommentWithFiles>;
 };
 
+/**
+ * Single search hit. Fields marked **conditional** below appear only for specific `type` values:
+ *
+ * | Conditional field | Appears when `type` is |
+ * | --- | --- |
+ * | `is_smart` | `task` |
+ * | `task` | `task` (only if it's a smart subtask), `taskcheck`, `task_comment` |
+ * | `smart_task` | `taskcheck`, `task_comment` (the smart-task ancestor, if any) |
+ * | `note` | `note_comment` |
+ * | `file` | `file_comment` |
+ * | `link` | `link_comment` |
+ *
+ */
 export type SearchResult = {
-    score?: number;
-    id?: number;
+    /**
+     * Elasticsearch relevance score (`null` if missing from the hit).
+     */
+    score?: number | null;
+    /**
+     * Entity ID. For `task` hits whose entity is a child of a multi-project parent, this is rewritten to the **multi-project parent's task ID** (the original child ID is not exposed here).
+     *
+     */
+    id?: number | null;
     uuid?: string | null;
-    name?: string;
-    author_id?: number;
-    type?: 'task' | 'subtask' | 'project' | 'tasklist' | 'file' | 'comment';
+    name?: string | null;
+    /**
+     * ID of the root entity's owner.
+     */
+    author_id?: number | null;
+    /**
+     * Underlying Elasticsearch entity type for this hit (underscore form of `ElasticsearchEntityTypeEnum`). Broader than the `entity_type` request filter.
+     *
+     */
+    type?: 'task' | 'taskcheck' | 'task_comment' | 'note_comment' | 'file_comment' | 'link_comment' | 'project' | 'tasklist' | 'file' | 'link' | 'note' | 'directory' | 'user';
+    /**
+     * Highlighted snippets from the entity name (HTML, with `<em>` markers).
+     */
     highlight_name?: Array<string>;
+    /**
+     * Highlighted snippets from the entity content (HTML, with `<em>` markers).
+     */
     highlight_content?: Array<string>;
-    project?: ProjectBasic;
-    tasklist?: TasklistBasic;
+    project?: ProjectBasic | null;
+    tasklist?: TasklistBasic | null;
+    /**
+     * Numeric state ID of the root entity (active / archived / finished / template).
+     */
     state?: number;
+    /**
+     * **Conditional** — present only for `type=task`. `true` when the task is a smart subtask, `false` for a regular top-level task.
+     *
+     */
     is_smart?: boolean;
+    /**
+     * **Conditional** — parent task of the hit. Present for `type` of `taskcheck`, `task_comment`, and for `task` hits that are smart subtasks (in which case it carries the parent task).
+     *
+     */
+    task?: {
+        id?: number;
+        name?: string;
+    };
+    /**
+     * **Conditional** — smart-task ancestor (if any) for `type` of `taskcheck` or `task_comment`. `null` when the hit is not under a smart task.
+     *
+     */
+    smart_task?: {
+        id?: number;
+        name?: string;
+    } | null;
+    /**
+     * **Conditional** — present only for `type=note_comment`.
+     */
+    note?: {
+        id?: number | null;
+        name?: string | null;
+    };
+    /**
+     * **Conditional** — present only for `type=file_comment`.
+     */
+    file?: {
+        uuid?: string | null;
+        name?: string | null;
+    };
+    /**
+     * **Conditional** — present only for `type=link_comment`.
+     */
+    link?: {
+        uuid?: string | null;
+        name?: string | null;
+    };
 };
 
 /**
- * Page number (starting from 0)
+ * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
  */
 export type PageParam = number;
+
+/**
+ * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+ */
+export type PageAliasParam = number;
 
 export type ProjectIdParam = number;
 
 export type TasklistIdParam = number;
 
 export type TaskIdParam = number;
+
+/**
+ * ID of the taskcheck (`tasks_checks.id`)
+ */
+export type TaskcheckIdParam = number;
 
 export type GetUsersMeData = {
     body?: never;
@@ -867,6 +966,10 @@ export type GetUsersMeResponses = {
              * Email address of the authenticated user
              */
             email: string;
+            /**
+             * Full name of the authenticated user (first name + last name, or email if name is empty).
+             */
+            fullname: string;
             /**
              * Normalized form of the authenticated user's `fullname` (whitespace stripped, diacritics removed) used in comments as the visible text after `@` inside a mention span. Build a mention with:
              * `<span data-freelo-mention="1" data-freelo-user-id="{id}">@{mention_key}</span>`
@@ -953,9 +1056,13 @@ export type GetAllProjectsData = {
         'created_in_range[date_from]'?: string;
         'created_in_range[date_to]'?: string;
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/all-projects';
 };
@@ -978,9 +1085,13 @@ export type GetInvitedProjectsData = {
     path?: never;
     query?: {
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/invited-projects';
 };
@@ -1003,9 +1114,13 @@ export type GetArchivedProjectsData = {
     path?: never;
     query?: {
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/archived-projects';
 };
@@ -1034,9 +1149,13 @@ export type GetTemplateProjectsData = {
         'created_in_range[date_from]'?: string;
         'created_in_range[date_to]'?: string;
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/template-projects';
 };
@@ -1067,9 +1186,13 @@ export type GetUserProjectsData = {
         order_by?: 'name' | 'date_add' | 'date_edited_at';
         order?: 'asc' | 'desc';
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/user/{user_id}/all-projects';
 };
@@ -1130,9 +1253,13 @@ export type GetProjectWorkersData = {
     };
     query?: {
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/project/{project_id}/workers';
 };
@@ -1276,7 +1403,7 @@ export type FindAvailableProjectLabelsResponses = {
      * Successful response
      */
     200: {
-        label?: Array<ProjectLabel>;
+        labels?: Array<ProjectLabel>;
     };
 };
 
@@ -1461,6 +1588,13 @@ export type CreateTasklistData = {
          * Currency amount (2 decimal places, no separator)
          */
         budget?: string;
+        /**
+         * Position (order) of the tasklist within the project, 1 = first. Tasklists currently at this position or below shift down by 1 to make room. Values past the end of the list are clamped to `last + 1`. Omit to append at the end.
+         *
+         * Note: despite the name, this is positional ordering — not to be confused with task `priority_enum` (low/medium/high importance).
+         *
+         */
+        priority?: number;
     };
     path: {
         project_id: number;
@@ -1478,6 +1612,41 @@ export type CreateTasklistResponses = {
 
 export type CreateTasklistResponse = CreateTasklistResponses[keyof CreateTasklistResponses];
 
+export type EditTasklistData = {
+    body: {
+        name?: string;
+        /**
+         * Integer amount in minor currency units, encoded as a string (e.g. "100000" for 1000.00). `null` or `"0"` clears the budget. Decimal strings ("100.50") are rejected with HTTP 400.
+         */
+        budget?: string | null;
+        time_budget_minutes?: number | null;
+        priority?: number;
+        tracking_users_ids?: Array<number>;
+        should_change_existing_tasks?: boolean;
+        worker_id?: number | null;
+    };
+    path: {
+        tasklist_id: number;
+    };
+    query?: never;
+    url: '/tasklist/{tasklist_id}/edit';
+};
+
+export type EditTasklistResponses = {
+    /**
+     * Tasklist updated
+     */
+    200: {
+        /**
+         * `true` when the priority renumber finished (or was not requested). `false` when other fields committed but the priority renumber failed (the client may retry the priority field alone).
+         *
+         */
+        priorityApplied: boolean;
+    };
+};
+
+export type EditTasklistResponse = EditTasklistResponses[keyof EditTasklistResponses];
+
 export type GetAllTasklistsData = {
     body?: never;
     path?: never;
@@ -1486,9 +1655,13 @@ export type GetAllTasklistsData = {
         order_by?: 'name' | 'date_add' | 'date_edited_at';
         order?: 'asc' | 'desc';
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/all-tasklists';
 };
@@ -1683,9 +1856,17 @@ export type GetAllTasksData = {
          */
         worker_id?: number;
         /**
-         * Page number (starting from 0)
+         * Only tasks in the authenticated user's priorities ("my priorities"). Pass `1` to enable, `0` to disable — string values like `true`/`false` are not accepted and silently fall back to the default.
+         */
+        my_priorities?: 0 | 1;
+        /**
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/all-tasks';
 };
@@ -1711,9 +1892,13 @@ export type GetFinishedTasksData = {
     query?: {
         search_query?: string;
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/tasklist/{tasklist_id}/finished-tasks';
 };
@@ -1804,6 +1989,13 @@ export type EditTaskData = {
     body: {
         name?: string;
         /**
+         * Task description as an object, identical to the POST /task/{task_id}/description request body. Files are downloaded from download_url, attached to the description, and the description file set is reconciled (files no longer present are archived).
+         */
+        description?: {
+            content: string;
+            files?: Array<FileUpload>;
+        };
+        /**
          * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
          */
         due_date?: string;
@@ -1880,6 +2072,96 @@ export type FinishTaskResponses = {
 };
 
 export type FinishTaskResponse = FinishTaskResponses[keyof FinishTaskResponses];
+
+export type DeleteTaskcheckData = {
+    body?: never;
+    path: {
+        /**
+         * ID of the taskcheck (`tasks_checks.id`)
+         */
+        taskcheck_id: number;
+    };
+    query?: never;
+    url: '/taskcheck/{taskcheck_id}';
+};
+
+export type DeleteTaskcheckResponses = {
+    /**
+     * Successful response
+     */
+    200: SuccessResponse;
+};
+
+export type DeleteTaskcheckResponse = DeleteTaskcheckResponses[keyof DeleteTaskcheckResponses];
+
+export type EditTaskcheckData = {
+    body: {
+        name?: string;
+        /**
+         * User id of the worker to assign. Pass `null` to clear.
+         */
+        worker?: number | null;
+    };
+    path: {
+        /**
+         * ID of the taskcheck (`tasks_checks.id`)
+         */
+        taskcheck_id: number;
+    };
+    query?: never;
+    url: '/taskcheck/{taskcheck_id}';
+};
+
+export type EditTaskcheckResponses = {
+    /**
+     * Successful response
+     */
+    200: SuccessResponse;
+};
+
+export type EditTaskcheckResponse = EditTaskcheckResponses[keyof EditTaskcheckResponses];
+
+export type FinishTaskcheckData = {
+    body?: never;
+    path: {
+        /**
+         * ID of the taskcheck (`tasks_checks.id`)
+         */
+        taskcheck_id: number;
+    };
+    query?: never;
+    url: '/taskcheck/{taskcheck_id}/finish';
+};
+
+export type FinishTaskcheckResponses = {
+    /**
+     * Successful response
+     */
+    200: SuccessResponse;
+};
+
+export type FinishTaskcheckResponse = FinishTaskcheckResponses[keyof FinishTaskcheckResponses];
+
+export type ActivateTaskcheckData = {
+    body?: never;
+    path: {
+        /**
+         * ID of the taskcheck (`tasks_checks.id`)
+         */
+        taskcheck_id: number;
+    };
+    query?: never;
+    url: '/taskcheck/{taskcheck_id}/activate';
+};
+
+export type ActivateTaskcheckResponses = {
+    /**
+     * Successful response
+     */
+    200: SuccessResponse;
+};
+
+export type ActivateTaskcheckResponse = ActivateTaskcheckResponses[keyof ActivateTaskcheckResponses];
 
 export type MoveTaskData = {
     body?: {
@@ -2258,9 +2540,13 @@ export type GetSubtasksInTaskData = {
     };
     query?: {
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/task/{task_id}/subtasks';
 };
@@ -2295,6 +2581,24 @@ export type CreateSubtaskResponses = {
 };
 
 export type CreateSubtaskResponse = CreateSubtaskResponses[keyof CreateSubtaskResponses];
+
+export type FindAvailableTaskLabelsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/task-labels/find-available';
+};
+
+export type FindAvailableTaskLabelsResponses = {
+    /**
+     * Successful response
+     */
+    200: {
+        labels?: Array<TaskLabel>;
+    };
+};
+
+export type FindAvailableTaskLabelsResponse = FindAvailableTaskLabelsResponses[keyof FindAvailableTaskLabelsResponses];
 
 export type CreateTaskLabelsData = {
     body: {
@@ -2409,9 +2713,13 @@ export type GetAllCommentsData = {
         order_by?: 'date_add' | 'date_edited_at';
         order?: 'asc' | 'desc';
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/all-comments';
 };
@@ -2622,9 +2930,13 @@ export type GetWorkReportsData = {
          */
         with_own_taskless?: 0 | 1;
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/work-reports';
 };
@@ -2737,9 +3049,13 @@ export type GetIssuedInvoicesData = {
         'date_range[date_to]'?: string;
         'projects_ids[]'?: Array<number>;
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/issued-invoices';
 };
@@ -2837,9 +3153,13 @@ export type GetAllUsersData = {
     path?: never;
     query?: {
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/users';
 };
@@ -3002,9 +3322,13 @@ export type GetAllNotificationsData = {
          */
         only_unread?: 0 | 1;
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/all-notifications';
 };
@@ -3070,9 +3394,13 @@ export type GetAllEventsData = {
         'date_range[date_to]'?: string;
         'tasks_ids[]'?: Array<number>;
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/events';
 };
@@ -3135,9 +3463,13 @@ export type GetAllDocsAndFilesData = {
         'projects_ids[]'?: Array<number>;
         type?: 'directory' | 'link' | 'file' | 'document';
         /**
-         * Page number (starting from 0)
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
     };
     url: '/all-docs-and-files';
 };
@@ -3558,20 +3890,76 @@ export type EditNoteResponse = EditNoteResponses[keyof EditNoteResponses];
 
 export type SearchData = {
     body: {
+        /**
+         * Fulltext query (2–200 chars after trimming). Double-quoted fragments are matched as ordered exact phrases; the rest as loose terms.
+         *
+         */
         search_query: string;
-        projects_ids?: Array<number>;
-        tasklists_ids?: Array<number>;
-        tasks_ids?: Array<number>;
-        authors_ids?: Array<number>;
-        workers_ids?: Array<number>;
+        /**
+         * Narrow to a single category. See the **Entity types** table in the endpoint description for the underlying ES document types each value maps to. Omit for mixed results.
+         *
+         */
+        entity_type?: 'task' | 'subtask' | 'taskcheck' | 'project' | 'tasklist' | 'file' | 'comment';
+        /**
+         * Exclude one or more categories (same vocabulary as `entity_type`).
+         */
+        exclude_entity_types?: Array<'task' | 'subtask' | 'taskcheck' | 'project' | 'tasklist' | 'file' | 'comment'>;
+        /**
+         * Lifecycle states to include. Defaults to `["active"]` if omitted or empty.
+         */
         state_ids?: Array<'active' | 'archived' | 'finished' | 'template' | 'not_template' | 'archived_finished' | 'archived_unfinished'>;
-        lang?: string;
+        /**
+         * Restrict to these projects (or to documents attached to them).
+         */
+        projects_ids?: Array<number>;
+        /**
+         * Restrict to these tasklists (or to documents attached to them).
+         */
+        tasklists_ids?: Array<number>;
+        /**
+         * Restrict to these tasks (or to documents attached to them — e.g. comments / files of the listed tasks).
+         */
+        tasks_ids?: Array<number>;
+        /**
+         * Filter by author (entity owner) user IDs.
+         */
+        authors_ids?: Array<number>;
+        /**
+         * Filter by assignee user IDs. Meaningful for tasks / subtasks.
+         */
+        workers_ids?: Array<number>;
+        /**
+         * When `true`, restrict to smart-subtask documents (subtasks, checklist items and their comments).
+         */
+        is_subtask?: boolean;
+        /**
+         * Due-date range. At least one of `date_from` / `date_to` must be set when this object is present.
+         */
         due_date?: {
             date_from?: string;
             date_to?: string;
         };
-        entity_type?: 'task' | 'subtask' | 'project' | 'tasklist' | 'file' | 'comment';
+        /**
+         * Optional sort. Omit for relevance-score ordering.
+         */
+        sort?: {
+            order_by?: 'last_updated';
+            /**
+             * Direction — note the uppercase values (`OrderEnum::ASC` / `OrderEnum::DESC`).
+             */
+            order?: 'ASC' | 'DESC';
+        };
+        /**
+         * Language used by the Elasticsearch analyzer / stemmer.
+         */
+        lang?: 'cs_cz' | 'en_us';
+        /**
+         * Zero-based page index.
+         */
         page?: number;
+        /**
+         * Page size.
+         */
         limit?: number;
     };
     path?: never;
