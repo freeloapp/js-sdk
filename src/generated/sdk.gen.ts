@@ -1479,6 +1479,11 @@ export const removeTaskLabelsFromTask = <ThrowOnError extends boolean = false>(o
  * - Subsequent calls are always regular comments; the description is managed separately via `/task/{id}/description`.
  * - Fires notifications to the task's tracking users and a `comment_created` event.
  *
+ * **Mentioning users:**
+ * Embed a mention in `content` as an HTML span:
+ * `<span data-freelo-mention="1" data-freelo-user-id="{id}">@{mention_key}</span>`
+ * where `{id}` is the user's id and `{mention_key}` is the visible text after `@` (the normalized `fullname` — whitespace stripped, diacritics removed). Get both from the user's `UserBasic` object (e.g. `GET /users/me`). The mentioned user is notified.
+ *
  */
 export const createComment = <ThrowOnError extends boolean = false>(options: Options<CreateCommentData, ThrowOnError>) => (options.client ?? client).post<CreateCommentResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
