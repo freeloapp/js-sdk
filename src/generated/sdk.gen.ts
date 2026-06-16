@@ -658,15 +658,17 @@ export const getAssignableWorkers = <ThrowOnError extends boolean = false>(optio
 /**
  * Get tasklist detail
  *
- * Returns metadata for a single tasklist — name, budget, parent project reference, and the latest `date_edited` / `date_add` audit timestamps.
+ * Returns metadata for a single tasklist — name, budget, parent project reference, the default worker (`worker_id`), and the latest `date_edited` / `date_add` audit timestamps.
  *
  * **Use cases:**
  * - Opening a tasklist detail view
  * - Re-fetching metadata after an edit to confirm the state
  * - Reading budget for reporting purposes
+ * - Reading the default worker set via `POST /tasklist/{tasklist_id}/edit` (`worker_id`)
  *
  * **Behavior notes:**
  * - Performs both a tasklist fetch (ACL-checked) and a project fetch (ACL-checked). If the caller has no access to either, returns 404.
+ * - `worker_id` is `null` when no default worker is set, or when the configured default worker is no longer among the tasklist's assignable workers (project membership / tasklist ACL).
  *
  */
 export const getTasklist = <ThrowOnError extends boolean = false>(options: Options<GetTasklistData, ThrowOnError>) => (options.client ?? client).get<GetTasklistResponses, unknown, ThrowOnError>({
@@ -767,6 +769,7 @@ export const createTask = <ThrowOnError extends boolean = false>(options: Option
  * - `finished_overdue=true` filters for tasks finished **after** their due date — a reporting lens for delivery SLAs.
  * - `worker_id` filters by assignee only (not by tracking users).
  * - `my_priorities=1` returns only tasks the authenticated user has added to their priorities.
+ * - `priority_enum` filters by task priority level — `l` (low), `m` (medium) or `h` (high); omit to return tasks of any priority.
  *
  */
 export const getAllTasks = <ThrowOnError extends boolean = false>(options?: Options<GetAllTasksData, ThrowOnError>) => (options?.client ?? client).get<GetAllTasksResponses, unknown, ThrowOnError>({
