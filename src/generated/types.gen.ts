@@ -193,6 +193,10 @@ export type TasklistFull = TasklistBasic & {
 export type TasklistDetail = TasklistBasic & {
     project_id?: number;
     /**
+     * Default worker of the tasklist (same field as in POST /tasklist/{tasklist_id}/edit). `null` when not set or when the worker is no longer among the tasklist's assignable workers.
+     */
+    worker_id?: number | null;
+    /**
      * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
      */
     date_add?: string;
@@ -1860,6 +1864,10 @@ export type GetAllTasksData = {
          */
         my_priorities?: 0 | 1;
         /**
+         * Filter by task priority level: `l` (low), `m` (medium) or `h` (high). Omit to return tasks of any priority.
+         */
+        priority_enum?: 'l' | 'm' | 'h';
+        /**
          * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
@@ -2661,6 +2669,12 @@ export type RemoveTaskLabelsFromTaskResponse = RemoveTaskLabelsFromTaskResponses
 
 export type CreateCommentData = {
     body: {
+        /**
+         * Comment body (HTML / plain text). To mention a user, embed a span:
+         * `<span data-freelo-mention="1" data-freelo-user-id="{id}">@{mention_key}</span>`
+         * (`id` and `mention_key` come from the user's `UserBasic` object, e.g. `GET /users/me`).
+         *
+         */
         content: string;
         files?: Array<FileUpload>;
     };
