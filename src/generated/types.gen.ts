@@ -2661,6 +2661,12 @@ export type RemoveTaskLabelsFromTaskResponse = RemoveTaskLabelsFromTaskResponses
 
 export type CreateCommentData = {
     body: {
+        /**
+         * Comment body (HTML / plain text). To mention a user, embed a span:
+         * `<span data-freelo-mention="1" data-freelo-user-id="{id}">@{mention_key}</span>`
+         * (`id` and `mention_key` come from the user's `UserBasic` object, e.g. `GET /users/me`).
+         *
+         */
         content: string;
         files?: Array<FileUpload>;
     };
