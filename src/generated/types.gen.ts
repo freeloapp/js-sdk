@@ -226,6 +226,21 @@ export type TaskLabel = {
     color?: string;
 };
 
+export type TaskLabelColor = {
+    /**
+     * Hex value to send as the label color (e.g. "#15acc0").
+     */
+    color?: string;
+    /**
+     * Human-readable color name, for display only; not accepted as input.
+     */
+    display_name?: string;
+    /**
+     * True for the color applied when a label is created without a color.
+     */
+    is_default?: boolean;
+};
+
 /**
  * Two input modes: (1) UUID only — reference an existing label by UUID, assigned as-is. (2) Name-based — name is required; color defaults to #77787a if omitted; uuid is auto-generated if omitted. Matching is by name+color — if an existing label matches both, it is reused; otherwise a new label is created.
  *
@@ -2607,6 +2622,24 @@ export type FindAvailableTaskLabelsResponses = {
 };
 
 export type FindAvailableTaskLabelsResponse = FindAvailableTaskLabelsResponses[keyof FindAvailableTaskLabelsResponses];
+
+export type GetTaskLabelColorsData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/task-label-colors';
+};
+
+export type GetTaskLabelColorsResponses = {
+    /**
+     * Successful response
+     */
+    200: {
+        colors?: Array<TaskLabelColor>;
+    };
+};
+
+export type GetTaskLabelColorsResponse = GetTaskLabelColorsResponses[keyof GetTaskLabelColorsResponses];
 
 export type CreateTaskLabelsData = {
     body: {
