@@ -18,10 +18,10 @@ jobs:
       # takes precedence over OIDC trusted publishing and breaks publish
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
-      # Trusted publishing requires npm >= 11.5.1 (Node 20 ships older npm)
+      # Trusted publishing requires npm >= 11.5.1; ensure it regardless of the npm bundled with Node
       - run: npm install -g npm@latest
 
       - run: npm ci
