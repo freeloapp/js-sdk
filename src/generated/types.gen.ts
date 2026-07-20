@@ -499,9 +499,37 @@ export type FileFull = FileBasic & {
     state?: State;
 };
 
-export type FileUpload = {
+/**
+ * A file to attach to a comment / task description / work report. Provide **one** of two variants:
+ * - **By uuid** — reference a file already uploaded via `POST /file/upload` (`{ "uuid": "…" }`).
+ * - **By download_url** — give a URL that Freelo downloads the file from server-side (`{ "download_url": "…" }`).
+ *
+ * The variant is chosen by which key is present: if `uuid` is set it is used, otherwise `download_url` is downloaded. `caption` is optional in both.
+ *
+ */
+export type FileUpload = FileUploadByUuid | FileUploadByUrl;
+
+export type FileUploadByUuid = {
+    /**
+     * UUID returned by `POST /file/upload`.
+     */
+    uuid: string;
+    /**
+     * Optional caption. Ignored if empty.
+     */
+    caption?: string;
+};
+
+export type FileUploadByUrl = {
+    /**
+     * URL Freelo fetches the file from (server-side download).
+     */
     download_url: string;
     filename?: string;
+    /**
+     * Optional caption. Ignored if empty.
+     */
+    caption?: string;
 };
 
 export type Comment = {
@@ -1671,6 +1699,10 @@ export type GetAllTasklistsData = {
     path?: never;
     query?: {
         'projects_ids[]'?: Array<number>;
+        /**
+         * Restrict to tasklists in the given states. Defaults to both when omitted.
+         */
+        'states[]'?: Array<'active' | 'finished'>;
         order_by?: 'name' | 'date_add' | 'date_edited_at';
         order?: 'asc' | 'desc';
         /**
@@ -1776,7 +1808,10 @@ export type GetTasksInTasklistData = {
         tasklist_id: number;
     };
     query?: {
-        order_by?: 'priority' | 'name' | 'date_add' | 'date_edited_at';
+        /**
+         * When `due_date`, tasks without a due date are always last; all-day tasks sort at the start of their day (00:00).
+         */
+        order_by?: 'priority' | 'name' | 'date_add' | 'date_edited_at' | 'due_date';
         order?: 'asc' | 'desc';
     };
     url: '/project/{project_id}/tasklist/{tasklist_id}/tasks';
@@ -1815,7 +1850,7 @@ export type GetAllTasksData = {
     path?: never;
     query?: {
         /**
-         * Fulltext search query for the task name
+         * Fulltext search query matched against the **task name only** (not descriptions, comments or files) and restricted to **top-level tasks** (subtasks and checklist items are excluded). For full-content or subtask/checklist search use `POST /search`.
          */
         search_query?: string;
         /**
@@ -1830,7 +1865,10 @@ export type GetAllTasksData = {
          * Filter tasks by tasklist IDs
          */
         'tasklists_ids[]'?: Array<number>;
-        order_by?: 'priority' | 'name' | 'date_add' | 'date_edited_at';
+        /**
+         * When `due_date`, tasks without a due date are always last; all-day tasks sort at the start of their day (00:00). Results are tie-broken by task id for stable pagination.
+         */
+        order_by?: 'priority' | 'name' | 'date_add' | 'date_edited_at' | 'due_date';
         order?: 'asc' | 'desc';
         /**
          * Filter tasks that have at least one of the specified labels (case insensitive). Can be combined with with_label.
@@ -1995,7 +2033,16 @@ export type GetTaskData = {
     path: {
         task_id: number;
     };
-    query?: never;
+    query?: {
+        /**
+         * Sort direction for inline comments by date_add. Defaults to asc (oldest first).
+         */
+        comments_order?: 'asc' | 'desc';
+        /**
+         * Max number of inline comments to return after ordering. Omit for all comments; 0 returns none.
+         */
+        comments_limit?: number;
+    };
     url: '/task/{task_id}';
 };
 
@@ -2703,12 +2750,22 @@ export type RemoveTaskLabelsFromTaskResponse = RemoveTaskLabelsFromTaskResponses
 export type CreateCommentData = {
     body: {
         /**
-         * Comment body (HTML / plain text). To mention a user, embed a span:
+         * Comment body (HTML / plain text).
+         *
+         * **Inline file attachment:** embed an anchor to attach an uploaded file inside the body:
+         * `<a data-freelo-uuid="{file_uuid}" href="https://app.freelo.io/file/{file_uuid}">caption</a>`
+         * The UUID is extracted server-side and the file is attached automatically (do not also list it in `files`). The anchor stays in the stored content, so the file is rendered inside the comment on read.
+         *
+         * **Mention a user:** embed a span:
          * `<span data-freelo-mention="1" data-freelo-user-id="{id}">@{mention_key}</span>`
          * (`id` and `mention_key` come from the user's `UserBasic` object, e.g. `GET /users/me`).
          *
          */
         content: string;
+        /**
+         * Files to attach as plain attachments (not placed inline in the body). Alternative to embedding an anchor in `content` — use one mechanism per file, never both for the same UUID.
+         *
+         */
         files?: Array<FileUpload>;
     };
     path: {
@@ -2727,9 +2784,44 @@ export type CreateCommentResponses = {
 
 export type CreateCommentResponse = CreateCommentResponses[keyof CreateCommentResponses];
 
+export type DeleteCommentData = {
+    body?: never;
+    path: {
+        comment_id: number;
+    };
+    query?: never;
+    url: '/comment/{comment_id}';
+};
+
+export type DeleteCommentErrors = {
+    /**
+     * The 15-minute deletion window has expired
+     */
+    400: unknown;
+    /**
+     * Comment not found or not owned by the caller
+     */
+    404: unknown;
+};
+
+export type DeleteCommentResponses = {
+    /**
+     * Comment deleted
+     */
+    200: unknown;
+};
+
 export type EditCommentData = {
     body: {
+        /**
+         * Comment body (HTML / plain text). Supports inline file anchors (`<a data-freelo-uuid="{file_uuid}">…</a>`) and user mentions — see `POST /task/{id}/comments`.
+         *
+         */
         content: string;
+        /**
+         * Files to attach as plain attachments (not placed inline in the body). Replaces the full attachment set. Use one mechanism per file — do not also embed the same UUID in `content`.
+         *
+         */
         files?: Array<FileUpload>;
     };
     path: {
@@ -3464,6 +3556,31 @@ export type GetAllEventsResponses = {
 };
 
 export type GetAllEventsResponse = GetAllEventsResponses[keyof GetAllEventsResponses];
+
+export type DeleteDocOrFileByUuidData = {
+    body?: never;
+    path: {
+        file_uuid: string;
+    };
+    query?: never;
+    url: '/file/{file_uuid}';
+};
+
+export type DeleteDocOrFileByUuidErrors = {
+    /**
+     * No file or document found for the given UUID
+     */
+    404: unknown;
+};
+
+export type DeleteDocOrFileByUuidResponses = {
+    /**
+     * File or document deleted
+     */
+    200: SuccessResponse;
+};
+
+export type DeleteDocOrFileByUuidResponse = DeleteDocOrFileByUuidResponses[keyof DeleteDocOrFileByUuidResponses];
 
 export type DownloadFileData = {
     body?: never;
