@@ -848,6 +848,7 @@ export type CustomFieldWithValue = {
 
 export type Note = {
     id?: number;
+    uuid?: string;
     name?: string;
     /**
      * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
@@ -977,6 +978,11 @@ export type TaskIdParam = number;
  * ID of the taskcheck (`tasks_checks.id`)
  */
 export type TaskcheckIdParam = number;
+
+/**
+ * Numeric note ID (`documents.id`) or note UUID (`documents.uuid`) — both are accepted in the same position. `GET /all-docs-and-files` returns only the UUID for notes.
+ */
+export type NoteIdParam = number | string;
 
 export type GetUsersMeData = {
     body?: never;
@@ -3998,7 +4004,10 @@ export type CreateNoteResponse = CreateNoteResponses[keyof CreateNoteResponses];
 export type DeleteNoteData = {
     body?: never;
     path: {
-        note_id: number;
+        /**
+         * Numeric note ID (`documents.id`) or note UUID (`documents.uuid`) — both are accepted in the same position. `GET /all-docs-and-files` returns only the UUID for notes.
+         */
+        note_id: number | string;
     };
     query?: never;
     url: '/note/{note_id}';
@@ -4016,7 +4025,10 @@ export type DeleteNoteResponse = DeleteNoteResponses[keyof DeleteNoteResponses];
 export type GetNoteData = {
     body?: never;
     path: {
-        note_id: number;
+        /**
+         * Numeric note ID (`documents.id`) or note UUID (`documents.uuid`) — both are accepted in the same position. `GET /all-docs-and-files` returns only the UUID for notes.
+         */
+        note_id: number | string;
     };
     query?: never;
     url: '/note/{note_id}';
@@ -4037,7 +4049,10 @@ export type EditNoteData = {
         content?: string;
     };
     path: {
-        note_id: number;
+        /**
+         * Numeric note ID (`documents.id`) or note UUID (`documents.uuid`) — both are accepted in the same position. `GET /all-docs-and-files` returns only the UUID for notes.
+         */
+        note_id: number | string;
     };
     query?: never;
     url: '/note/{note_id}';

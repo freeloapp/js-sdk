@@ -2524,6 +2524,7 @@ export const createNote = <ThrowOnError extends boolean = false>(options: Option
  *
  * **Behavior notes:**
  * - Response returns the (now-deleted) note's state for confirmation. This is a quirk — most delete endpoints return a SuccessResponse; this one returns the Note.
+ * - Accepts the numeric id **or** the note `uuid` (as returned by `GET /all-docs-and-files`).
  *
  */
 export const deleteNote = <ThrowOnError extends boolean = false>(options: Options<DeleteNoteData, ThrowOnError>) => (options.client ?? client).delete<DeleteNoteResponses, unknown, ThrowOnError>({
@@ -2539,6 +2540,7 @@ export const deleteNote = <ThrowOnError extends boolean = false>(options: Option
  *
  * **Behavior notes:**
  * - ACL-checked via the note's project.
+ * - Accepts the numeric id **or** the note `uuid` (as returned by `GET /all-docs-and-files`).
  *
  */
 export const getNote = <ThrowOnError extends boolean = false>(options: Options<GetNoteData, ThrowOnError>) => (options.client ?? client).get<GetNoteResponses, unknown, ThrowOnError>({
@@ -2554,6 +2556,7 @@ export const getNote = <ThrowOnError extends boolean = false>(options: Options<G
  *
  * **Behavior notes:**
  * - Overwrites content — there is no history / diff tracking exposed via the API.
+ * - Accepts the numeric id **or** the note `uuid` (as returned by `GET /all-docs-and-files`).
  *
  */
 export const editNote = <ThrowOnError extends boolean = false>(options: Options<EditNoteData, ThrowOnError>) => (options.client ?? client).post<EditNoteResponses, unknown, ThrowOnError>({
