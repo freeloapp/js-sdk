@@ -286,10 +286,13 @@ const { data: newTask } = await createTask({
   body: { name: 'New Task', worker_ids: [1] },
 });
 
-// Edit task
+// Edit task (name, description, labels, worker, due dates, priority, tracking users)
 await editTask({
   path: { task_id: 99 },
-  body: { name: 'Updated Name' },
+  body: {
+    name: 'Updated Name',
+    description: '<p>Rewritten task body</p>', // overwrites the whole description
+  },
 });
 
 // Finish / delete / move
@@ -300,6 +303,69 @@ await moveTask({
   body: { tasklist_id: 10 },
 });
 ```
+
+### Task Labels
+
+```typescript
+import {
+  findAvailableTaskLabels,
+  createTaskLabels,
+  addTaskLabelsToTask,
+  removeTaskLabelsFromTask,
+  mergeTaskLabels,
+  getTaskLabelColors,
+} from '@freeloapp/js-sdk';
+
+// All labels available to the caller, optionally narrowed to one project
+const { data: all } = await findAvailableTaskLabels();
+const { data: inProject } = await findAvailableTaskLabels({
+  query: { project_id: 42 },
+});
+
+// Fetch-or-create — an existing label with the same name AND color is reused
+await createTaskLabels({ body: { labels: [{ name: 'bug', color: '#ff0000' }] } });
+
+// Attach / detach on a task (by uuid, or by name + color)
+await addTaskLabelsToTask({
+  path: { task_id: 99 },
+  body: { labels: [{ name: 'bug', color: '#ff0000' }] },
+});
+await removeTaskLabelsFromTask({
+  path: { task_id: 99 },
+  body: { labels: [{ uuid: 'aaaaaaaa-...' }] },
+});
+
+// Merge labels — every task carrying a source label ends up with the target label
+await mergeTaskLabels({
+  body: {
+    from_uuids: ['aaaaaaaa-...', 'bbbbbbbb-...'],
+    to_uuid: 'cccccccc-...',
+  },
+});
+```
+
+Merge notes: the target's name and color come from the existing `to_uuid` label,
+all UUIDs must be owned by the caller (otherwise `404`), the replacement applies
+only to tasks in projects where the caller is a commander, and the source label
+definitions are detached from tasks but not deleted.
+
+### Notifying yourself about your own actions
+
+By default the API omits the action's author from the notification recipients.
+Pass `notify_author: true` to keep yourself in the loop — useful for automations
+running under your own token. Supported by `createTask` (and its `subtasks`),
+`editTask`, `activateTask`, `finishTask`, `editTaskcheck`, `finishTaskcheck`,
+`createComment`, `editComment` and `editNote`.
+
+```typescript
+await createComment({
+  path: { task_id: 99 },
+  body: { content: 'Deployed to production', notify_author: true },
+});
+```
+
+It only takes effect if you are otherwise a subscriber, worker or tracking user
+of the target.
 
 ### Tasklists
 

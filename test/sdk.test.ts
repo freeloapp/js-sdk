@@ -9,6 +9,12 @@ import {
   createTask,
   getTask,
   getAllTasks,
+  editTask,
+  finishTask,
+  activateTask,
+  createComment,
+  mergeTaskLabels,
+  findAvailableTaskLabels,
   search,
 } from '../src/generated/sdk.gen';
 
@@ -181,6 +187,124 @@ describe('SDK functions with mock fetch', () => {
       const request = mockFetch.mock.calls[0][0] as Request;
       expect(request.method).toBe('POST');
       expect(request.url).toContain('/search');
+    });
+  });
+
+  describe('Task labels', () => {
+    it('mergeTaskLabels sends POST /task-labels/merge with from_uuids and to_uuid', async () => {
+      mockJsonResponse({ result: 'success' });
+
+      await mergeTaskLabels({
+        client,
+        body: {
+          from_uuids: ['11111111-1111-1111-1111-111111111111'],
+          to_uuid: '22222222-2222-2222-2222-222222222222',
+        },
+      });
+
+      const request = mockFetch.mock.calls[0][0] as Request;
+      expect(request.method).toBe('POST');
+      expect(request.url).toContain('/task-labels/merge');
+      expect(request.headers.get('Content-Type')).toBe('application/json');
+      await expect(request.json()).resolves.toEqual({
+        from_uuids: ['11111111-1111-1111-1111-111111111111'],
+        to_uuid: '22222222-2222-2222-2222-222222222222',
+      });
+    });
+
+    it('findAvailableTaskLabels forwards the project_id query param', async () => {
+      mockJsonResponse({ labels: [] });
+
+      await findAvailableTaskLabels({
+        client,
+        query: { project_id: 42 },
+      });
+
+      const request = mockFetch.mock.calls[0][0] as Request;
+      expect(request.method).toBe('GET');
+      expect(request.url).toContain('/task-labels/find-available');
+      expect(new URL(request.url).searchParams.get('project_id')).toBe('42');
+    });
+
+    it('findAvailableTaskLabels works without a query', async () => {
+      mockJsonResponse({ labels: [] });
+
+      await findAvailableTaskLabels({ client });
+
+      const request = mockFetch.mock.calls[0][0] as Request;
+      expect(new URL(request.url).search).toBe('');
+    });
+  });
+
+  describe('notify_author', () => {
+    it('editTask forwards description, labels and notify_author', async () => {
+      mockJsonResponse({ id: 99 });
+
+      await editTask({
+        client,
+        path: { task_id: 99 },
+        body: {
+          name: 'Updated',
+          description: '<p>New body</p>',
+          labels: [{ name: 'bug', color: '#ff0000' }],
+          notify_author: true,
+        },
+      });
+
+      const request = mockFetch.mock.calls[0][0] as Request;
+      expect(request.method).toBe('POST');
+      expect(request.url).toContain('/task/99');
+      await expect(request.json()).resolves.toEqual({
+        name: 'Updated',
+        description: '<p>New body</p>',
+        labels: [{ name: 'bug', color: '#ff0000' }],
+        notify_author: true,
+      });
+    });
+
+    it('finishTask accepts a notify_author body', async () => {
+      mockJsonResponse({ id: 99 });
+
+      await finishTask({
+        client,
+        path: { task_id: 99 },
+        body: { notify_author: true },
+      });
+
+      const request = mockFetch.mock.calls[0][0] as Request;
+      expect(request.method).toBe('POST');
+      expect(request.url).toContain('/task/99/finish');
+      expect(request.headers.get('Content-Type')).toBe('application/json');
+      await expect(request.json()).resolves.toEqual({ notify_author: true });
+    });
+
+    it('activateTask still works without a body', async () => {
+      mockJsonResponse({ id: 99 });
+
+      await activateTask({
+        client,
+        path: { task_id: 99 },
+      });
+
+      const request = mockFetch.mock.calls[0][0] as Request;
+      expect(request.method).toBe('POST');
+      expect(request.url).toContain('/task/99/activate');
+    });
+
+    it('createComment forwards notify_author', async () => {
+      mockJsonResponse({ id: 1 });
+
+      await createComment({
+        client,
+        path: { task_id: 99 },
+        body: { content: 'Hello!', notify_author: true },
+      });
+
+      const request = mockFetch.mock.calls[0][0] as Request;
+      await expect(request.json()).resolves.toEqual({
+        content: 'Hello!',
+        notify_author: true,
+      });
     });
   });
 
