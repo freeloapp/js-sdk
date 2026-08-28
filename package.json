@@ -1,6 +1,6 @@
 {
   "name": "@freeloapp/js-sdk",
-  "version": "2.6.3",
+  "version": "2.7.0",
   "description": "Official JavaScript/TypeScript SDK for Freelo.io API",
   "license": "MIT",
   "author": "Freelo Bay s.r.o.",

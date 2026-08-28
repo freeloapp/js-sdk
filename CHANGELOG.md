@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.0](https://github.com/freeloapp/js-sdk/compare/js-sdk-v2.6.3...js-sdk-v2.7.0) (2026-08-28)
+
+
+### Added
+
+* document and test new task-label and notify_author API surface ([d7d1696](https://github.com/freeloapp/js-sdk/commit/d7d169630aa5e690aa7e3cdd8fe25d20bd170738))
+
+
+### Fixed
+
+* regenerate SDK from updated OpenAPI spec ([2ff4c2b](https://github.com/freeloapp/js-sdk/commit/2ff4c2b4c46957bf9bfb241496a67962e1175074))
+* regenerate SDK from updated OpenAPI spec ([7214e0f](https://github.com/freeloapp/js-sdk/commit/7214e0fe5fb6e28e3a255ea2f97bb920e3973254))
+
 ## [2.6.3](https://github.com/freeloapp/js-sdk/compare/js-sdk-v2.6.2...js-sdk-v2.6.3) (2026-07-30)
 
 
