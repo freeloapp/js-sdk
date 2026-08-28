@@ -214,6 +214,17 @@ export interface CallOptions {
 }
 
 /**
+ * Result of a low-level `call()`: either `data` or `error` is set, never both.
+ */
+export type CallResult<TData = unknown, TError = unknown> = (
+  | { data: TData; error: undefined }
+  | { data: undefined; error: TError }
+) & {
+  request: Request;
+  response: Response;
+};
+
+/**
  * Low-level function for calling arbitrary Freelo API endpoints.
  *
  * Authentication, User-Agent, logging, and rate-limit handling are applied
@@ -250,18 +261,21 @@ export interface CallOptions {
  */
 export async function call<TData = unknown, TError = unknown>(
   options: CallOptions,
-): Promise<
-  | { data: TData; error: undefined; request: Request; response: Response }
-  | { data: undefined; error: TError; request: Request; response: Response }
-> {
+): Promise<CallResult<TData, TError>> {
   const c = options.client ?? defaultClient;
 
-  return c.request({
+  // The cast is unavoidable: `c.request` resolves its result through
+  // `RequestResult`, which unwraps `TData[keyof TData]` whenever `TData`
+  // extends `Record<string, unknown>` (the generated SDK models responses as
+  // status-keyed maps). `call()` deliberately treats `TData` as the payload
+  // type itself, so the two cannot be proven assignable for an unresolved
+  // generic — but they are structurally identical apart from that unwrapping.
+  return c.request<TData, TError>({
     method: options.method,
     url: options.url,
     body: options.body,
     query: options.query,
     path: options.path,
     headers: options.headers,
-  }) as any;
+  }) as unknown as Promise<CallResult<TData, TError>>;
 }
