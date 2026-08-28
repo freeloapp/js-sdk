@@ -33,6 +33,7 @@ export {
   type BasicAuth,
   type BearerAuth,
   type CallOptions,
+  type CallResult,
 } from './freelo.js';
 
 // Generated client (for advanced usage / custom client instances)
