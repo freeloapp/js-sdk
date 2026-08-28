@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.1](https://github.com/freeloapp/js-sdk/compare/js-sdk-v2.7.0...js-sdk-v2.7.1) (2026-08-28)
+
+
+### Changed
+
+* replace any cast in call() with a typed CallResult ([#22](https://github.com/freeloapp/js-sdk/issues/22)) ([004b876](https://github.com/freeloapp/js-sdk/commit/004b876373c6962279d672b76429000582cda1de))
+
 ## [2.7.0](https://github.com/freeloapp/js-sdk/compare/js-sdk-v2.6.3...js-sdk-v2.7.0) (2026-08-28)
 
 
