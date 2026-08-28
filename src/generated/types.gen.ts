@@ -356,6 +356,10 @@ export type TaskCreate = {
     tracking_users_ids?: Array<number>;
     turn_off_authors_tracking?: boolean;
     subtasks?: Array<SubtaskCreate>;
+    /**
+     * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
+     */
+    notify_author?: boolean;
 };
 
 export type TaskCreated = {
@@ -442,6 +446,10 @@ export type SubtaskCreate = {
     };
     labels?: Array<TaskLabelAddInput>;
     tracking_users_ids?: Array<number>;
+    /**
+     * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
+     */
+    notify_author?: boolean;
 };
 
 export type Subtask = {
@@ -2084,6 +2092,7 @@ export type EditTaskData = {
          * Allowed options are l, m, h. Set to null to remove priority.
          */
         priority_enum?: 'l' | 'm' | 'h';
+        labels?: Array<TaskLabelAddInput>;
         /**
          * Set (replace) all tracking users. Pass an empty array to remove all.
          */
@@ -2096,6 +2105,10 @@ export type EditTaskData = {
          * Remove tracking users by user ID.
          */
         remove_tracking_users_ids?: Array<number>;
+        /**
+         * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
+         */
+        notify_author?: boolean;
     };
     path: {
         task_id: number;
@@ -2114,7 +2127,12 @@ export type EditTaskResponses = {
 export type EditTaskResponse = EditTaskResponses[keyof EditTaskResponses];
 
 export type ActivateTaskData = {
-    body?: never;
+    body?: {
+        /**
+         * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
+         */
+        notify_author?: boolean;
+    };
     path: {
         task_id: number;
     };
@@ -2132,7 +2150,12 @@ export type ActivateTaskResponses = {
 export type ActivateTaskResponse = ActivateTaskResponses[keyof ActivateTaskResponses];
 
 export type FinishTaskData = {
-    body?: never;
+    body?: {
+        /**
+         * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
+         */
+        notify_author?: boolean;
+    };
     path: {
         task_id: number;
     };
@@ -2177,6 +2200,10 @@ export type EditTaskcheckData = {
          * User id of the worker to assign. Pass `null` to clear.
          */
         worker?: number | null;
+        /**
+         * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
+         */
+        notify_author?: boolean;
     };
     path: {
         /**
@@ -2198,7 +2225,12 @@ export type EditTaskcheckResponses = {
 export type EditTaskcheckResponse = EditTaskcheckResponses[keyof EditTaskcheckResponses];
 
 export type FinishTaskcheckData = {
-    body?: never;
+    body?: {
+        /**
+         * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
+         */
+        notify_author?: boolean;
+    };
     path: {
         /**
          * ID of the taskcheck (`tasks_checks.id`)
@@ -2661,7 +2693,12 @@ export type CreateSubtaskResponse = CreateSubtaskResponses[keyof CreateSubtaskRe
 export type FindAvailableTaskLabelsData = {
     body?: never;
     path?: never;
-    query?: never;
+    query?: {
+        /**
+         * Restrict results to labels used in this project (must be accessible to the caller).
+         */
+        project_id?: number;
+    };
     url: '/task-labels/find-available';
 };
 
@@ -2712,6 +2749,31 @@ export type CreateTaskLabelsResponses = {
      */
     200: unknown;
 };
+
+export type MergeTaskLabelsData = {
+    body: {
+        /**
+         * UUIDs of the labels to merge away (must be owned by the caller).
+         */
+        from_uuids: Array<string>;
+        /**
+         * UUID of the label the source labels are merged into (must be owned by the caller).
+         */
+        to_uuid: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/task-labels/merge';
+};
+
+export type MergeTaskLabelsResponses = {
+    /**
+     * Successful response
+     */
+    200: SuccessResponse;
+};
+
+export type MergeTaskLabelsResponse = MergeTaskLabelsResponses[keyof MergeTaskLabelsResponses];
 
 export type AddTaskLabelsToTaskData = {
     body: {
@@ -2773,6 +2835,10 @@ export type CreateCommentData = {
          *
          */
         files?: Array<FileUpload>;
+        /**
+         * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
+         */
+        notify_author?: boolean;
     };
     path: {
         task_id: number;
@@ -2829,6 +2895,10 @@ export type EditCommentData = {
          *
          */
         files?: Array<FileUpload>;
+        /**
+         * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
+         */
+        notify_author?: boolean;
     };
     path: {
         comment_id: number;
@@ -4047,6 +4117,10 @@ export type EditNoteData = {
     body: {
         name: string;
         content?: string;
+        /**
+         * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
+         */
+        notify_author?: boolean;
     };
     path: {
         /**

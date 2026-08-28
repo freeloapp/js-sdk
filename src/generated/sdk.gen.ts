@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskcheckData, ActivateTaskcheckResponses, ActivateTaskData, ActivateTaskResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCommentData, DeleteCommentErrors, DeleteCommentResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteDocOrFileByUuidData, DeleteDocOrFileByUuidErrors, DeleteDocOrFileByUuidResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskcheckData, DeleteTaskcheckResponses, DeleteTaskData, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskcheckData, EditTaskcheckResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTasklistData, EditTasklistResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindAvailableTaskLabelsData, FindAvailableTaskLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskcheckData, FinishTaskcheckResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTaskLabelColorsData, GetTaskLabelColorsResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UploadFileData, UploadFileResponses } from './types.gen';
+import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskcheckData, ActivateTaskcheckResponses, ActivateTaskData, ActivateTaskResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCommentData, DeleteCommentErrors, DeleteCommentResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteDocOrFileByUuidData, DeleteDocOrFileByUuidErrors, DeleteDocOrFileByUuidResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskcheckData, DeleteTaskcheckResponses, DeleteTaskData, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskcheckData, EditTaskcheckResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTasklistData, EditTasklistResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindAvailableTaskLabelsData, FindAvailableTaskLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskcheckData, FinishTaskcheckResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTaskLabelColorsData, GetTaskLabelColorsResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MergeTaskLabelsData, MergeTaskLabelsResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UploadFileData, UploadFileResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -881,12 +881,13 @@ export const getTask = <ThrowOnError extends boolean = false>(options: Options<G
  *
  * Partially updates a task. Only the fields listed below are editable through this endpoint — any other key in the body is **silently ignored** (the facade uses `array_intersect_key` against a fixed whitelist).
  *
- * **Editable fields:** `name`, `worker`, `due_date`, `due_date_end`, `labels`, `priority_enum`, `tracking_users_ids`, `add_tracking_users_ids`, `remove_tracking_users_ids`.
+ * **Editable fields:** `name`, `description`, `worker`, `due_date`, `due_date_end`, `labels`, `priority_enum`, `tracking_users_ids`, `add_tracking_users_ids`, `remove_tracking_users_ids`.
  *
  * **Use cases:**
  * - Reassigning a task
  * - Changing priority / due date
  * - Renaming or relabeling from an integration
+ * - Rewriting the task body without a second call to `POST /task/{task_id}/description`
  * - Adjusting tracking users (add / remove / replace)
  *
  * **Behavior notes (non-obvious):**
@@ -897,6 +898,7 @@ export const getTask = <ThrowOnError extends boolean = false>(options: Options<G
  * - `remove_tracking_users_ids` **removes** the given IDs from the current set.
  * Mixing `tracking_users_ids` (replace) with add/remove in one call is accepted but the final state is determined by the facade's order of operations — keep it to one shape per call to be deterministic.
  * - **Labels must reference existing labels or be fully-formed new label DTOs** — the behavior matches the task-labels add-to-task semantics.
+ * - **`description` overwrites the whole description** (upsert, no append, no history) — identical semantics to `POST /task/{task_id}/description`. Omitting the key leaves the current description untouched; the task edit and the description update run in a single transaction.
  * - The endpoint responds with the task's full detail (same shape as `GET /task/{id}`).
  * - Note the HTTP method: `POST` is used for edits here (historical REST shape), not `PUT`/`PATCH`.
  *
@@ -928,7 +930,11 @@ export const editTask = <ThrowOnError extends boolean = false>(options: Options<
 export const activateTask = <ThrowOnError extends boolean = false>(options: Options<ActivateTaskData, ThrowOnError>) => (options.client ?? client).post<ActivateTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/task/{task_id}/activate',
-    ...options
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
 });
 
 /**
@@ -949,7 +955,11 @@ export const activateTask = <ThrowOnError extends boolean = false>(options: Opti
 export const finishTask = <ThrowOnError extends boolean = false>(options: Options<FinishTaskData, ThrowOnError>) => (options.client ?? client).post<FinishTaskResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/task/{task_id}/finish',
-    ...options
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
 });
 
 /**
@@ -989,7 +999,11 @@ export const editTaskcheck = <ThrowOnError extends boolean = false>(options: Opt
 export const finishTaskcheck = <ThrowOnError extends boolean = false>(options: Options<FinishTaskcheckData, ThrowOnError>) => (options.client ?? client).post<FinishTaskcheckResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/taskcheck/{taskcheck_id}/finish',
-    ...options
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
 });
 
 /**
@@ -1375,6 +1389,7 @@ export const createSubtask = <ThrowOnError extends boolean = false>(options: Opt
  *
  * **Behavior notes:**
  * - Sorted by `name` ascending.
+ * - Pass the optional `project_id` query parameter to restrict the result to labels used in that single project. The project must be one the caller owns or is invited to; otherwise `{ "labels": [] }` is returned.
  * - If the caller has no accessible projects, returns `{ "labels": [] }`.
  *
  */
@@ -1405,7 +1420,7 @@ export const getTaskLabelColors = <ThrowOnError extends boolean = false>(options
  * - Importing labels from another system
  *
  * **Behavior notes (non-obvious):**
- * - This is a **fetch-or-create** — labels with an existing matching name are **re-used**, not duplicated. The endpoint only creates those that don't already exist.
+ * - This is a **fetch-or-create** — a label whose **name AND color** already exist among the caller's own labels is **re-used**, not duplicated (matching is case-sensitive). The endpoint only creates those that don't already exist. This holds even if the client sends a fresh `uuid` each call.
  * - The label is scoped to the caller's account and available across their accessible projects via the "task-labels-used" relation.
  * - If the caller has **no projects at all**, the "used" relation is silently skipped (no `NoProjectsException` bubbles up to the caller).
  * - The response does not explicitly report which labels were new vs. reused — query `/project-labels/find-available` or the task detail to verify.
@@ -1414,6 +1429,32 @@ export const getTaskLabelColors = <ThrowOnError extends boolean = false>(options
 export const createTaskLabels = <ThrowOnError extends boolean = false>(options: Options<CreateTaskLabelsData, ThrowOnError>) => (options.client ?? client).post<CreateTaskLabelsResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/task-labels',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Merge task labels into a single target label
+ *
+ * Merges one or more source labels into a target label in a single server-side operation. Every task that carried a source label ends up carrying the target label instead; the source labels are detached from those tasks.
+ *
+ * Use this instead of iterating over tasks and re-adding a label client-side — one call performs the whole merge-and-replace across all the caller's accessible tasks.
+ *
+ * **Ownership & scope:**
+ * - Both the target (`to_uuid`) and every source label (`from_uuids`) must be owned by the caller; otherwise the endpoint responds `404` (labels the caller does not own are treated as non-existent).
+ * - The replacement is applied only to tasks in projects where the caller is a commander.
+ *
+ * **Behavior notes (non-obvious):**
+ * - The target label's name and color are taken from the existing `to_uuid` label — the client does not send them.
+ * - Source labels are detached from tasks but their definitions are not deleted by this call.
+ *
+ */
+export const mergeTaskLabels = <ThrowOnError extends boolean = false>(options: Options<MergeTaskLabelsData, ThrowOnError>) => (options.client ?? client).post<MergeTaskLabelsResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/task-labels/merge',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -1436,6 +1477,7 @@ export const createTaskLabels = <ThrowOnError extends boolean = false>(options: 
  *
  * **Behavior notes (non-obvious):**
  * - Name+color matching is **case-sensitive**. `"bug"` and `"Bug"` are different labels.
+ * - Reuse matches against **all** of the caller's labels — including ones the caller owns but has never used on a task — so name mode does not mint a duplicate of an existing unused label.
  * - If you pass a UUID that doesn't match any existing label, `CannotCreateWithProvidedUuidException` is thrown.
  * - When labels are actually added (vs. already present), a `task_labels_change` event is emitted (→ webhooks, audit log).
  * - Calling with an empty array short-circuits — no event, no ACL check, 200 response.
