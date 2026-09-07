@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskcheckData, ActivateTaskcheckResponses, ActivateTaskData, ActivateTaskResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCommentData, DeleteCommentErrors, DeleteCommentResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteDocOrFileByUuidData, DeleteDocOrFileByUuidErrors, DeleteDocOrFileByUuidResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskcheckData, DeleteTaskcheckResponses, DeleteTaskData, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskcheckData, EditTaskcheckResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTasklistData, EditTasklistResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindAvailableTaskLabelsData, FindAvailableTaskLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskcheckData, FinishTaskcheckResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTaskLabelColorsData, GetTaskLabelColorsResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MergeTaskLabelsData, MergeTaskLabelsResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UploadFileData, UploadFileResponses } from './types.gen';
+import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskcheckData, ActivateTaskcheckResponses, ActivateTaskData, ActivateTasklistData, ActivateTasklistResponses, ActivateTaskResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, ArchiveTasklistData, ArchiveTasklistResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskRelationData, CreateTaskRelationErrors, CreateTaskRelationResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCommentData, DeleteCommentErrors, DeleteCommentResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteDocOrFileByUuidData, DeleteDocOrFileByUuidErrors, DeleteDocOrFileByUuidResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskcheckData, DeleteTaskcheckResponses, DeleteTaskData, DeleteTasklistData, DeleteTasklistResponses, DeleteTaskRelationData, DeleteTaskRelationErrors, DeleteTaskRelationResponses, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskcheckData, EditTaskcheckResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTasklistData, EditTasklistResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindAvailableTaskLabelsData, FindAvailableTaskLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskcheckData, FinishTaskcheckResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectBudgetData, GetProjectBudgetResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTaskLabelColorsData, GetTaskLabelColorsResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MergeTaskLabelsData, MergeTaskLabelsResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, ResetProjectBudgetData, ResetProjectBudgetResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UpdateProjectBudgetData, UpdateProjectBudgetResponses, UpdateProjectData, UpdateProjectErrors, UpdateProjectResponses, UploadFileData, UploadFileResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -233,6 +233,29 @@ export const getProject = <ThrowOnError extends boolean = false>(options: Option
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/project/{project_id}',
     ...options
+});
+
+/**
+ * Update project
+ *
+ * Partially updates a project's name and/or deadline. Only fields present in the body are
+ * changed; an omitted field is left unchanged; `due_date: null` clears the deadline.
+ * Any other field in the body is ignored.
+ *
+ * Name and deadline are the only editable fields — project owner and currency cannot be
+ * changed via the API (use the Freelo app). Only the project owner or a project commander
+ * may edit; for everyone else the project is indistinguishable from a non-existent one
+ * and the response is `404`.
+ *
+ */
+export const updateProject = <ThrowOnError extends boolean = false>(options: Options<UpdateProjectData, ThrowOnError>) => (options.client ?? client).patch<UpdateProjectResponses, UpdateProjectErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/project/{project_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
 });
 
 /**
@@ -561,6 +584,60 @@ export const deletePinnedItem = <ThrowOnError extends boolean = false>(options: 
 });
 
 /**
+ * Get project budget state
+ *
+ * Returns the current budget state for a project: the configured settings plus consumption
+ * and remaining values for both money and time.
+ *
+ * Only the project owner and project commanders may read the budget.
+ *
+ */
+export const getProjectBudget = <ThrowOnError extends boolean = false>(options: Options<GetProjectBudgetData, ThrowOnError>) => (options.client ?? client).get<GetProjectBudgetResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/project/{project_id}/budget',
+    ...options
+});
+
+/**
+ * Set or change project budget
+ *
+ * Sets or changes the project budget (amount, time budget, recurrence and reset day/interval).
+ *
+ * To **cancel** the budget, send `budget: null` and `minutes_budget: 0` (with `is_recurrent: false`) — it resets to empty/zero.
+ *
+ * Only the project owner and project commanders may change the budget.
+ *
+ */
+export const updateProjectBudget = <ThrowOnError extends boolean = false>(options: Options<UpdateProjectBudgetData, ThrowOnError>) => (options.client ?? client).post<UpdateProjectBudgetResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/project/{project_id}/budget',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Reset project budget
+ *
+ * Resets the project budget now: snapshots the current period into budget history and zeroes
+ * consumption. Returns the budget state after the reset.
+ *
+ * When nothing has been consumed yet (no tracked time and no cost), the reset is a no-op: no
+ * history entry is written and `next_reset_date` of a recurrent budget is left unchanged. The
+ * endpoint still responds `200` with the current budget state.
+ *
+ * Only the project owner and project commanders may reset the budget.
+ *
+ */
+export const resetProjectBudget = <ThrowOnError extends boolean = false>(options: Options<ResetProjectBudgetData, ThrowOnError>) => (options.client ?? client).post<ResetProjectBudgetResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/project/{project_id}/budget/reset',
+    ...options
+});
+
+/**
  * Create tasklist in project
  *
  * Creates a new tasklist inside the given project. The tasklist inherits project-level ACL and becomes visible to all project workers unless the tasklist's own ACL is narrowed later.
@@ -657,6 +734,29 @@ export const getAssignableWorkers = <ThrowOnError extends boolean = false>(optio
 });
 
 /**
+ * Delete tasklist (soft-delete)
+ *
+ * Marks the tasklist as deleted. It disappears from project listings together with its tasks, but is retained in the database.
+ *
+ * **Use cases:**
+ * - Cancelling a whole batch of externally-provisioned work (the action the tasklist represented was called off)
+ * - Removing a tasklist created by mistake during an import
+ *
+ * **Behavior notes:**
+ * - This is a **soft-delete** — the row stays and `POST /tasklist/{tasklist_id}/activate` brings the tasklist and its tasks back.
+ * - Tasks inside are not deleted individually; they stop being listed because their tasklist is deleted. Restoring the tasklist brings them back.
+ * - Side effects: pending events and notifications tied to the tasklist are removed, its public shared links are revoked, and the `tasklist_deleted` webhook fires. **These side effects are permanent** — activating the tasklist again does not bring back the removed events / notifications, nor does it re-issue the revoked public links.
+ * - Idempotent — deleting an already-deleted tasklist returns success.
+ * - Both the tasklist and its project are ACL-checked. If the caller has no access to either, returns 404.
+ *
+ */
+export const deleteTasklist = <ThrowOnError extends boolean = false>(options: Options<DeleteTasklistData, ThrowOnError>) => (options.client ?? client).delete<DeleteTasklistResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/tasklist/{tasklist_id}',
+    ...options
+});
+
+/**
  * Get tasklist detail
  *
  * Returns metadata for a single tasklist — name, budget, parent project reference, the default worker (`worker_id`), and the latest `date_edited` / `date_add` audit timestamps.
@@ -675,6 +775,52 @@ export const getAssignableWorkers = <ThrowOnError extends boolean = false>(optio
 export const getTasklist = <ThrowOnError extends boolean = false>(options: Options<GetTasklistData, ThrowOnError>) => (options.client ?? client).get<GetTasklistResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/tasklist/{tasklist_id}',
+    ...options
+});
+
+/**
+ * Archive tasklist
+ *
+ * Moves the tasklist to the `finished` state. It is hidden from the active tasklist listing but stays fully accessible through the archive.
+ *
+ * **Use cases:**
+ * - Closing a finished batch of work provisioned from an external system
+ * - Cleaning up the active project view without losing history
+ *
+ * **Behavior notes:**
+ * - Sets the tasklist state to `finished` and stamps `date_finished`.
+ * - Tasklists in the `deleted` state are accepted as well and end up `finished` — archiving a deleted tasklist brings it back out of the trash. The permanent side effects of the preceding delete (removed events and notifications, revoked public shared links) are not undone.
+ * - The `tasklist_archived` webhook fires.
+ * - Idempotent — archiving an already-archived tasklist returns success.
+ * - Both the tasklist and its project are ACL-checked. If the caller has no access to either, returns 404.
+ *
+ */
+export const archiveTasklist = <ThrowOnError extends boolean = false>(options: Options<ArchiveTasklistData, ThrowOnError>) => (options.client ?? client).post<ArchiveTasklistResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/tasklist/{tasklist_id}/archive',
+    ...options
+});
+
+/**
+ * Activate tasklist
+ *
+ * Returns the tasklist to the `active` state. Works both as un-archive and as restore from the trash.
+ *
+ * **Use cases:**
+ * - Reopening work that was archived prematurely
+ * - Recovering a tasklist deleted by mistake
+ *
+ * **Behavior notes:**
+ * - Accepts tasklists in the `finished` and `deleted` states alike — both end up `active`.
+ * - Un-archiving clears `date_finished`.
+ * - This is **not** a full undo of `DELETE /tasklist/{tasklist_id}`. It restores the tasklist and its tasks, but the events and notifications removed by the delete stay gone and the revoked public shared links are not re-issued.
+ * - Idempotent — activating an already-active tasklist returns success.
+ * - Both the tasklist and its project are ACL-checked. If the caller has no access to either, returns 404.
+ *
+ */
+export const activateTasklist = <ThrowOnError extends boolean = false>(options: Options<ActivateTasklistData, ThrowOnError>) => (options.client ?? client).post<ActivateTasklistResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/tasklist/{tasklist_id}/activate',
     ...options
 });
 
@@ -1089,6 +1235,46 @@ export const getTaskRelations = <ThrowOnError extends boolean = false>(options: 
 });
 
 /**
+ * Create task relation
+ *
+ * Creates a relation between `task_id` and `related_task_id`. The `type` is always interpreted
+ * **from the point of view of `task_id`**, so `blocks` and `blocked_by` describe the same relation
+ * seen from opposite sides.
+ *
+ * `related_to` and `duplicate_of` are **symmetric** — both tasks report the same type, so
+ * `duplicate_of` does not record which of the two tasks is the duplicate.
+ *
+ * **400 is returned when:**
+ * - `type` is not one of the listed values
+ * - the same pair of tasks is already related
+ * - `related_task_id` is the task itself
+ * - a blocking relation would close a cycle
+ *
+ */
+export const createTaskRelation = <ThrowOnError extends boolean = false>(options: Options<CreateTaskRelationData, ThrowOnError>) => (options.client ?? client).post<CreateTaskRelationResponses, CreateTaskRelationErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/task/{task_id}/relations',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Delete task relation
+ *
+ * Deletes a relation of `task_id`. The relation may be deleted from either side — passing the
+ * task on either end of the relation works.
+ *
+ */
+export const deleteTaskRelation = <ThrowOnError extends boolean = false>(options: Options<DeleteTaskRelationData, ThrowOnError>) => (options.client ?? client).delete<DeleteTaskRelationResponses, DeleteTaskRelationErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/task/{task_id}/relations/{relation_uuid}',
+    ...options
+});
+
+/**
  * Remove task from a secondary project
  *
  * Reverses a prior "assign to project" call by deleting the child task that belonged to the specified secondary project. The primary task continues to exist.
@@ -1243,6 +1429,10 @@ export const getPublicLinkToTask = <ThrowOnError extends boolean = false>(option
  * - If `target_tasklist_id` is omitted, the copied task lands in the **same tasklist ID** it had in the template — which only works if `target_project_id` (or an auto-created project) has a tasklist with that ID. Safer to always pass both.
  * - `preset_date_from` shifts floating due-dates (same as other template endpoints).
  * - `users_ids` is a list of template members to invite into the destination.
+ * - `name` and `description` override what was copied from the template. They are applied **after** the copy, so omitting them keeps the template values and the template task itself is never modified. `description` replaces the whole description (upsert, no history) — identical semantics to `POST /task/{task_id}/description`.
+ * - The overrides apply to the copied task only; names and descriptions of its subtasks always come from the template. Sending `null` in either field is treated the same as omitting it.
+ * - A malformed request — including an invalid `description.files[].download_url` — is rejected with `400` before anything is copied, so no task is created.
+ * - Because the overrides themselves run after the copy has been committed, the two failures still possible afterwards (the server cannot download a well-formed `description.files[].download_url`, or you lack permission to rename a task in the destination project) return an error **and still leave the created task behind**, carrying the template name and description. There is no idempotency key, so retrying creates a second task — check the destination tasklist first.
  *
  */
 export const createTaskFromTemplate = <ThrowOnError extends boolean = false>(options: Options<CreateTaskFromTemplateData, ThrowOnError>) => (options.client ?? client).post<CreateTaskFromTemplateResponses, unknown, ThrowOnError>({

@@ -33,6 +33,7 @@ export type TaskBasic = {
 };
 
 export type TaskRelation = {
+    uuid?: string;
     type?: 'blocked_by' | 'blocks' | 'related_to' | 'duplicate_of';
     related_task_id?: number;
     related_task_name?: string;
@@ -91,7 +92,18 @@ export type ProjectBasic = {
     name?: string;
 };
 
+export type ProjectMutationResult = ProjectBasic & {
+    /**
+     * Project deadline as a calendar date (`YYYY-MM-DD`). The project deadline has no time-of-day component.
+     */
+    due_date?: string | null;
+};
+
 export type ProjectWithTasklists = ProjectBasic & {
+    /**
+     * Project deadline as a calendar date (`YYYY-MM-DD`). The project deadline has no time-of-day component.
+     */
+    due_date?: string | null;
     /**
      * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
      */
@@ -105,6 +117,10 @@ export type ProjectWithTasklists = ProjectBasic & {
 };
 
 export type ProjectFull = ProjectBasic & {
+    /**
+     * Project deadline as a calendar date (`YYYY-MM-DD`). The project deadline has no time-of-day component.
+     */
+    due_date?: string | null;
     /**
      * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
      */
@@ -166,6 +182,78 @@ export type PinnedItem = {
     id?: number;
     link?: string;
     title?: string;
+};
+
+/**
+ * Current budget state — configured settings plus consumption (čerpání) and remaining (zbývá)
+ * values for both money and time. All monetary amounts use the `Currency` format (amount ×100).
+ *
+ */
+export type ProjectBudgetState = {
+    is_recurrent: boolean;
+    /**
+     * Day of month (1–31) when a recurrent budget resets. 0 when not recurrent.
+     */
+    null_in_day_of_month: number;
+    /**
+     * Reset interval in months for a recurrent budget. 0 when not recurrent.
+     */
+    null_after_months_count: number;
+    /**
+     * Configured cost budget (project currency). Amount is `0` when no cost budget is set.
+     */
+    budget: Currency;
+    /**
+     * Configured time budget in minutes.
+     */
+    minutes_budget: number;
+    /**
+     * Cost consumed so far (čerpání).
+     */
+    spent_cost: Currency;
+    /**
+     * Time consumed so far in minutes (čerpání).
+     */
+    spent_minutes: number;
+    /**
+     * Remaining cost budget (budget − spent; may be negative when overspent).
+     */
+    remaining_cost: Currency;
+    /**
+     * Remaining time budget in minutes (may be negative when overspent).
+     */
+    remaining_minutes: number;
+    /**
+     * When a recurrent budget will next reset (naive ISO8601, Europe/Prague). null for non-recurrent budgets.
+     */
+    next_reset_date: string | null;
+};
+
+/**
+ * Budget settings to set or change.
+ *
+ * To **cancel** the budget, send `budget: null` and `minutes_budget: 0` (with `is_recurrent: false`)
+ * — it resets to empty/zero. The budget currency always follows the project currency.
+ *
+ */
+export type ProjectBudgetSettingsInput = {
+    is_recurrent: boolean;
+    /**
+     * Day of month to reset a recurrent budget. Required and must be 1–31 when `is_recurrent` is true; ignored otherwise.
+     */
+    null_in_day_of_month?: number;
+    /**
+     * Reset interval in months for a recurrent budget. Required and at most 300 when `is_recurrent` is true; ignored otherwise.
+     */
+    null_after_months_count?: number;
+    /**
+     * Cost budget in minor currency units, e.g. "100000" for 1000.00. Must be a non-negative whole number. Send null or omit to clear it.
+     */
+    budget?: string | null;
+    /**
+     * Time budget in minutes. Use 0 for none.
+     */
+    minutes_budget?: number;
 };
 
 export type TasklistWithBudget = TasklistBasic & {
@@ -427,6 +515,12 @@ export type TaskDetail = {
     total_time_estimate?: TimeEstimate;
     users_time_estimates?: Array<UserTimeEstimate>;
     tracking_users?: Array<UserBasic>;
+    /**
+     * Empty when the project owner's plan has no team features — the detail stays readable and
+     * the relations are simply omitted. `GET /task/{task_id}/relations` returns 403 in that case.
+     *
+     */
+    relations?: Array<TaskRelation>;
 };
 
 export type SubtaskCreate = {
@@ -1076,6 +1170,10 @@ export type CreateProjectData = {
          */
         currency_iso: 'CZK' | 'EUR' | 'USD';
         /**
+         * Project deadline as a calendar date (`YYYY-MM-DD`). The project deadline has no time-of-day component.
+         */
+        due_date?: string | null;
+        /**
          * ID of user assigned as owner. Must be an owner-eligible user in the caller's account.
          * If omitted, the authenticated caller becomes the owner.
          *
@@ -1091,7 +1189,7 @@ export type CreateProjectResponses = {
     /**
      * Project created
      */
-    200: ProjectBasic;
+    200: ProjectMutationResult;
 };
 
 export type CreateProjectResponse = CreateProjectResponses[keyof CreateProjectResponses];
@@ -1306,6 +1404,41 @@ export type GetProjectResponses = {
 };
 
 export type GetProjectResponse = GetProjectResponses[keyof GetProjectResponses];
+
+export type UpdateProjectData = {
+    body: {
+        name?: string;
+        /**
+         * Project deadline as a calendar date (`YYYY-MM-DD`). The project deadline has no time-of-day component.
+         */
+        due_date?: string | null;
+    };
+    path: {
+        project_id: number;
+    };
+    query?: never;
+    url: '/project/{project_id}';
+};
+
+export type UpdateProjectErrors = {
+    /**
+     * Malformed `due_date` or invalid `name`
+     */
+    400: unknown;
+    /**
+     * Project does not exist, or the caller is neither its owner nor a commander
+     */
+    404: unknown;
+};
+
+export type UpdateProjectResponses = {
+    /**
+     * Project updated
+     */
+    200: ProjectMutationResult;
+};
+
+export type UpdateProjectResponse = UpdateProjectResponses[keyof UpdateProjectResponses];
 
 export type GetProjectWorkersData = {
     body?: never;
@@ -1642,6 +1775,60 @@ export type DeletePinnedItemResponses = {
 
 export type DeletePinnedItemResponse = DeletePinnedItemResponses[keyof DeletePinnedItemResponses];
 
+export type GetProjectBudgetData = {
+    body?: never;
+    path: {
+        project_id: number;
+    };
+    query?: never;
+    url: '/project/{project_id}/budget';
+};
+
+export type GetProjectBudgetResponses = {
+    /**
+     * Current budget state
+     */
+    200: ProjectBudgetState;
+};
+
+export type GetProjectBudgetResponse = GetProjectBudgetResponses[keyof GetProjectBudgetResponses];
+
+export type UpdateProjectBudgetData = {
+    body: ProjectBudgetSettingsInput;
+    path: {
+        project_id: number;
+    };
+    query?: never;
+    url: '/project/{project_id}/budget';
+};
+
+export type UpdateProjectBudgetResponses = {
+    /**
+     * Updated budget state
+     */
+    200: ProjectBudgetState;
+};
+
+export type UpdateProjectBudgetResponse = UpdateProjectBudgetResponses[keyof UpdateProjectBudgetResponses];
+
+export type ResetProjectBudgetData = {
+    body?: never;
+    path: {
+        project_id: number;
+    };
+    query?: never;
+    url: '/project/{project_id}/budget/reset';
+};
+
+export type ResetProjectBudgetResponses = {
+    /**
+     * Budget state after reset
+     */
+    200: ProjectBudgetState;
+};
+
+export type ResetProjectBudgetResponse = ResetProjectBudgetResponses[keyof ResetProjectBudgetResponses];
+
 export type CreateTasklistData = {
     body: {
         name: string;
@@ -1763,6 +1950,24 @@ export type GetAssignableWorkersResponses = {
 
 export type GetAssignableWorkersResponse = GetAssignableWorkersResponses[keyof GetAssignableWorkersResponses];
 
+export type DeleteTasklistData = {
+    body?: never;
+    path: {
+        tasklist_id: number;
+    };
+    query?: never;
+    url: '/tasklist/{tasklist_id}';
+};
+
+export type DeleteTasklistResponses = {
+    /**
+     * Successful response
+     */
+    200: SuccessResponse;
+};
+
+export type DeleteTasklistResponse = DeleteTasklistResponses[keyof DeleteTasklistResponses];
+
 export type GetTasklistData = {
     body?: never;
     path: {
@@ -1780,6 +1985,42 @@ export type GetTasklistResponses = {
 };
 
 export type GetTasklistResponse = GetTasklistResponses[keyof GetTasklistResponses];
+
+export type ArchiveTasklistData = {
+    body?: never;
+    path: {
+        tasklist_id: number;
+    };
+    query?: never;
+    url: '/tasklist/{tasklist_id}/archive';
+};
+
+export type ArchiveTasklistResponses = {
+    /**
+     * Successful response
+     */
+    200: SuccessResponse;
+};
+
+export type ArchiveTasklistResponse = ArchiveTasklistResponses[keyof ArchiveTasklistResponses];
+
+export type ActivateTasklistData = {
+    body?: never;
+    path: {
+        tasklist_id: number;
+    };
+    query?: never;
+    url: '/tasklist/{tasklist_id}/activate';
+};
+
+export type ActivateTasklistResponses = {
+    /**
+     * Successful response
+     */
+    200: SuccessResponse;
+};
+
+export type ActivateTasklistResponse = ActivateTasklistResponses[keyof ActivateTasklistResponses];
 
 export type CreateTasklistFromTemplateData = {
     body: {
@@ -2352,10 +2593,16 @@ export type GetTaskRelationsData = {
 
 export type GetTaskRelationsErrors = {
     /**
-     * Returned when the task does not exist, when the caller has no access to the task
-     * or its project, when the project owner's plan has no team features, or when the
-     * requested ID is a multi-project child. No separate 403 is emitted — access is
-     * indistinguishable from not-found by design.
+     * Returned when the project owner's plan has no team features, so relations may not be read
+     * at all. The task detail (`GET /task/{task_id}`) stays readable in that case and reports
+     * an empty `relations` array instead.
+     *
+     */
+    403: unknown;
+    /**
+     * Returned when the task does not exist, when the caller has no access to the task or its
+     * project, or when the requested ID is a multi-project child. Access is indistinguishable
+     * from not-found by design.
      *
      */
     404: unknown;
@@ -2371,6 +2618,97 @@ export type GetTaskRelationsResponses = {
 };
 
 export type GetTaskRelationsResponse = GetTaskRelationsResponses[keyof GetTaskRelationsResponses];
+
+export type CreateTaskRelationData = {
+    body: {
+        /**
+         * Relation type from the point of view of `task_id`. `related_to` and `duplicate_of`
+         * are symmetric.
+         *
+         */
+        type: 'blocked_by' | 'blocks' | 'related_to' | 'duplicate_of';
+        /**
+         * The task on the other side of the relation.
+         */
+        related_task_id: number;
+    };
+    path: {
+        task_id: number;
+    };
+    query?: never;
+    url: '/task/{task_id}/relations';
+};
+
+export type CreateTaskRelationErrors = {
+    /**
+     * Invalid relation type, duplicate relation, self-relation or cycle detected
+     */
+    400: unknown;
+    /**
+     * Returned when the project owner's plan does not allow the requested relation type —
+     * `related_to` and `duplicate_of` require team features, `blocked_by` and `blocks`
+     * additionally require business features.
+     *
+     */
+    403: unknown;
+    /**
+     * Returned when either task does not exist, when the caller has no access to it, or when
+     * either ID is a multi-project child.
+     *
+     */
+    404: unknown;
+};
+
+export type CreateTaskRelationResponses = {
+    /**
+     * Created relation
+     */
+    200: TaskRelation;
+};
+
+export type CreateTaskRelationResponse = CreateTaskRelationResponses[keyof CreateTaskRelationResponses];
+
+export type DeleteTaskRelationData = {
+    body?: never;
+    path: {
+        task_id: number;
+        /**
+         * UUID of the relation, as returned in the `uuid` attribute of a relation.
+         */
+        relation_uuid: string;
+    };
+    query?: never;
+    url: '/task/{task_id}/relations/{relation_uuid}';
+};
+
+export type DeleteTaskRelationErrors = {
+    /**
+     * `relation_uuid` is not a valid UUID
+     */
+    400: unknown;
+    /**
+     * Returned when the project owner's plan does not allow the relation type — `related_to` and
+     * `duplicate_of` require team features, `blocked_by` and `blocks` additionally require
+     * business features.
+     *
+     */
+    403: unknown;
+    /**
+     * Returned when the task does not exist, when the caller has no access to it, when no
+     * relation with `relation_uuid` exists, or when that relation is not attached to `task_id`.
+     *
+     */
+    404: unknown;
+};
+
+export type DeleteTaskRelationResponses = {
+    /**
+     * Relation deleted
+     */
+    200: SuccessResponse;
+};
+
+export type DeleteTaskRelationResponse = DeleteTaskRelationResponses[keyof DeleteTaskRelationResponses];
 
 export type RemoveTaskFromProjectData = {
     body?: never;
@@ -2539,6 +2877,17 @@ export type CreateTaskFromTemplateData = {
         target_tasklist_id?: number;
         preset_date_from?: string;
         users_ids?: Array<number>;
+        /**
+         * Overrides the task name copied from the template. Trimmed before use; an empty or whitespace-only value is rejected. Omit (or send null) to keep the template one.
+         */
+        name?: string | null;
+        /**
+         * Overrides the task description copied from the template. Same shape as the POST /task/{task_id}/description request body. Omit (or send null) to keep the template description.
+         */
+        description?: {
+            content: string;
+            files?: Array<FileUpload>;
+        } | null;
     };
     path: {
         template_id: number;
