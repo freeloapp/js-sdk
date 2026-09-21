@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskcheckData, ActivateTaskcheckResponses, ActivateTaskData, ActivateTasklistData, ActivateTasklistResponses, ActivateTaskResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, ArchiveTasklistData, ArchiveTasklistResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskRelationData, CreateTaskRelationErrors, CreateTaskRelationResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCommentData, DeleteCommentErrors, DeleteCommentResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteDocOrFileByUuidData, DeleteDocOrFileByUuidErrors, DeleteDocOrFileByUuidResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskcheckData, DeleteTaskcheckResponses, DeleteTaskData, DeleteTasklistData, DeleteTasklistResponses, DeleteTaskRelationData, DeleteTaskRelationErrors, DeleteTaskRelationResponses, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskcheckData, EditTaskcheckResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTasklistData, EditTasklistResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindAvailableTaskLabelsData, FindAvailableTaskLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskcheckData, FinishTaskcheckResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectBudgetData, GetProjectBudgetResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTaskLabelColorsData, GetTaskLabelColorsResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MergeTaskLabelsData, MergeTaskLabelsResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, ResetProjectBudgetData, ResetProjectBudgetResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UpdateProjectBudgetData, UpdateProjectBudgetResponses, UpdateProjectData, UpdateProjectErrors, UpdateProjectResponses, UploadFileData, UploadFileResponses } from './types.gen';
+import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskcheckData, ActivateTaskcheckResponses, ActivateTaskData, ActivateTasklistData, ActivateTasklistResponses, ActivateTaskResponses, AddCustomFieldEnumValueData, AddCustomFieldEnumValueResponses, AddCustomFieldValueData, AddCustomFieldValueResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, ArchiveTasklistData, ArchiveTasklistResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, ChangeCustomFieldEnumValueData, ChangeCustomFieldEnumValueResponses, ChangeCustomFieldValueData, ChangeCustomFieldValueResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskRelationData, CreateTaskRelationErrors, CreateTaskRelationResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCommentData, DeleteCommentErrors, DeleteCommentResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteDocOrFileByUuidData, DeleteDocOrFileByUuidErrors, DeleteDocOrFileByUuidResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskcheckData, DeleteTaskcheckResponses, DeleteTaskData, DeleteTasklistData, DeleteTasklistResponses, DeleteTaskRelationData, DeleteTaskRelationErrors, DeleteTaskRelationResponses, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskcheckData, EditTaskcheckResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTasklistData, EditTasklistResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindAvailableTaskLabelsData, FindAvailableTaskLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskcheckData, FinishTaskcheckResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectBudgetData, GetProjectBudgetResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTaskLabelColorsData, GetTaskLabelColorsResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MergeTaskLabelsData, MergeTaskLabelsResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, ResetProjectBudgetData, ResetProjectBudgetResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UpdateProjectBudgetData, UpdateProjectBudgetResponses, UpdateProjectData, UpdateProjectErrors, UpdateProjectResponses, UploadFileData, UploadFileResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -1732,8 +1732,10 @@ export const removeTaskLabelsFromTask = <ThrowOnError extends boolean = false>(o
  * **Attaching files (two ways — pick one per file):**
  * 1. **As an attachment** — list the file in the `files` array (`{ "uuid": "…" }`). The file is attached to the comment but not placed at a specific position in the text.
  * 2. **Inline in the body** — embed an anchor with `data-freelo-uuid` in `content`:
- * `<a data-freelo-uuid="{file_uuid}" href="https://app.freelo.io/file/{file_uuid}">caption</a>`
- * The server extracts the UUID from `content`, attaches the file automatically (so you do **not** also add it to `files`), and keeps the anchor in the stored `content` — so a later `GET` shows the file inside the comment body. The anchor must be an `<a>` element (not a `<div>`); the text between the tags becomes the file caption.
+ * `<a data-filename="{filename}" data-freelo-uuid="{file_uuid}">caption</a>`
+ * The server extracts the UUID from `content`, attaches the file automatically (so you do **not** also add it to `files`), and keeps the anchor in the stored `content` — so a later `GET` shows the file inside the comment body. The anchor must be an `<a>` element (not a `<div>`); the text between the tags becomes the file caption and must not be empty.
+ *
+ * Send only those attributes — **no `href` and no `target`**. The server fills in the file metadata and adds `target` itself when it stores the comment; supplying an `href` to an app domain suppresses that and stores markup the web UI never produces. `data-filename` is optional but recommended, so stored content matches what the UI creates.
  *
  * ⚠️ Do not reference the same file UUID in both `content` and `files` — it would be attached twice.
  *
@@ -2523,6 +2525,92 @@ export const restoreCustomField = <ThrowOnError extends boolean = false>(options
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/custom-field/restore/{uuid}',
     ...options
+});
+
+/**
+ * Add a scalar custom-field value to a task (deprecated)
+ *
+ * **Deprecated** — use `POST /custom-field/add-or-edit-value` instead, which upserts by
+ * (`task_id`, `custom_field_uuid`) and does not require the caller to know whether a value exists.
+ *
+ * Creates a value of a **non-enum** custom field on the given task.
+ *
+ *
+ * @deprecated
+ */
+export const addCustomFieldValue = <ThrowOnError extends boolean = false>(options: Options<AddCustomFieldValueData, ThrowOnError>) => (options.client ?? client).post<AddCustomFieldValueResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/custom-field/add-value/{task_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Change a scalar custom-field value (deprecated)
+ *
+ * **Deprecated** — use `POST /custom-field/add-or-edit-value` instead.
+ *
+ * Changes an existing value of a **non-enum** custom field, addressed by the value's own UUID.
+ *
+ *
+ * @deprecated
+ */
+export const changeCustomFieldValue = <ThrowOnError extends boolean = false>(options: Options<ChangeCustomFieldValueData, ThrowOnError>) => (options.client ?? client).post<ChangeCustomFieldValueResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/custom-field/change-value/{uuid}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Assign an enum option to a task (deprecated)
+ *
+ * **Deprecated** — use `POST /custom-field/add-or-edit-enum-value` instead.
+ *
+ * Assigns an enum option of an enum-typed custom field to the given task.
+ *
+ * **Behavior notes:**
+ * - The custom field is passed as `customFieldUuid` (camelCase) in the body — unlike the rest
+ * of the API, which uses snake_case. This inconsistency is one reason the endpoint is deprecated.
+ * - `value` is the **UUID of the enum option**, not the displayed string.
+ *
+ *
+ * @deprecated
+ */
+export const addCustomFieldEnumValue = <ThrowOnError extends boolean = false>(options: Options<AddCustomFieldEnumValueData, ThrowOnError>) => (options.client ?? client).post<AddCustomFieldEnumValueResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/custom-field/add-enum-value/{task_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Change an assigned enum option (deprecated)
+ *
+ * **Deprecated** — use `POST /custom-field/add-or-edit-enum-value` instead.
+ *
+ * Changes which enum option an existing custom-field value points to.
+ *
+ *
+ * @deprecated
+ */
+export const changeCustomFieldEnumValue = <ThrowOnError extends boolean = false>(options: Options<ChangeCustomFieldEnumValueData, ThrowOnError>) => (options.client ?? client).post<ChangeCustomFieldEnumValueResponses, unknown, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/custom-field/change-enum-value/{uuid}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
 });
 
 /**
