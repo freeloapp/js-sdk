@@ -521,7 +521,47 @@ export type TaskDetail = {
      *
      */
     relations?: Array<TaskRelation>;
+    copied_from_task?: CopiedFromTask;
+    multi_project_task?: MultiProjectTask;
 };
+
+/**
+ * Origin task this task was copied from (template copy or multi-project copy); `null` otherwise.
+ */
+export type CopiedFromTask = {
+    id?: number;
+    project?: {
+        id?: number;
+        /**
+         * Whether the origin project is a template (or a deleted project that was one).
+         */
+        is_template?: boolean;
+    };
+} | null;
+
+/**
+ * Mapping of the task across the projects it is assigned to. `null` when the task is a
+ * child instance of a multi-project task — the block is only rendered on the parent.
+ *
+ */
+export type MultiProjectTask = {
+    /**
+     * Whether the task lives in more than one project.
+     */
+    is_multi_project?: boolean;
+    /**
+     * One entry per project the task is assigned to, including the root task.
+     */
+    assigned_to?: Array<{
+        project?: ProjectBasic;
+        tasklist?: TasklistBasic;
+        task?: {
+            id?: number;
+            name?: string;
+            sorting_id?: number;
+        };
+    }>;
+} | null;
 
 export type SubtaskCreate = {
     name: string;
@@ -544,6 +584,38 @@ export type SubtaskCreate = {
      * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
      */
     notify_author?: boolean;
+};
+
+/**
+ * Shape returned when a subtask is created. It is narrower than the read shape of
+ * `GET /task/{task_id}/subtasks` — no project, tasklist, state or counters.
+ *
+ */
+export type SubtaskCreated = {
+    id?: number;
+    /**
+     * ID of the underlying full task; `null` for a simple checklist item (taskcheck).
+     */
+    task_id?: number | null;
+    name?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
+    due_date?: string | null;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
+    due_date_end?: string | null;
+    worker?: UserBasic;
+    priority_enum?: string | null;
+    labels?: Array<TaskLabel>;
+    comment?: {
+        content?: string;
+    } | null;
+    /**
+     * Followers of the subtask.
+     */
+    tracking_users?: Array<UserBasic>;
 };
 
 export type Subtask = {
@@ -781,7 +853,15 @@ export type Notification = {
      * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
      */
     date_action?: string;
-    author?: UserBasic;
+    /**
+     * The author of the notification. Unlike everywhere else in the API, the user's name is
+     * exposed here as `name`, not as `fullname`.
+     *
+     */
+    author?: {
+        id?: number;
+        name?: string;
+    };
     who?: UserBasic;
     is_unread?: boolean;
     is_new?: boolean;
@@ -802,6 +882,28 @@ export type Notification = {
         uuid?: string;
         filename?: string;
         caption?: string;
+    } | null;
+    file_comment?: {
+        id?: number;
+    } | null;
+    project_link?: {
+        id?: number;
+        name?: string;
+    } | null;
+    project_link_comment?: {
+        id?: number;
+    } | null;
+    /**
+     * Some notifications carry information about more than one action (e.g. several new comments).
+     */
+    multi_notification?: Array<string> | null;
+    /**
+     * Present only on the deleted-work notification; describes the work that was removed.
+     */
+    work_deleted?: {
+        minutes?: number;
+        cost?: Currency;
+        note?: string;
     } | null;
     more_comments?: boolean;
     more_users?: Array<UserBasic>;
@@ -879,6 +981,27 @@ export type CustomField = {
     project_id?: number;
     author_id?: number;
     name?: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
+    date_add?: string;
+    priority?: number;
+};
+
+/**
+ * Shape returned by the custom-field create / rename / restore endpoints. It differs from
+ * the read shape: the type UUID is exposed as `type`, not as `custom_fields_types_uuid`.
+ *
+ */
+export type CustomFieldMutationResult = {
+    uuid?: string;
+    name?: string;
+    /**
+     * UUID of the custom-field type (see `GET /custom-field/get-types`).
+     */
+    type?: string;
+    project_id?: number;
+    author_id?: number;
     /**
      * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
      */
@@ -3034,7 +3157,7 @@ export type CreateSubtaskResponses = {
     /**
      * Subtask created
      */
-    200: Subtask;
+    200: SubtaskCreated;
 };
 
 export type CreateSubtaskResponse = CreateSubtaskResponses[keyof CreateSubtaskResponses];
@@ -3170,8 +3293,8 @@ export type CreateCommentData = {
          * Comment body (HTML / plain text).
          *
          * **Inline file attachment:** embed an anchor to attach an uploaded file inside the body:
-         * `<a data-freelo-uuid="{file_uuid}" href="https://app.freelo.io/file/{file_uuid}">caption</a>`
-         * The UUID is extracted server-side and the file is attached automatically (do not also list it in `files`). The anchor stays in the stored content, so the file is rendered inside the comment on read.
+         * `<a data-filename="{filename}" data-freelo-uuid="{file_uuid}">caption</a>`
+         * The UUID is extracted server-side and the file is attached automatically (do not also list it in `files`). The anchor stays in the stored content, so the file is rendered inside the comment on read. Send no `href` and no `target` — the server adds the file metadata and `target` itself.
          *
          * **Mention a user:** embed a span:
          * `<span data-freelo-mention="1" data-freelo-user-id="{id}">@{mention_key}</span>`
@@ -4140,7 +4263,7 @@ export type CreateCustomFieldResponses = {
      * Custom field created
      */
     200: {
-        custom_field?: CustomField;
+        custom_field?: CustomFieldMutationResult;
     };
 };
 
@@ -4162,7 +4285,7 @@ export type RenameCustomFieldResponses = {
      * Custom field renamed
      */
     200: {
-        custom_field?: CustomField;
+        custom_field?: CustomFieldMutationResult;
     };
 };
 
@@ -4200,11 +4323,127 @@ export type RestoreCustomFieldResponses = {
      * Custom field restored
      */
     200: {
-        custom_field?: CustomField;
+        custom_field?: CustomFieldMutationResult;
     };
 };
 
 export type RestoreCustomFieldResponse = RestoreCustomFieldResponses[keyof RestoreCustomFieldResponses];
+
+export type AddCustomFieldValueData = {
+    body: {
+        /**
+         * UUID of the created value. Generated server-side when omitted.
+         */
+        uuid?: string;
+        custom_field_uuid: string;
+        value: string;
+    };
+    path: {
+        /**
+         * ID of the task the value is assigned to.
+         */
+        task_id: number;
+    };
+    query?: never;
+    url: '/custom-field/add-value/{task_id}';
+};
+
+export type AddCustomFieldValueResponses = {
+    /**
+     * Value created
+     */
+    200: {
+        custom_field_value?: CustomFieldValue;
+    };
+};
+
+export type AddCustomFieldValueResponse = AddCustomFieldValueResponses[keyof AddCustomFieldValueResponses];
+
+export type ChangeCustomFieldValueData = {
+    body: {
+        value: string;
+    };
+    path: {
+        /**
+         * UUID of the custom-field value.
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/custom-field/change-value/{uuid}';
+};
+
+export type ChangeCustomFieldValueResponses = {
+    /**
+     * Value changed
+     */
+    200: {
+        custom_field_value?: CustomFieldValue;
+    };
+};
+
+export type ChangeCustomFieldValueResponse = ChangeCustomFieldValueResponses[keyof ChangeCustomFieldValueResponses];
+
+export type AddCustomFieldEnumValueData = {
+    body: {
+        /**
+         * UUID of the created value. Generated server-side when omitted.
+         */
+        uuid?: string;
+        customFieldUuid: string;
+        /**
+         * UUID of the enum option.
+         */
+        value: string;
+    };
+    path: {
+        /**
+         * ID of the task the option is assigned to.
+         */
+        task_id: number;
+    };
+    query?: never;
+    url: '/custom-field/add-enum-value/{task_id}';
+};
+
+export type AddCustomFieldEnumValueResponses = {
+    /**
+     * Enum option assigned
+     */
+    200: {
+        custom_field_value?: CustomFieldValue;
+    };
+};
+
+export type AddCustomFieldEnumValueResponse = AddCustomFieldEnumValueResponses[keyof AddCustomFieldEnumValueResponses];
+
+export type ChangeCustomFieldEnumValueData = {
+    body: {
+        /**
+         * UUID of the enum option.
+         */
+        value: string;
+    };
+    path: {
+        /**
+         * UUID of the custom-field value to change.
+         */
+        uuid: string;
+    };
+    query?: never;
+    url: '/custom-field/change-enum-value/{uuid}';
+};
+
+export type ChangeCustomFieldEnumValueResponses = {
+    /**
+     * Enum option changed
+     */
+    200: {
+        custom_field_value?: CustomFieldValue;
+    };
+};
+
+export type ChangeCustomFieldEnumValueResponse = ChangeCustomFieldEnumValueResponses[keyof ChangeCustomFieldEnumValueResponses];
 
 export type AddOrEditCustomFieldValueData = {
     body: {
