@@ -1999,6 +1999,8 @@ export const deleteWorkReport = <ThrowOnError extends boolean = false>(options: 
  * - `task_id` can be changed to **re-parent** the report to a different task — ACL is re-checked against the new task.
  * - ACL rules: the report author and the project owner/commander can edit; other users get `NotFoundException` (hiding existence).
  * - If the report's parent project has been marked as invoiced, edits may be blocked — see `/issued-invoice/{id}/mark-as-invoiced`.
+ * - Omitted fields keep their stored value. `minutes` must be an integer or an integer-valued
+ * string; any other value is rejected with `400`, it is never silently stored as `0`.
  *
  */
 export const editWorkReport = <ThrowOnError extends boolean = false>(options: Options<EditWorkReportData, ThrowOnError>) => (options.client ?? client).post<EditWorkReportResponses, unknown, ThrowOnError>({
