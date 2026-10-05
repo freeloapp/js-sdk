@@ -2648,6 +2648,10 @@ export type MoveTaskData = {
              */
             source_tasklist_id?: number;
         };
+        /**
+         * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you already follow the task or the target tasklist — following the task is enough, and if the move takes it out of your reach you get the "moved away" variant that does not name the destination. Ignored when `multi_project_task.source_tasklist_id` points at a child task's tasklist — that flow moves the child within its own project and emits no move notification.
+         */
+        notify_author?: boolean;
     };
     path: {
         task_id: number;
@@ -2885,6 +2889,10 @@ export type EditTaskDescriptionData = {
     body: {
         content: string;
         files?: Array<FileUpload>;
+        /**
+         * On the **first** call (the one that creates the description), keeps the authenticated caller's existing unread notifications on the task instead of clearing them because they wrote the description. It never creates a notification — the description itself is not announced to its own author. On later calls (the description already exists) it has the usual meaning: the caller is kept among the recipients of the description-edit notification.
+         */
+        notify_author?: boolean;
     };
     path: {
         task_id: number;
@@ -3308,7 +3316,7 @@ export type CreateCommentData = {
          */
         files?: Array<FileUpload>;
         /**
-         * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
+         * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target. If this call creates the task's description (the task has no comments yet), it behaves as on `POST /task/{task_id}/description`: it only keeps your existing unread notifications on the task, and the description does not notify you.
          */
         notify_author?: boolean;
     };
@@ -4003,11 +4011,11 @@ export type GetAllNotificationsData = {
         'users_ids[]'?: Array<number>;
         'teams_uuids[]'?: Array<string>;
         order?: 'asc' | 'desc';
-        'notification_types[]'?: Array<string>;
+        'notifications_types[]'?: Array<string>;
         /**
          * Only return unread notifications. Pass `1` to enable, `0` to disable — string values like `true`/`false` are not accepted and silently fall back to the default.
          */
-        only_unread?: 0 | 1;
+        is_only_unread?: 0 | 1;
         /**
          * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
