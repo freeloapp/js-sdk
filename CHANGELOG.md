@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.4](https://github.com/freeloapp/js-sdk/compare/js-sdk-v2.7.3...js-sdk-v2.7.4) (2026-10-21)
+
+
+### Fixed
+
+* regenerate SDK from updated OpenAPI spec ([#29](https://github.com/freeloapp/js-sdk/issues/29)) ([96b4fb8](https://github.com/freeloapp/js-sdk/commit/96b4fb8e850227ce66186c2ccd524617ad5b4979))
+* regenerate SDK from updated OpenAPI spec ([#32](https://github.com/freeloapp/js-sdk/issues/32)) ([de01a6e](https://github.com/freeloapp/js-sdk/commit/de01a6e8c5a1a2989f46976231390e8c428fba8f))
+* send the notification filters under the names the API reads ([#30](https://github.com/freeloapp/js-sdk/issues/30)) ([2900639](https://github.com/freeloapp/js-sdk/commit/29006398998ab89bdbd8d1ed67875e0dcbc45ad9))
+
 ## [2.7.3](https://github.com/freeloapp/js-sdk/compare/js-sdk-v2.7.2...js-sdk-v2.7.3) (2026-09-21)
 
 
