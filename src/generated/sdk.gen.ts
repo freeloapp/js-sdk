@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskcheckData, ActivateTaskcheckResponses, ActivateTaskData, ActivateTasklistData, ActivateTasklistResponses, ActivateTaskResponses, AddCustomFieldEnumValueData, AddCustomFieldEnumValueResponses, AddCustomFieldValueData, AddCustomFieldValueResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, ArchiveTasklistData, ArchiveTasklistResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, ChangeCustomFieldEnumValueData, ChangeCustomFieldEnumValueResponses, ChangeCustomFieldValueData, ChangeCustomFieldValueResponses, CreateCommentData, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateNoteData, CreateNoteResponses, CreateProjectData, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskFromTemplateData, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskRelationData, CreateTaskRelationErrors, CreateTaskRelationResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCommentData, DeleteCommentErrors, DeleteCommentResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteDocOrFileByUuidData, DeleteDocOrFileByUuidErrors, DeleteDocOrFileByUuidResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskcheckData, DeleteTaskcheckResponses, DeleteTaskData, DeleteTasklistData, DeleteTasklistResponses, DeleteTaskRelationData, DeleteTaskRelationErrors, DeleteTaskRelationResponses, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentResponses, EditEnumOptionData, EditEnumOptionResponses, EditNoteData, EditNoteResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskcheckData, EditTaskcheckResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionResponses, EditTasklistData, EditTasklistResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindAvailableTaskLabelsData, FindAvailableTaskLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskcheckData, FinishTaskcheckResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectBudgetData, GetProjectBudgetResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTaskLabelColorsData, GetTaskLabelColorsResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MergeTaskLabelsData, MergeTaskLabelsResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, ResetProjectBudgetData, ResetProjectBudgetResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UpdateProjectBudgetData, UpdateProjectBudgetResponses, UpdateProjectData, UpdateProjectErrors, UpdateProjectResponses, UploadFileData, UploadFileResponses } from './types.gen';
+import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskcheckData, ActivateTaskcheckResponses, ActivateTaskData, ActivateTasklistData, ActivateTasklistResponses, ActivateTaskResponses, AddCustomFieldEnumValueData, AddCustomFieldEnumValueResponses, AddCustomFieldValueData, AddCustomFieldValueResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, ArchiveTasklistData, ArchiveTasklistResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, ChangeCustomFieldEnumValueData, ChangeCustomFieldEnumValueResponses, ChangeCustomFieldValueData, ChangeCustomFieldValueResponses, CreateCommentData, CreateCommentErrors, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateDirectoryData, CreateDirectoryErrors, CreateDirectoryResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateLinkData, CreateLinkErrors, CreateLinkResponses, CreateNoteData, CreateNoteErrors, CreateNoteResponses, CreateProjectData, CreateProjectFileData, CreateProjectFileErrors, CreateProjectFileResponses, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskErrors, CreateTaskFromTemplateData, CreateTaskFromTemplateErrors, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskRelationData, CreateTaskRelationErrors, CreateTaskRelationResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCommentData, DeleteCommentErrors, DeleteCommentResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteDirectoryData, DeleteDirectoryErrors, DeleteDirectoryResponses, DeleteDocOrFileByUuidData, DeleteDocOrFileByUuidErrors, DeleteDocOrFileByUuidResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteLinkData, DeleteLinkErrors, DeleteLinkResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectFileData, DeleteProjectFileErrors, DeleteProjectFileResponses, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskcheckData, DeleteTaskcheckResponses, DeleteTaskData, DeleteTasklistData, DeleteTasklistResponses, DeleteTaskRelationData, DeleteTaskRelationErrors, DeleteTaskRelationResponses, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileErrors, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentErrors, EditCommentResponses, EditDirectoryData, EditDirectoryErrors, EditDirectoryResponses, EditEnumOptionData, EditEnumOptionResponses, EditLinkData, EditLinkErrors, EditLinkResponses, EditNoteData, EditNoteErrors, EditNoteResponses, EditProjectFileData, EditProjectFileErrors, EditProjectFileResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskcheckData, EditTaskcheckResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionErrors, EditTaskDescriptionResponses, EditTaskErrors, EditTasklistData, EditTasklistResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindAvailableTaskLabelsData, FindAvailableTaskLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskcheckData, FinishTaskcheckResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesErrors, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetDirectoryData, GetDirectoryErrors, GetDirectoryResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectBudgetData, GetProjectBudgetResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTaskLabelColorsData, GetTaskLabelColorsResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MergeTaskLabelsData, MergeTaskLabelsResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, ResetProjectBudgetData, ResetProjectBudgetResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UpdateProjectBudgetData, UpdateProjectBudgetResponses, UpdateProjectData, UpdateProjectErrors, UpdateProjectResponses, UploadFileData, UploadFileResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -886,9 +886,11 @@ export const getTasksInTasklist = <ThrowOnError extends boolean = false>(options
  * - The assignee (`worker`) must be one of the tasklist's `assignable-workers` (see that endpoint). A user outside the ACL scope results in `WorkerHasNoAccessToTasklistException` → 403.
  * - `tracking_users_ids` defaults to the assignee + author if omitted (via `TaskDataDefaultTrackingUsersFiller`).
  * - Creates a `task_created` event (→ webhooks, notifications, calendar sync).
+ * - Files in `comment` (`files` or inline `data-freelo-uuid` anchors) are checked before the task is created: a reused, foreign or unknown upload returns **400** and no task is created.
+ * - `comment.files` requires a non-empty `comment.content`; files sent without it return **400** instead of being dropped.
  *
  */
-export const createTask = <ThrowOnError extends boolean = false>(options: Options<CreateTaskData, ThrowOnError>) => (options.client ?? client).post<CreateTaskResponses, unknown, ThrowOnError>({
+export const createTask = <ThrowOnError extends boolean = false>(options: Options<CreateTaskData, ThrowOnError>) => (options.client ?? client).post<CreateTaskResponses, CreateTaskErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/project/{project_id}/tasklist/{tasklist_id}/tasks',
     ...options,
@@ -1027,7 +1029,7 @@ export const getTask = <ThrowOnError extends boolean = false>(options: Options<G
  *
  * Partially updates a task. Only the fields listed below are editable through this endpoint — any other key in the body is **silently ignored** (the facade uses `array_intersect_key` against a fixed whitelist).
  *
- * **Editable fields:** `name`, `description`, `worker`, `due_date`, `due_date_end`, `labels`, `priority_enum`, `tracking_users_ids`, `add_tracking_users_ids`, `remove_tracking_users_ids`.
+ * **Editable fields:** `name`, `description`, `worker`, `due_date`, `due_date_end`, `labels`, `priority_enum`, `tracking_users_ids`, `add_tracking_users_ids`, `remove_tracking_users_ids`. Optional flags: `notify_author`, and `collision_mode`, which reschedules tasks linked by blocking relations (see below).
  *
  * **Use cases:**
  * - Reassigning a task
@@ -1045,11 +1047,24 @@ export const getTask = <ThrowOnError extends boolean = false>(options: Options<G
  * Mixing `tracking_users_ids` (replace) with add/remove in one call is accepted but the final state is determined by the facade's order of operations — keep it to one shape per call to be deterministic.
  * - **Labels must reference existing labels or be fully-formed new label DTOs** — the behavior matches the task-labels add-to-task semantics.
  * - **`description` overwrites the whole description** (upsert, no append, no history) — identical semantics to `POST /task/{task_id}/description`. Omitting the key leaves the current description untouched; the task edit and the description update run in a single transaction.
+ * - **`due_date` and `due_date_end` are replaced as a pair.** Sending either key sets both, and the omitted one is treated as `null`: sending only `due_date` drops the end (single-day deadline), sending only `due_date_end` turns it into a single-day deadline on that date. To change one boundary of a range, send both. Omitting both keys leaves the deadline untouched.
+ * - Description files are checked before anything is changed: a reused, foreign or unknown upload returns **400** and neither the task nor its description is edited. Files already attached to the description may be listed again.
  * - The endpoint responds with the task's full detail (same shape as `GET /task/{id}`).
+ * - **`collision_mode` reschedules related tasks the same way Timeline does** in the app. Only blocking relations (`blocks` / `blocked_by`) are followed, recursively; finished tasks never move. Tasks without a due date never move either, and the change does not propagate through them to their own related tasks.
+ * - `none` (default): only the edited task changes.
+ * - `keep_gap` keeps the gaps — the start drives predecessors, the end drives successors (in whole days):
+ * - When the end moves by N days, following tasks move as a whole by N days, recursively — also earlier, with no "today" limit (only predecessors are kept from moving before today).
+ * - When the start moves by N days, each direct predecessor that has not started yet moves as a whole by N days (never to before today) and the change continues to its own predecessors; a predecessor that has already started (starts today or earlier) keeps its start and only its end moves by N days. A predecessor never ends before it starts.
+ * - When a predecessor's end moves, its other following tasks move by the same number of days.
+ * - `use_gap`: related tasks move only when they would collide with the edited task; an existing gap is used up first. Moving later shifts following tasks, moving earlier shifts preceding tasks. Tasks that already overlapped before the change move by the same number of days, so the overlap is kept. When the task had no due date before, collisions in both directions are resolved, like scheduling a task on the Timeline.
+ * - The edited task always ends with exactly the dates it would get without `collision_mode`. Nothing else moves when its due date is cleared, when only the time of day changes, with `keep_gap` when the task had no due date before, or for tasks in template projects.
+ * - `keep_gap` / `use_gap` need the Business plan, like the Timeline view: whenever the request contains `due_date` or `due_date_end` (even `null`) together with one of them and the project owner cannot use Business features, it fails with `402` (you are the owner) or `403` and nothing is saved — even if nothing would be rescheduled.
+ * - The edit is not atomic: the other fields are saved first, then related tasks are rescheduled. If rescheduling fails unexpectedly, the request returns an error but the other changes stay saved, so re-read the task before retrying.
+ * - Related tasks are rescheduled even in projects you cannot see; `shifted_tasks` lists only those you can. Each rescheduled task fires the usual due date notifications and a `task_edited` webhook; the edited task and the rescheduled tasks share one due date notification, so `notify_author` applies to all of them.
  * - Note the HTTP method: `POST` is used for edits here (historical REST shape), not `PUT`/`PATCH`.
  *
  */
-export const editTask = <ThrowOnError extends boolean = false>(options: Options<EditTaskData, ThrowOnError>) => (options.client ?? client).post<EditTaskResponses, unknown, ThrowOnError>({
+export const editTask = <ThrowOnError extends boolean = false>(options: Options<EditTaskData, ThrowOnError>) => (options.client ?? client).post<EditTaskResponses, EditTaskErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/task/{task_id}',
     ...options,
@@ -1325,10 +1340,10 @@ export const getTaskDescription = <ThrowOnError extends boolean = false>(options
  *
  * **Behavior notes (non-obvious):**
  * - Upsert semantics: first call creates, subsequent call **replaces** the content entirely. Any previous content is lost — not stored in history.
- * - `files` expects already-uploaded file UUIDs (see `POST /file/upload`).
+ * - `files` expects already-uploaded file UUIDs (see `POST /file/upload`). Files already attached to the description may be listed again; any other UUID must be your own fresh upload — a reused, foreign or unknown UUID returns **400** and the description is left unchanged.
  *
  */
-export const editTaskDescription = <ThrowOnError extends boolean = false>(options: Options<EditTaskDescriptionData, ThrowOnError>) => (options.client ?? client).post<EditTaskDescriptionResponses, unknown, ThrowOnError>({
+export const editTaskDescription = <ThrowOnError extends boolean = false>(options: Options<EditTaskDescriptionData, ThrowOnError>) => (options.client ?? client).post<EditTaskDescriptionResponses, EditTaskDescriptionErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/task/{task_id}/description',
     ...options,
@@ -1431,11 +1446,11 @@ export const getPublicLinkToTask = <ThrowOnError extends boolean = false>(option
  * - `users_ids` is a list of template members to invite into the destination.
  * - `name` and `description` override what was copied from the template. They are applied **after** the copy, so omitting them keeps the template values and the template task itself is never modified. `description` replaces the whole description (upsert, no history) — identical semantics to `POST /task/{task_id}/description`.
  * - The overrides apply to the copied task only; names and descriptions of its subtasks always come from the template. Sending `null` in either field is treated the same as omitting it.
- * - A malformed request — including an invalid `description.files[].download_url` — is rejected with `400` before anything is copied, so no task is created.
+ * - A malformed request — including an invalid `description.files[].download_url` or a reused, foreign or unknown uploaded file UUID in `description` — is rejected with `400` before anything is copied, so no task is created.
  * - Because the overrides themselves run after the copy has been committed, the two failures still possible afterwards (the server cannot download a well-formed `description.files[].download_url`, or you lack permission to rename a task in the destination project) return an error **and still leave the created task behind**, carrying the template name and description. There is no idempotency key, so retrying creates a second task — check the destination tasklist first.
  *
  */
-export const createTaskFromTemplate = <ThrowOnError extends boolean = false>(options: Options<CreateTaskFromTemplateData, ThrowOnError>) => (options.client ?? client).post<CreateTaskFromTemplateResponses, unknown, ThrowOnError>({
+export const createTaskFromTemplate = <ThrowOnError extends boolean = false>(options: Options<CreateTaskFromTemplateData, ThrowOnError>) => (options.client ?? client).post<CreateTaskFromTemplateResponses, CreateTaskFromTemplateErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/task/create-from-template/{template_id}',
     ...options,
@@ -1738,6 +1753,7 @@ export const removeTaskLabelsFromTask = <ThrowOnError extends boolean = false>(o
  * Send only those attributes — **no `href` and no `target`**. The server fills in the file metadata and adds `target` itself when it stores the comment; supplying an `href` to an app domain suppresses that and stores markup the web UI never produces. `data-filename` is optional but recommended, so stored content matches what the UI creates.
  *
  * ⚠️ Do not reference the same file UUID in both `content` and `files` — it would be attached twice.
+ * Each uploaded file UUID can be attached **only once** and **only by the user who uploaded it**. A reused, foreign or unknown UUID (in `files` or in an inline anchor) returns **400** and nothing is saved — upload the file again via `POST /file/upload`.
  *
  * **Mentioning users:**
  * Embed a mention in `content` as an HTML span:
@@ -1745,7 +1761,7 @@ export const removeTaskLabelsFromTask = <ThrowOnError extends boolean = false>(o
  * where `{id}` is the user's id and `{mention_key}` is the visible text after `@` (the normalized `fullname` — whitespace stripped, diacritics removed). Get both from the user's `UserBasic` object (e.g. `GET /users/me`). The mentioned user is notified.
  *
  */
-export const createComment = <ThrowOnError extends boolean = false>(options: Options<CreateCommentData, ThrowOnError>) => (options.client ?? client).post<CreateCommentResponses, unknown, ThrowOnError>({
+export const createComment = <ThrowOnError extends boolean = false>(options: Options<CreateCommentData, ThrowOnError>) => (options.client ?? client).post<CreateCommentResponses, CreateCommentErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/task/{task_id}/comments',
     ...options,
@@ -1783,11 +1799,12 @@ export const deleteComment = <ThrowOnError extends boolean = false>(options: Opt
  * **Behavior notes:**
  * - `files` replaces the full attachment set — pass the complete list of file UUIDs you want attached, not a delta.
  * - Files can also be attached inline via a `<a data-freelo-uuid="{file_uuid}">…</a>` anchor in `content` (see `POST /task/{id}/comments`). Use one mechanism per file, never both for the same UUID.
+ * - Files already attached to this comment may be listed again. Any other file must be your own fresh upload — a reused, foreign, unknown or archived-attachment UUID returns **400** and the comment is left unchanged.
  * - ACL: only the comment's author can edit (or project owner / commander depending on role rules). Otherwise 404 `NotFoundException` is returned (not 403, to avoid leaking the existence of inaccessible comments).
  * - The method used is `POST` for historical reasons, not `PUT`/`PATCH`.
  *
  */
-export const editComment = <ThrowOnError extends boolean = false>(options: Options<EditCommentData, ThrowOnError>) => (options.client ?? client).post<EditCommentResponses, unknown, ThrowOnError>({
+export const editComment = <ThrowOnError extends boolean = false>(options: Options<EditCommentData, ThrowOnError>) => (options.client ?? client).post<EditCommentResponses, EditCommentErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/comment/{comment_id}',
     ...options,
@@ -2330,14 +2347,18 @@ export const getAllEvents = <ThrowOnError extends boolean = false>(options?: Opt
 /**
  * Delete a file or document by UUID
  *
- * Deletes a single **file** or **document/note** identified by its UUID. The endpoint resolves the resource type from the UUID automatically and soft-deletes it.
+ * **Deletes a single file or document/note identified by its UUID. This cannot be undone via the API.**
  *
  * **Use cases:**
  * - Removing a file or note surfaced by the listing, by UUID alone
  *
  * **Behavior notes:**
- * - Soft-delete only — the resource is marked deleted, not physically removed.
- * - Returns 404 if no file or document matches the UUID, or the caller has no access to it.
+ * - The resource type is resolved from the UUID automatically.
+ * - A deleted file or note stops being available through the API — it is not returned by `GET /all-docs-and-files` and `GET /file/{file_uuid}` returns 404.
+ * - Deleting an already deleted file or note returns 200 again, unless it lies inside a deleted directory — then 404.
+ * - Attachments of tasks, task comments, notes and file or link discussions cannot be deleted here — returns 404.
+ * - Returns 404 if no file or document matches the UUID, it lies inside a deleted directory, or the caller has no access to it.
+ * - Guest accounts have no access to the Files section and to notes — returns 403.
  *
  */
 export const deleteDocOrFileByUuid = <ThrowOnError extends boolean = false>(options: Options<DeleteDocOrFileByUuidData, ThrowOnError>) => (options.client ?? client).delete<DeleteDocOrFileByUuidResponses, DeleteDocOrFileByUuidErrors, ThrowOnError>({
@@ -2357,29 +2378,31 @@ export const deleteDocOrFileByUuid = <ThrowOnError extends boolean = false>(opti
  *
  * **Behavior notes:**
  * - Content-Type is derived from the stored MIME type. Content-Disposition header carries the original filename.
- * - Returns 404 if the file does not exist, was deleted, or the caller has no access to any project it is attached to.
+ * - Returns 404 if the file does not exist, was deleted, is an attachment of a deleted file or link, lies inside a deleted directory (also an attachment of a note, file or link inside it), or the caller has no access to any project it is attached to.
+ * - Guest accounts have no access to the Files section and to notes: a Files-section file, an attachment of a file or link discussion and a note attachment return 403. Attachments of tasks and task comments stay downloadable for guests.
  *
  */
-export const downloadFile = <ThrowOnError extends boolean = false>(options: Options<DownloadFileData, ThrowOnError>) => (options.client ?? client).get<DownloadFileResponses, unknown, ThrowOnError>({
+export const downloadFile = <ThrowOnError extends boolean = false>(options: Options<DownloadFileData, ThrowOnError>) => (options.client ?? client).get<DownloadFileResponses, DownloadFileErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/file/{file_uuid}',
     ...options
 });
 
 /**
- * Upload a file (multipart)
+ * Upload a file as an attachment (multipart)
  *
- * Uploads a single file (**max 100 MB**). Returns a UUID that can be referenced from other endpoints.
+ * **Prepares an attachment** for a comment, task description or note — the file is **not** stored in the project's Files section and does not appear in `GET /all-docs-and-files`. To store a file in the Files section use `POST /project-files`.
+ *
+ * Uploads a single file (**max 1945 MiB**). Returns a UUID that can be referenced from other endpoints.
  *
  * **Use cases:**
  * - Attaching an image to a comment: embed `<a data-freelo-uuid="{uuid}">caption</a>` in the comment content
  * - Attaching files to a task description via `POST /task/{id}/description`
- * - Pinning files to a project
  *
  * **Behavior notes:**
  * - The upload does **not** automatically attach the file anywhere — it produces a UUID you then reference.
  * - `multipart/form-data` is mandatory; JSON body is rejected.
- * - Size / content-type checks come from `FileUploadChecker`; oversize or forbidden types return 400.
+ * - A missing file or an upload error returns 400.
  *
  */
 export const uploadFile = <ThrowOnError extends boolean = false>(options: Options<UploadFileData, ThrowOnError>) => (options.client ?? client).post<UploadFileResponses, unknown, ThrowOnError>({
@@ -2401,16 +2424,292 @@ export const uploadFile = <ThrowOnError extends boolean = false>(options: Option
  * **Use cases:**
  * - Building a cross-project "library" search
  * - Export / backup of non-task assets
+ * - Content of one directory: `projects_ids[]=X&directory_uuid=<uuid>` (or `directory_uuid=root` for the project root)
+ * - Finding a document by name: `search=contract`
  *
  * **Behavior notes:**
  * - ACL-filtered by the caller's visible projects.
  * - Without `projects_ids[]`, spans every project the caller can see.
+ * - Guest accounts do not see directories, links and files; without the notes permission they do not see notes either.
+ * - Attachments of comments (task, note or file discussions) are never listed.
+ * - Items inside a deleted directory (at any depth) are not listed.
+ * - `search` matches a case- and accent-insensitive substring of the name of a directory, link or note, and of the displayed `name` of a file (its caption, or `original_filename` when the caption is empty). It searches the whole project; together with `directory_uuid` only the direct items of that directory.
+ * - Changed in this version (backward compatible): `name` is now filled for files; new field `original_filename`.
  *
  */
-export const getAllDocsAndFiles = <ThrowOnError extends boolean = false>(options?: Options<GetAllDocsAndFilesData, ThrowOnError>) => (options?.client ?? client).get<GetAllDocsAndFilesResponses, unknown, ThrowOnError>({
+export const getAllDocsAndFiles = <ThrowOnError extends boolean = false>(options?: Options<GetAllDocsAndFilesData, ThrowOnError>) => (options?.client ?? client).get<GetAllDocsAndFilesResponses, GetAllDocsAndFilesErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/all-docs-and-files',
     ...options
+});
+
+/**
+ * Create a directory in the Files section
+ *
+ * Creates a directory in the project Files section — in the project root or inside another directory (`directory_uuid`). Returns the created item in the same shape as an item of `GET /all-docs-and-files`.
+ *
+ * **Use cases:**
+ * - Structuring project documents like a disk (e.g. *Clients › ABC › Contracts*)
+ * - Preparing a target directory before uploading or linking documents into it
+ *
+ * **Behavior notes:**
+ * - The directory is appended at the end of its parent directory (`order`).
+ * - Directory nesting is limited to 50 levels (a directory in the project root is level 1). Creating a directory below level 50 returns 409.
+ * - The parent directory must be active and belong to the same project, otherwise 404. A directory inside a deleted directory counts as deleted.
+ * - Archived projects are read-only for new items — returns 403. Guest accounts have no access to the Files section — returns 403.
+ * - Unknown body fields are rejected with 400.
+ *
+ */
+export const createDirectory = <ThrowOnError extends boolean = false>(options: Options<CreateDirectoryData, ThrowOnError>) => (options.client ?? client).post<CreateDirectoryResponses, CreateDirectoryErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/directories',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Permanently delete a directory
+ *
+ * **Permanently deletes the directory. This cannot be undone via the API.**
+ *
+ * **Use cases:**
+ * - Removing an empty directory that is no longer needed
+ * - Removing a directory that still contains items (`force=true`)
+ *
+ * **Behavior notes:**
+ * - A directory that is not empty is rejected with 409 by default; the error says how many items it contains. Repeat the request with `force=true` to delete it anyway.
+ * - With `force=true` the directory is deleted even when it is not empty. Its items are not deleted one by one. **This cannot be undone.**
+ * - The whole content of a deleted directory (subdirectories, files, links, notes) stops being available through the API — it is not returned by `GET /all-docs-and-files`, by detail, edit or download (`GET /file/{file_uuid}` returns 404).
+ * - Deleting is allowed in archived projects too.
+ * - Deleting an already deleted directory returns 404.
+ * - A directory inside a deleted directory counts as deleted — returns 404.
+ * - Guest accounts have no access to the Files section — returns 403.
+ *
+ */
+export const deleteDirectory = <ThrowOnError extends boolean = false>(options: Options<DeleteDirectoryData, ThrowOnError>) => (options.client ?? client).delete<DeleteDirectoryResponses, DeleteDirectoryErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/directories/{directory_uuid}',
+    ...options
+});
+
+/**
+ * Get a directory
+ *
+ * Returns a directory of the project Files section including `items_count` — the number of its direct items.
+ *
+ * **Use cases:**
+ * - Checking how many items a directory holds before deleting it
+ * - Resolving a directory UUID to its name and parent
+ *
+ * **Behavior notes:**
+ * - To list the content of the directory use `GET /all-docs-and-files`.
+ * - A deleted directory, or a directory inside a deleted directory, returns 404.
+ * - Guest accounts have no access to the Files section — returns 403.
+ *
+ */
+export const getDirectory = <ThrowOnError extends boolean = false>(options: Options<GetDirectoryData, ThrowOnError>) => (options.client ?? client).get<GetDirectoryResponses, GetDirectoryErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/directories/{directory_uuid}',
+    ...options
+});
+
+/**
+ * Rename, recolor or move a directory
+ *
+ * Updates only the fields present in the body. Moving = sending `directory_uuid` (`null` moves the directory to the project root).
+ *
+ * **Use cases:**
+ * - Renaming a directory when the project changes
+ * - Restructuring the Files section without recreating directories
+ *
+ * **Behavior notes:**
+ * - The directory is moved together with its whole content, within the same project only.
+ * - Moving a directory into itself or into one of its subdirectories returns 409.
+ * - The resulting structure may not be deeper than 50 levels (the moved directory counts with its own subdirectories), otherwise 409.
+ * - A directory inside a deleted directory counts as deleted — returns 404.
+ * - The target directory must be active and belong to the same project, otherwise 404.
+ * - A moved directory is appended at the end of the target directory.
+ * - Editing is allowed in archived projects (same as in the app). An empty body changes nothing.
+ * - Unknown body fields are rejected with 400.
+ *
+ */
+export const editDirectory = <ThrowOnError extends boolean = false>(options: Options<EditDirectoryData, ThrowOnError>) => (options.client ?? client).patch<EditDirectoryResponses, EditDirectoryErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/directories/{directory_uuid}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Add a link to the Files section
+ *
+ * Stores a link to an external document (Google Doc, Drive folder, Dropbox, OneDrive or any URL) in the project Files section — in the project root or inside a directory (`directory_uuid`). Freelo downloads nothing, it only keeps the link. Returns the created item in the same shape as an item of `GET /all-docs-and-files`.
+ *
+ * **Use cases:**
+ * - Making documents that live elsewhere reachable from the project
+ * - Putting a link next to related documents in a directory
+ *
+ * **Behavior notes:**
+ * - `link` must be an absolute http(s) URL with a host. International domain names and diacritics are allowed and stored as sent.
+ * - `link_type` is derived from `link` and must not be sent; sending it (like any other unknown field) returns 400.
+ * - The link is appended at the end of its directory (`order`).
+ * - The target directory must be active and belong to the same project, otherwise 404. A directory inside a deleted directory counts as deleted.
+ * - Archived projects are read-only for new items — returns 403. Guest accounts have no access to the Files section — returns 403.
+ *
+ * **Link type detection** (`link_type` is derived from `link`, never sent):
+ *
+ * | URL | `link_type` |
+ * |---|---|
+ * | `docs.google.com/document/…` | `google_doc` |
+ * | `docs.google.com/spreadsheets/…` | `google_sheet` |
+ * | `docs.google.com/presentation/…` | `google_slide` |
+ * | other `docs.google.com/…`, `drive.google.com/…` | `google_general` |
+ * | `dropbox.com` and its subdomains | `dropbox` |
+ * | `1drv.ms`, `onedrive.live.com`, `onedrive.com`, `*.sharepoint.com` | `onedrive` |
+ * | anything else | `link` |
+ *
+ * Google Workspace (`/a/<domain>/…`) and multi-account (`/u/<n>/…`) prefixes are ignored. Hosts match exactly or as a subdomain (`evil-dropbox.com` is a plain `link`).
+ *
+ */
+export const createLink = <ThrowOnError extends boolean = false>(options: Options<CreateLinkData, ThrowOnError>) => (options.client ?? client).post<CreateLinkResponses, CreateLinkErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/links',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Delete a link (soft-delete)
+ *
+ * Soft-deletes the link — it is marked deleted, not physically removed. The API cannot restore it.
+ *
+ * **Use cases:**
+ * - Removing a link to a document that is no longer relevant
+ *
+ * **Behavior notes:**
+ * - Deleting an already deleted link returns 404.
+ * - A link inside a deleted directory counts as deleted — returns 404.
+ * - Deleting is allowed in archived projects too.
+ * - Guest accounts have no access to the Files section — returns 403.
+ *
+ */
+export const deleteLink = <ThrowOnError extends boolean = false>(options: Options<DeleteLinkData, ThrowOnError>) => (options.client ?? client).delete<DeleteLinkResponses, DeleteLinkErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/links/{link_uuid}',
+    ...options
+});
+
+/**
+ * Edit or move a link
+ *
+ * Updates only the fields present in the body. Moving = sending `directory_uuid` (`null` moves the link to the project root).
+ *
+ * **Use cases:**
+ * - Fixing the name, URL or note of a link
+ * - Moving a link into the directory with related documents
+ *
+ * **Behavior notes:**
+ * - Changing `link` recalculates `link_type` (see `POST /links`); `link_type` itself must not be sent — returns 400.
+ * - `note: null` removes the note. The note is sanitized like a comment.
+ * - A link is moved within the same project only. The target directory must be active and belong to the same project, otherwise 404.
+ * - A link inside a deleted directory counts as deleted — returns 404.
+ * - Editing is allowed in archived projects (same as in the app). An empty body changes nothing.
+ * - Unknown body fields are rejected with 400.
+ *
+ */
+export const editLink = <ThrowOnError extends boolean = false>(options: Options<EditLinkData, ThrowOnError>) => (options.client ?? client).patch<EditLinkResponses, EditLinkErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/links/{link_uuid}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Upload a file into the Files section (multipart)
+ *
+ * **Stores the file in the project's Files section** (optionally in a directory). The file appears in `GET /all-docs-and-files`. Returns the created item in the same shape as an item of `GET /all-docs-and-files`.
+ *
+ * **Not for comment attachments — use `POST /file/upload` for that.**
+ *
+ * **Use cases:**
+ * - Keeping a document with the project instead of an e-mail or a shared drive
+ * - Uploading straight into a directory (`directory_uuid`) without moving the file afterwards
+ *
+ * **Behavior notes:**
+ * - Max file size is 1945 MiB. An empty file returns 400.
+ * - The file name may have at most 255 bytes and its extension at most 16 bytes, otherwise 400.
+ * - `original_filename` is the file name exactly as sent by the client. `caption` defaults to it; a caption is at most 90 characters (a longer default is shortened, a longer sent caption returns 400). `name` is the caption.
+ * - `filename` is the internal storage name.
+ * - Empty form fields count as not sent (`directory_uuid=""` = project root).
+ * - The target directory must be active and belong to the project, otherwise 404. A directory inside a deleted directory counts as deleted.
+ * - Archived projects are read-only for new items — returns 403. Guest accounts have no access to the Files section — returns 403.
+ * - Invalid input returns 400 before any access check (403/404).
+ * - Unknown form fields are rejected with 400.
+ *
+ */
+export const createProjectFile = <ThrowOnError extends boolean = false>(options: Options<CreateProjectFileData, ThrowOnError>) => (options.client ?? client).post<CreateProjectFileResponses, CreateProjectFileErrors, ThrowOnError>({
+    ...formDataBodySerializer,
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/project-files',
+    ...options,
+    headers: {
+        'Content-Type': null,
+        ...options.headers
+    }
+});
+
+/**
+ * Delete a file of the Files section
+ *
+ * Permanently deletes the file from the Files section. This cannot be undone via the API.
+ *
+ * **Behavior notes:**
+ * - Only files of the Files section are accepted — an attachment of a task, task comment, note or file or link discussion, or a temporary upload, returns 404. A file inside a deleted directory counts as deleted (404).
+ * - Deleting an already deleted file returns 404.
+ * - Allowed in archived projects. Guest accounts have no access to the Files section — returns 403.
+ *
+ */
+export const deleteProjectFile = <ThrowOnError extends boolean = false>(options: Options<DeleteProjectFileData, ThrowOnError>) => (options.client ?? client).delete<DeleteProjectFileResponses, DeleteProjectFileErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/project-files/{file_uuid}',
+    ...options
+});
+
+/**
+ * Edit a file of the Files section
+ *
+ * Changes the caption, note or colour of a file in the project Files section, or moves it to another directory of the same project. The file content stays as it is.
+ *
+ * **Behavior notes:**
+ * - Missing fields stay unchanged; `{}` returns the current state. `"note": null` removes the note.
+ * - `"directory_uuid": null` moves the file to the project root. Moving is limited to the file's project.
+ * - Only files of the Files section are accepted — an attachment of a task, task comment, note or file or link discussion, or a temporary upload, returns 404. A file inside a deleted directory counts as deleted (404).
+ * - The target directory must be active and belong to the project, otherwise 404.
+ * - Guest accounts have no access to the Files section — returns 403.
+ * - Allowed in archived projects, same as in the app.
+ * - Unknown body fields are rejected with 400.
+ *
+ */
+export const editProjectFile = <ThrowOnError extends boolean = false>(options: Options<EditProjectFileData, ThrowOnError>) => (options.client ?? client).patch<EditProjectFileResponses, EditProjectFileErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/project-files/{file_uuid}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
 });
 
 /**
@@ -2828,8 +3127,13 @@ export const findCustomFieldsByProject = <ThrowOnError extends boolean = false>(
  * **Behavior notes (non-obvious):**
  * - Internally handled by `DocumentPresenter` — the `/note*` paths are aliases of `/document*`. The response shape is a Document. `name` maps to the note title, `content` to the body.
  *
+ * **Attaching files (two ways — pick one per file):**
+ * 1. **As an attachment** — list a file uploaded via `POST /file/upload` in `files` (`{ "uuid": "…", "caption": "…" }`), or let the server download it with `{ "download_url": "…", "filename": "…" }`. `content` may be omitted when you only attach files.
+ * 2. **Inline in the body** — embed `<a data-freelo-uuid="{file_uuid}">caption</a>` in `content`; the file is attached automatically.
+ * - Each uploaded file UUID can be attached **only once** and **only by the user who uploaded it**. A reused, foreign or unknown UUID (in `files` or in an inline anchor) returns **400** and nothing is saved — upload the file again via `POST /file/upload`.
+ *
  */
-export const createNote = <ThrowOnError extends boolean = false>(options: Options<CreateNoteData, ThrowOnError>) => (options.client ?? client).post<CreateNoteResponses, unknown, ThrowOnError>({
+export const createNote = <ThrowOnError extends boolean = false>(options: Options<CreateNoteData, ThrowOnError>) => (options.client ?? client).post<CreateNoteResponses, CreateNoteErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/project/{project_id}/note',
     ...options,
@@ -2880,8 +3184,21 @@ export const getNote = <ThrowOnError extends boolean = false>(options: Options<G
  * - Overwrites content — there is no history / diff tracking exposed via the API.
  * - Accepts the numeric id **or** the note `uuid` (as returned by `GET /all-docs-and-files`).
  *
+ * **Content and attachments:**
+ * | Request | Result |
+ * |---|---|
+ * | `name` only (no `content` key) | Only the title changes; body and attachments stay as they are. |
+ * | `content` without `files` | The body is replaced; current attachments are kept with their captions. |
+ * | `content` with `files` | `files` is the **complete** list of attachments — attached files not listed are removed. Already attached files may be listed again. |
+ * | `content` with `files: []` | The body is replaced and **all attachments are removed**. Omit `files` to keep them. |
+ * | `content: null` | The body is cleared. Attachments follow the same rules as above (kept without `files`, replaced with `files`). |
+ * | `files` without `content` | Rejected with 400 — send the current `content` to keep it. |
+ *
+ * Files can also be attached inline via `<a data-freelo-uuid="{file_uuid}">caption</a>` in `content`.
+ * - Each uploaded file UUID can be attached **only once** and **only by the user who uploaded it**. A reused, foreign or unknown UUID (in `files` or in an inline anchor) returns **400** and nothing is saved — upload the file again via `POST /file/upload`.
+ *
  */
-export const editNote = <ThrowOnError extends boolean = false>(options: Options<EditNoteData, ThrowOnError>) => (options.client ?? client).post<EditNoteResponses, unknown, ThrowOnError>({
+export const editNote = <ThrowOnError extends boolean = false>(options: Options<EditNoteData, ThrowOnError>) => (options.client ?? client).post<EditNoteResponses, EditNoteErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/note/{note_id}',
     ...options,
