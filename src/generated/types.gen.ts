@@ -438,7 +438,14 @@ export type TaskCreate = {
     worker?: number;
     priority_enum?: 'h' | 'm' | 'l';
     comment?: {
+        /**
+         * First comment of the task (becomes its description). Supports inline file anchors `<a data-freelo-uuid="{file_uuid}">caption</a>`.
+         */
         content?: string;
+        /**
+         * Files uploaded via `POST /file/upload` to attach to the comment.
+         */
+        files?: Array<FileUpload>;
     };
     labels?: Array<TaskLabelAddInput>;
     tracking_users_ids?: Array<number>;
@@ -474,6 +481,19 @@ export type TaskCreated = {
         task_id?: number;
         name?: string;
     }>;
+};
+
+export type ShiftedTask = {
+    id: number;
+    name: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
+    due_date: string;
+    /**
+     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     */
+    due_date_end: string | null;
 };
 
 export type TaskDetail = {
@@ -697,6 +717,9 @@ export type FileUploadByUuid = {
 export type FileUploadByUrl = {
     /**
      * URL Freelo fetches the file from (server-side download).
+     *
+     * Must be an absolute `http(s)` URL of a publicly reachable host. Redirects are not followed, and private, loopback, link-local or Freelo's own addresses are refused. A refused or failed download returns `400` and nothing is created. At most 20 files per request can be given by `download_url`.
+     *
      */
     download_url: string;
     filename?: string;
@@ -953,7 +976,10 @@ export type Event = {
 
 export type FileItem = {
     uuid?: string;
-    name?: string;
+    /**
+     * Display name. Directory, link, note: their name. File: `caption`, or `original_filename` when the caption is empty.
+     */
+    name?: string | null;
     author?: UserBasic;
     project?: ProjectBasic;
     directory_uuid?: string | null;
@@ -963,7 +989,17 @@ export type FileItem = {
     date_add?: string;
     order?: number;
     type?: 'directory' | 'link' | 'file' | 'document';
+    /**
+     * Files only: internal storage name (contains a random prefix). Do not use it as a display name.
+     */
     filename?: string | null;
+    /**
+     * Files only: the name of the file when it was uploaded; null for other types.
+     */
+    original_filename?: string | null;
+    /**
+     * Files only: caption editable by users (defaults to the original file name).
+     */
     caption?: string | null;
     mime_type?: string | null;
     extension?: string | null;
@@ -971,8 +1007,92 @@ export type FileItem = {
     color?: string | null;
     items_count?: number | null;
     link?: string | null;
-    link_type?: string | null;
+    link_type?: 'link' | 'google_doc' | 'google_sheet' | 'google_slide' | 'google_general' | 'dropbox' | 'onedrive' | null;
     note?: string | null;
+};
+
+/**
+ * One item of the project Files section — the same shape as an item of `GET /all-docs-and-files`. Fields that do not apply to the item type are null (`size` and `items_count` are 0).
+ */
+export type DocsAndFilesItem = FileItem;
+
+export type DirectoryCreateRequest = {
+    project_id: number;
+    /**
+     * Plain text, not HTML. Surrounding whitespace (including no-break spaces) is trimmed; control and bidirectional control characters (e.g. U+202E) are rejected.
+     */
+    name: string;
+    color?: '#77787a' | '#15acc0' | '#367fee' | '#10aa40' | '#f2830b' | '#ca3e99' | '#9235e4' | '#e9483a' | '#ffffff' | '#e3b51e';
+    /**
+     * Parent directory; null or missing = project root.
+     */
+    directory_uuid?: string | null;
+};
+
+export type DirectoryEditRequest = {
+    /**
+     * Plain text, not HTML. Surrounding whitespace (including no-break spaces) is trimmed; control and bidirectional control characters (e.g. U+202E) are rejected.
+     */
+    name?: string;
+    color?: '#77787a' | '#15acc0' | '#367fee' | '#10aa40' | '#f2830b' | '#ca3e99' | '#9235e4' | '#e9483a' | '#ffffff' | '#e3b51e';
+    /**
+     * Target parent directory; null moves the directory to the project root.
+     */
+    directory_uuid?: string | null;
+};
+
+export type LinkCreateRequest = {
+    project_id: number;
+    /**
+     * Plain text, not HTML. Surrounding whitespace (including no-break spaces) is trimmed; control and bidirectional control characters (e.g. U+202E) are rejected.
+     */
+    name: string;
+    /**
+     * Absolute http(s) URL with a host and no user credentials (`user@host` is rejected). `link_type` is derived from it. Surrounding whitespace is trimmed. Must not contain whitespace (including no-break and zero-width spaces), control characters or any of `"`, `<`, `>`, a backtick, `\`. IDN hosts and diacritics are allowed. Stored and returned as plain text.
+     */
+    link: string;
+    note?: string | null;
+    /**
+     * null or missing = default gray.
+     */
+    color?: '#77787a' | '#15acc0' | '#367fee' | '#10aa40' | '#f2830b' | '#ca3e99' | '#9235e4' | '#e9483a' | '#ffffff' | '#e3b51e' | null;
+    /**
+     * Target directory; null or missing = project root.
+     */
+    directory_uuid?: string | null;
+};
+
+export type LinkEditRequest = {
+    /**
+     * Plain text, not HTML. Surrounding whitespace (including no-break spaces) is trimmed; control and bidirectional control characters (e.g. U+202E) are rejected.
+     */
+    name?: string;
+    /**
+     * Absolute http(s) URL with a host. Changing it recalculates `link_type`. Same rules as on create. Sending `null` is a validation error (400); omit the field to keep the URL.
+     */
+    link?: string;
+    /**
+     * null removes the note.
+     */
+    note?: string | null;
+    color?: '#77787a' | '#15acc0' | '#367fee' | '#10aa40' | '#f2830b' | '#ca3e99' | '#9235e4' | '#e9483a' | '#ffffff' | '#e3b51e';
+    /**
+     * Target directory; null moves the link to the project root.
+     */
+    directory_uuid?: string | null;
+};
+
+export type ProjectFileEditRequest = {
+    caption?: string;
+    /**
+     * null removes the note.
+     */
+    note?: string | null;
+    color?: '#77787a' | '#15acc0' | '#367fee' | '#10aa40' | '#f2830b' | '#ca3e99' | '#9235e4' | '#e9483a' | '#ffffff' | '#e3b51e';
+    /**
+     * Target directory; null moves the file to the project root.
+     */
+    directory_uuid?: string | null;
 };
 
 export type CustomField = {
@@ -1097,6 +1217,7 @@ export type Note = {
  * | Conditional field | Appears when `type` is |
  * | --- | --- |
  * | `is_smart` | `task` |
+ * | `multi_project_task` | `task`; nested in `task` for `taskcheck`, `task_comment` |
  * | `task` | `task` (only if it's a smart subtask), `taskcheck`, `task_comment` |
  * | `smart_task` | `taskcheck`, `task_comment` (the smart-task ancestor, if any) |
  * | `note` | `note_comment` |
@@ -1145,12 +1266,18 @@ export type SearchResult = {
      */
     is_smart?: boolean;
     /**
+     * **Conditional** — present only for `type=task`. The projects the task is assigned to that the caller can see, same shape as on the task detail. A multi-project task is listed once.
+     *
+     */
+    multi_project_task?: MultiProjectTask;
+    /**
      * **Conditional** — parent task of the hit. Present for `type` of `taskcheck`, `task_comment`, and for `task` hits that are smart subtasks (in which case it carries the parent task).
      *
      */
     task?: {
         id?: number;
         name?: string;
+        multi_project_task?: MultiProjectTask;
     };
     /**
      * **Conditional** — smart-task ancestor (if any) for `type` of `taskcheck` or `task_comment`. `null` when the hit is not under a smart task.
@@ -1203,6 +1330,17 @@ export type TaskIdParam = number;
  * ID of the taskcheck (`tasks_checks.id`)
  */
 export type TaskcheckIdParam = number;
+
+export type DirectoryUuidParam = string;
+
+export type LinkUuidParam = string;
+
+export type ProjectFileUuidParam = string;
+
+/**
+ * `true` deletes a directory even when it is not empty. This cannot be undone.
+ */
+export type ForceDeleteParam = boolean;
 
 /**
  * Numeric note ID (`documents.id`) or note UUID (`documents.uuid`) — both are accepted in the same position. `GET /all-docs-and-files` returns only the UUID for notes.
@@ -2214,6 +2352,21 @@ export type CreateTaskData = {
     url: '/project/{project_id}/tasklist/{tasklist_id}/tasks';
 };
 
+export type CreateTaskErrors = {
+    /**
+     * The request is rejected and nothing is saved when its `files` cannot be attached. Files are never dropped silently. Causes:
+     * - A referenced file UUID cannot be attached. Each uploaded file UUID can be attached only once and only by the user who uploaded it. Reusing a UUID that is already attached elsewhere, using someone else's upload or an unknown UUID (in `files` or in an inline `data-freelo-uuid` anchor) is rejected. Upload the file again via `POST /file/upload`.
+     * - An item in `files` has neither a non-empty `uuid` nor a non-empty `download_url`, or it has both `uuid` and `download_url`.
+     * - An inline anchor's `data-freelo-uuid` is not a valid UUID.
+     * - `files` has more than 100 items.
+     * - `files` is sent without the content it belongs to (note edit without `content`, task create with `comment.files` but an empty `comment.content`).
+     *
+     */
+    400: ErrorResponse;
+};
+
+export type CreateTaskError = CreateTaskErrors[keyof CreateTaskErrors];
+
 export type CreateTaskResponses = {
     /**
      * Task created
@@ -2444,13 +2597,17 @@ export type EditTaskData = {
             files?: Array<FileUpload>;
         };
         /**
-         * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+         * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description. Send `null` (with `due_date_end`) to clear the deadline.
          */
-        due_date?: string;
+        due_date?: string | null;
         /**
          * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
          */
-        due_date_end?: string;
+        due_date_end?: string | null;
+        /**
+         * How tasks linked by blocking relations react to the due date change. See behavior notes.
+         */
+        collision_mode?: 'none' | 'keep_gap' | 'use_gap';
         worker?: number;
         /**
          * Allowed options are l, m, h. Set to null to remove priority.
@@ -2481,11 +2638,37 @@ export type EditTaskData = {
     url: '/task/{task_id}';
 };
 
+export type EditTaskErrors = {
+    /**
+     * Invalid request body, e.g. unknown `collision_mode`, description files that cannot be attached (see the
+     * `FileCannotBeAttached` response), or a `files[].download_url` that was refused or could not be downloaded:
+     * it must be a publicly reachable http(s) URL on port 80/443; redirects, Freelo's own servers and private or
+     * local addresses are not fetched, and the file must not exceed 1945 MiB. The error message states the cause.
+     *
+     */
+    400: ErrorResponse;
+    /**
+     * `collision_mode` `keep_gap` / `use_gap` with a due date change, you own the project and its plan does not include Business features
+     */
+    402: unknown;
+    /**
+     * No permission to edit the task or its due dates, or `collision_mode` `keep_gap` / `use_gap` with a due date change in a project whose owner does not have Business features
+     */
+    403: unknown;
+};
+
+export type EditTaskError = EditTaskErrors[keyof EditTaskErrors];
+
 export type EditTaskResponses = {
     /**
      * Task updated
      */
-    200: TaskDetail;
+    200: TaskDetail & {
+        /**
+         * Present only when `collision_mode` is `keep_gap` or `use_gap`. Tasks rescheduled by the change, with their new due dates. Empty when nothing moved.
+         */
+        shifted_tasks?: Array<ShiftedTask>;
+    };
 };
 
 export type EditTaskResponse = EditTaskResponses[keyof EditTaskResponses];
@@ -2901,6 +3084,19 @@ export type EditTaskDescriptionData = {
     url: '/task/{task_id}/description';
 };
 
+export type EditTaskDescriptionErrors = {
+    /**
+     * Description files that cannot be attached (see the `FileCannotBeAttached` response), or a
+     * `files[].download_url` that was refused or could not be downloaded: it must be a publicly reachable http(s)
+     * URL on port 80/443; redirects, Freelo's own servers and private or local addresses are not fetched, and the
+     * file must not exceed 1945 MiB. The error message states the cause.
+     *
+     */
+    400: ErrorResponse;
+};
+
+export type EditTaskDescriptionError = EditTaskDescriptionErrors[keyof EditTaskDescriptionErrors];
+
 export type EditTaskDescriptionResponses = {
     /**
      * Description updated
@@ -3026,6 +3222,19 @@ export type CreateTaskFromTemplateData = {
     query?: never;
     url: '/task/create-from-template/{template_id}';
 };
+
+export type CreateTaskFromTemplateErrors = {
+    /**
+     * `files` that cannot be attached (see the `FileCannotBeAttached` response), or a `files[].download_url`
+     * that was refused or could not be downloaded: it must be a publicly reachable http(s) URL on port 80/443;
+     * redirects, Freelo's own servers and private or local addresses are not fetched, and the file must not
+     * exceed 1945 MiB. The error message states the cause.
+     *
+     */
+    400: ErrorResponse;
+};
+
+export type CreateTaskFromTemplateError = CreateTaskFromTemplateErrors[keyof CreateTaskFromTemplateErrors];
 
 export type CreateTaskFromTemplateResponses = {
     /**
@@ -3327,6 +3536,19 @@ export type CreateCommentData = {
     url: '/task/{task_id}/comments';
 };
 
+export type CreateCommentErrors = {
+    /**
+     * `files` that cannot be attached (see the `FileCannotBeAttached` response), or a `files[].download_url`
+     * that was refused or could not be downloaded: it must be a publicly reachable http(s) URL on port 80/443;
+     * redirects, Freelo's own servers and private or local addresses are not fetched, and the file must not
+     * exceed 1945 MiB. The error message states the cause.
+     *
+     */
+    400: ErrorResponse;
+};
+
+export type CreateCommentError = CreateCommentErrors[keyof CreateCommentErrors];
+
 export type CreateCommentResponses = {
     /**
      * Comment created
@@ -3386,6 +3608,19 @@ export type EditCommentData = {
     query?: never;
     url: '/comment/{comment_id}';
 };
+
+export type EditCommentErrors = {
+    /**
+     * `files` that cannot be attached (see the `FileCannotBeAttached` response), or a `files[].download_url`
+     * that was refused or could not be downloaded: it must be a publicly reachable http(s) URL on port 80/443;
+     * redirects, Freelo's own servers and private or local addresses are not fetched, and the file must not
+     * exceed 1945 MiB. The error message states the cause.
+     *
+     */
+    400: ErrorResponse;
+};
+
+export type EditCommentError = EditCommentErrors[keyof EditCommentErrors];
 
 export type EditCommentResponses = {
     /**
@@ -4124,10 +4359,16 @@ export type DeleteDocOrFileByUuidData = {
 
 export type DeleteDocOrFileByUuidErrors = {
     /**
-     * No file or document found for the given UUID
+     * The caller's role (guest account) has no access to the Files section or to notes
+     */
+    403: ErrorResponse;
+    /**
+     * No deletable file or document found for the given UUID (attachments are not deletable here), it lies inside a deleted directory, or it is not accessible
      */
     404: unknown;
 };
+
+export type DeleteDocOrFileByUuidError = DeleteDocOrFileByUuidErrors[keyof DeleteDocOrFileByUuidErrors];
 
 export type DeleteDocOrFileByUuidResponses = {
     /**
@@ -4146,6 +4387,19 @@ export type DownloadFileData = {
     query?: never;
     url: '/file/{file_uuid}';
 };
+
+export type DownloadFileErrors = {
+    /**
+     * The file belongs to the Files section or to a note and the caller's role (guest account) has no access to them
+     */
+    403: ErrorResponse;
+    /**
+     * File not found, deleted, an attachment of a deleted file or link, inside a deleted directory, or not accessible
+     */
+    404: ErrorResponse;
+};
+
+export type DownloadFileError = DownloadFileErrors[keyof DownloadFileErrors];
 
 export type DownloadFileResponses = {
     /**
@@ -4183,6 +4437,14 @@ export type GetAllDocsAndFilesData = {
         'projects_ids[]'?: Array<number>;
         type?: 'directory' | 'link' | 'file' | 'document';
         /**
+         * Lists only the direct items of this directory; `root` lists the items in the project root. Requires exactly one `projects_ids[]`.
+         */
+        directory_uuid?: string;
+        /**
+         * Case- and accent-insensitive substring of the item `name`; for a file its caption, or `original_filename` when the caption is empty. At most 255 characters.
+         */
+        search?: string;
+        /**
          * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
          */
         p?: number;
@@ -4193,6 +4455,19 @@ export type GetAllDocsAndFilesData = {
     };
     url: '/all-docs-and-files';
 };
+
+export type GetAllDocsAndFilesErrors = {
+    /**
+     * Empty or over-long (more than 255 characters) `search`, empty or invalid `directory_uuid`, or `directory_uuid` without exactly one `projects_ids[]`
+     */
+    400: ErrorResponse;
+    /**
+     * The `directory_uuid` directory does not exist, is deleted, lies inside a deleted directory, or does not belong to the project
+     */
+    404: ErrorResponse;
+};
+
+export type GetAllDocsAndFilesError = GetAllDocsAndFilesErrors[keyof GetAllDocsAndFilesErrors];
 
 export type GetAllDocsAndFilesResponses = {
     /**
@@ -4206,6 +4481,416 @@ export type GetAllDocsAndFilesResponses = {
 };
 
 export type GetAllDocsAndFilesResponse = GetAllDocsAndFilesResponses[keyof GetAllDocsAndFilesResponses];
+
+export type CreateDirectoryData = {
+    body: DirectoryCreateRequest;
+    path?: never;
+    query?: never;
+    url: '/directories';
+};
+
+export type CreateDirectoryErrors = {
+    /**
+     * Invalid request body
+     */
+    400: ErrorResponse;
+    /**
+     * The plan of the project owner has expired
+     */
+    402: ErrorResponse;
+    /**
+     * No access to the project or its Files section, or the project is archived
+     */
+    403: ErrorResponse;
+    /**
+     * Project or parent directory not found
+     */
+    404: ErrorResponse;
+    /**
+     * The directory would be nested deeper than 50 levels
+     */
+    409: ErrorResponse;
+};
+
+export type CreateDirectoryError = CreateDirectoryErrors[keyof CreateDirectoryErrors];
+
+export type CreateDirectoryResponses = {
+    /**
+     * Directory created
+     */
+    201: DocsAndFilesItem;
+};
+
+export type CreateDirectoryResponse = CreateDirectoryResponses[keyof CreateDirectoryResponses];
+
+export type DeleteDirectoryData = {
+    body?: never;
+    path: {
+        directory_uuid: string;
+    };
+    query?: {
+        /**
+         * `true` deletes a directory even when it is not empty. This cannot be undone.
+         */
+        force?: boolean;
+    };
+    url: '/directories/{directory_uuid}';
+};
+
+export type DeleteDirectoryErrors = {
+    /**
+     * Invalid directory UUID or `force` value
+     */
+    400: ErrorResponse;
+    /**
+     * The plan of the project owner has expired
+     */
+    402: ErrorResponse;
+    /**
+     * No access to the project or its Files section
+     */
+    403: ErrorResponse;
+    /**
+     * Directory not found or already deleted
+     */
+    404: ErrorResponse;
+    /**
+     * The directory is not empty and `force=true` was not sent
+     */
+    409: ErrorResponse;
+};
+
+export type DeleteDirectoryError = DeleteDirectoryErrors[keyof DeleteDirectoryErrors];
+
+export type DeleteDirectoryResponses = {
+    /**
+     * Directory deleted
+     */
+    200: SuccessResponse;
+};
+
+export type DeleteDirectoryResponse = DeleteDirectoryResponses[keyof DeleteDirectoryResponses];
+
+export type GetDirectoryData = {
+    body?: never;
+    path: {
+        directory_uuid: string;
+    };
+    query?: never;
+    url: '/directories/{directory_uuid}';
+};
+
+export type GetDirectoryErrors = {
+    /**
+     * Invalid directory UUID
+     */
+    400: ErrorResponse;
+    /**
+     * The plan of the project owner has expired
+     */
+    402: ErrorResponse;
+    /**
+     * No access to the project or its Files section
+     */
+    403: ErrorResponse;
+    /**
+     * Directory not found
+     */
+    404: ErrorResponse;
+};
+
+export type GetDirectoryError = GetDirectoryErrors[keyof GetDirectoryErrors];
+
+export type GetDirectoryResponses = {
+    /**
+     * Directory
+     */
+    200: DocsAndFilesItem;
+};
+
+export type GetDirectoryResponse = GetDirectoryResponses[keyof GetDirectoryResponses];
+
+export type EditDirectoryData = {
+    body: DirectoryEditRequest;
+    path: {
+        directory_uuid: string;
+    };
+    query?: never;
+    url: '/directories/{directory_uuid}';
+};
+
+export type EditDirectoryErrors = {
+    /**
+     * Invalid request body
+     */
+    400: ErrorResponse;
+    /**
+     * The plan of the project owner has expired
+     */
+    402: ErrorResponse;
+    /**
+     * No access to the project or its Files section
+     */
+    403: ErrorResponse;
+    /**
+     * Directory or target directory not found
+     */
+    404: ErrorResponse;
+    /**
+     * Move into its own subdirectory, or nesting deeper than 50 levels
+     */
+    409: ErrorResponse;
+};
+
+export type EditDirectoryError = EditDirectoryErrors[keyof EditDirectoryErrors];
+
+export type EditDirectoryResponses = {
+    /**
+     * Updated directory
+     */
+    200: DocsAndFilesItem;
+};
+
+export type EditDirectoryResponse = EditDirectoryResponses[keyof EditDirectoryResponses];
+
+export type CreateLinkData = {
+    body: LinkCreateRequest;
+    path?: never;
+    query?: never;
+    url: '/links';
+};
+
+export type CreateLinkErrors = {
+    /**
+     * Invalid request body (including a sent `link_type`)
+     */
+    400: ErrorResponse;
+    /**
+     * The plan of the project owner has expired
+     */
+    402: ErrorResponse;
+    /**
+     * No access to the project or its Files section, or the project is archived
+     */
+    403: ErrorResponse;
+    /**
+     * Project or directory not found
+     */
+    404: ErrorResponse;
+};
+
+export type CreateLinkError = CreateLinkErrors[keyof CreateLinkErrors];
+
+export type CreateLinkResponses = {
+    /**
+     * Link created
+     */
+    201: DocsAndFilesItem;
+};
+
+export type CreateLinkResponse = CreateLinkResponses[keyof CreateLinkResponses];
+
+export type DeleteLinkData = {
+    body?: never;
+    path: {
+        link_uuid: string;
+    };
+    query?: never;
+    url: '/links/{link_uuid}';
+};
+
+export type DeleteLinkErrors = {
+    /**
+     * Invalid link UUID
+     */
+    400: ErrorResponse;
+    /**
+     * The plan of the project owner has expired
+     */
+    402: ErrorResponse;
+    /**
+     * No access to the project or its Files section
+     */
+    403: ErrorResponse;
+    /**
+     * Link not found or already deleted
+     */
+    404: ErrorResponse;
+};
+
+export type DeleteLinkError = DeleteLinkErrors[keyof DeleteLinkErrors];
+
+export type DeleteLinkResponses = {
+    /**
+     * Link deleted
+     */
+    200: SuccessResponse;
+};
+
+export type DeleteLinkResponse = DeleteLinkResponses[keyof DeleteLinkResponses];
+
+export type EditLinkData = {
+    body: LinkEditRequest;
+    path: {
+        link_uuid: string;
+    };
+    query?: never;
+    url: '/links/{link_uuid}';
+};
+
+export type EditLinkErrors = {
+    /**
+     * Invalid request body (including a sent `link_type`)
+     */
+    400: ErrorResponse;
+    /**
+     * The plan of the project owner has expired
+     */
+    402: ErrorResponse;
+    /**
+     * No access to the project or its Files section
+     */
+    403: ErrorResponse;
+    /**
+     * Link or target directory not found
+     */
+    404: ErrorResponse;
+};
+
+export type EditLinkError = EditLinkErrors[keyof EditLinkErrors];
+
+export type EditLinkResponses = {
+    /**
+     * Updated link
+     */
+    200: DocsAndFilesItem;
+};
+
+export type EditLinkResponse = EditLinkResponses[keyof EditLinkResponses];
+
+export type CreateProjectFileData = {
+    body: {
+        file: Blob | File;
+        project_id: number;
+        /**
+         * Target directory; empty or missing = project root.
+         */
+        directory_uuid?: string;
+        /**
+         * Defaults to the uploaded file name.
+         */
+        caption?: string;
+        note?: string;
+        color?: '#77787a' | '#15acc0' | '#367fee' | '#10aa40' | '#f2830b' | '#ca3e99' | '#9235e4' | '#e9483a' | '#ffffff' | '#e3b51e';
+    };
+    path?: never;
+    query?: never;
+    url: '/project-files';
+};
+
+export type CreateProjectFileErrors = {
+    /**
+     * Missing, empty or too large file, or invalid form fields
+     */
+    400: ErrorResponse;
+    /**
+     * The plan of the project owner has expired
+     */
+    402: ErrorResponse;
+    /**
+     * No access to the project or its Files section, or the project is archived
+     */
+    403: ErrorResponse;
+    /**
+     * Project or target directory not found
+     */
+    404: ErrorResponse;
+};
+
+export type CreateProjectFileError = CreateProjectFileErrors[keyof CreateProjectFileErrors];
+
+export type CreateProjectFileResponses = {
+    /**
+     * File stored in the Files section
+     */
+    201: DocsAndFilesItem;
+};
+
+export type CreateProjectFileResponse = CreateProjectFileResponses[keyof CreateProjectFileResponses];
+
+export type DeleteProjectFileData = {
+    body?: never;
+    path: {
+        file_uuid: string;
+    };
+    query?: never;
+    url: '/project-files/{file_uuid}';
+};
+
+export type DeleteProjectFileErrors = {
+    /**
+     * The plan of the project owner has expired
+     */
+    402: ErrorResponse;
+    /**
+     * No access to the project or its Files section
+     */
+    403: ErrorResponse;
+    /**
+     * File not found
+     */
+    404: ErrorResponse;
+};
+
+export type DeleteProjectFileError = DeleteProjectFileErrors[keyof DeleteProjectFileErrors];
+
+export type DeleteProjectFileResponses = {
+    /**
+     * File deleted
+     */
+    200: SuccessResponse;
+};
+
+export type DeleteProjectFileResponse = DeleteProjectFileResponses[keyof DeleteProjectFileResponses];
+
+export type EditProjectFileData = {
+    body: ProjectFileEditRequest;
+    path: {
+        file_uuid: string;
+    };
+    query?: never;
+    url: '/project-files/{file_uuid}';
+};
+
+export type EditProjectFileErrors = {
+    /**
+     * Invalid request body
+     */
+    400: ErrorResponse;
+    /**
+     * The plan of the project owner has expired
+     */
+    402: ErrorResponse;
+    /**
+     * No access to the project or its Files section
+     */
+    403: ErrorResponse;
+    /**
+     * File or target directory not found
+     */
+    404: ErrorResponse;
+};
+
+export type EditProjectFileError = EditProjectFileErrors[keyof EditProjectFileErrors];
+
+export type EditProjectFileResponses = {
+    /**
+     * File edited
+     */
+    200: DocsAndFilesItem;
+};
+
+export type EditProjectFileResponse = EditProjectFileResponses[keyof EditProjectFileResponses];
 
 export type GetAllStatesData = {
     body?: never;
@@ -4649,7 +5334,14 @@ export type FindCustomFieldsByProjectResponse = FindCustomFieldsByProjectRespons
 export type CreateNoteData = {
     body: {
         name: string;
+        /**
+         * Note body (HTML / plain text). Supports inline file anchors `<a data-freelo-uuid="{file_uuid}">caption</a>`.
+         */
         content?: string;
+        /**
+         * Files to attach to the note. Use one mechanism per file — do not also embed the same UUID in `content`.
+         */
+        files?: Array<FileUpload>;
     };
     path: {
         project_id: number;
@@ -4657,6 +5349,21 @@ export type CreateNoteData = {
     query?: never;
     url: '/project/{project_id}/note';
 };
+
+export type CreateNoteErrors = {
+    /**
+     * The request is rejected and nothing is saved when its `files` cannot be attached. Files are never dropped silently. Causes:
+     * - A referenced file UUID cannot be attached. Each uploaded file UUID can be attached only once and only by the user who uploaded it. Reusing a UUID that is already attached elsewhere, using someone else's upload or an unknown UUID (in `files` or in an inline `data-freelo-uuid` anchor) is rejected. Upload the file again via `POST /file/upload`.
+     * - An item in `files` has neither a non-empty `uuid` nor a non-empty `download_url`, or it has both `uuid` and `download_url`.
+     * - An inline anchor's `data-freelo-uuid` is not a valid UUID.
+     * - `files` has more than 100 items.
+     * - `files` is sent without the content it belongs to (note edit without `content`, task create with `comment.files` but an empty `comment.content`).
+     *
+     */
+    400: ErrorResponse;
+};
+
+export type CreateNoteError = CreateNoteErrors[keyof CreateNoteErrors];
 
 export type CreateNoteResponses = {
     /**
@@ -4712,7 +5419,14 @@ export type GetNoteResponse = GetNoteResponses[keyof GetNoteResponses];
 export type EditNoteData = {
     body: {
         name: string;
-        content?: string;
+        /**
+         * New body. Omit it to change only the title. Supports inline file anchors.
+         */
+        content?: string | null;
+        /**
+         * Complete list of the note's attachments; requires `content`. Omit to keep the current attachments.
+         */
+        files?: Array<FileUpload>;
         /**
          * When true, the authenticated caller (the action author) is kept in the notification recipients even though they triggered the action. Useful for automations acting under your own token. Only takes effect if you are otherwise a subscriber/worker/tracking user of the target.
          */
@@ -4727,6 +5441,21 @@ export type EditNoteData = {
     query?: never;
     url: '/note/{note_id}';
 };
+
+export type EditNoteErrors = {
+    /**
+     * The request is rejected and nothing is saved when its `files` cannot be attached. Files are never dropped silently. Causes:
+     * - A referenced file UUID cannot be attached. Each uploaded file UUID can be attached only once and only by the user who uploaded it. Reusing a UUID that is already attached elsewhere, using someone else's upload or an unknown UUID (in `files` or in an inline `data-freelo-uuid` anchor) is rejected. Upload the file again via `POST /file/upload`.
+     * - An item in `files` has neither a non-empty `uuid` nor a non-empty `download_url`, or it has both `uuid` and `download_url`.
+     * - An inline anchor's `data-freelo-uuid` is not a valid UUID.
+     * - `files` has more than 100 items.
+     * - `files` is sent without the content it belongs to (note edit without `content`, task create with `comment.files` but an empty `comment.content`).
+     *
+     */
+    400: ErrorResponse;
+};
+
+export type EditNoteError = EditNoteErrors[keyof EditNoteErrors];
 
 export type EditNoteResponses = {
     /**
