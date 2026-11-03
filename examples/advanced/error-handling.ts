@@ -55,21 +55,33 @@ async function basicErrorHandling(projectId: number) {
 }
 
 /**
- * Example 2: Automatic retry on rate limiting
+ * How long to wait after a 429: the `Retry-After` header (seconds) is
+ * authoritative; on repeated 429s back off exponentially. Without the
+ * header, fall back to exponential backoff from `fallbackMs`.
+ */
+function rateLimitDelayMs(response: Response | undefined, attempt: number, fallbackMs = 1000): number {
+  const backoffMs = fallbackMs * 2 ** attempt;
+  const retryAfter = Number(response?.headers.get('Retry-After'));
+  if (!Number.isFinite(retryAfter) || retryAfter <= 0) return backoffMs;
+  return Math.max(retryAfter * 1000, attempt > 0 ? backoffMs : 0);
+}
+
+/**
+ * Example 2: Automatic retry on rate limiting (honors Retry-After)
  */
 async function withRateLimitRetry<T>(
-  fn: () => Promise<{ data: T; error?: unknown }>,
-  maxRetries = 3,
-  delayMs = 60000
+  fn: () => Promise<{ data: T; error?: unknown; response?: Response }>,
+  maxRetries = 3
 ): Promise<T> {
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
-    const { data, error } = await fn();
+    const { data, error, response } = await fn();
 
     if (!error) {
       return data;
     }
 
     if (isRateLimited(error) && attempt < maxRetries) {
+      const delayMs = rateLimitDelayMs(response, attempt);
       console.log(`Rate limited. Waiting ${delayMs / 1000}s before retry ${attempt + 1}/${maxRetries}...`);
       await new Promise((resolve) => setTimeout(resolve, delayMs));
       continue;

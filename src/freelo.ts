@@ -108,8 +108,11 @@ function applyInterceptors(target: Client, config: FreeloConfig): void {
   // Rate limit warning
   target.interceptors.response.use((response) => {
     if (response.status === 429) {
+      const retryAfter = response.headers.get('Retry-After');
       console.warn(
-        '[Freelo] Rate limited (429). Freelo allows 25 requests per minute. Wait 60 seconds before retrying.',
+        retryAfter
+          ? `[Freelo] Rate limited (429). Retry after ${retryAfter} s.`
+          : '[Freelo] Rate limited (429). Honor the Retry-After response header before retrying.',
       );
     }
     return response;

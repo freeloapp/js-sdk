@@ -21,7 +21,7 @@ This is the official JavaScript/TypeScript SDK for [Freelo.io](https://app.freel
 
 - **Base URL**: `https://api.freelo.io/v1`
 - **Authentication**: Basic Auth (email + API key), Bearer token (JWT/PASETO), or OAuth 2.1 (PKCE + auto-refresh via `identity.freelo.io`)
-- **Rate Limiting**: 25 requests per minute (429 status when exceeded, wait 60s)
+- **Rate Limiting**: Per-user token bucket shared by all apps/tokens of the same user; limits are configurable, never hardcode them. On 429, wait `Retry-After` seconds (exponential backoff on repeated 429s). Informational `RateLimit-Policy` / `RateLimit` headers (IETF draft) describe the current quota.
 - **Response Format**: JSON (UTF-8)
 - **API Documentation**: https://freelo.docs.apiary.io/
 

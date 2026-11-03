@@ -25,7 +25,7 @@ async function syncProjects() {
 
   if (error) {
     if (isRateLimited(error)) {
-      console.error('Rate limited - please wait 60 seconds and try again.');
+      console.error('Rate limited - honor the Retry-After header and try again later.');
     } else if (isFreeloError(error)) {
       console.error(`API Error:`, error);
     } else {
