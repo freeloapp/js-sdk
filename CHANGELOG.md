@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.7.5](https://github.com/freeloapp/js-sdk/compare/js-sdk-v2.7.4...js-sdk-v2.7.5) (2026-11-03)
+
+
+### Fixed
+
+* drop hardcoded rate limit numbers, honor Retry-After on 429 ([#34](https://github.com/freeloapp/js-sdk/issues/34)) ([21bfe11](https://github.com/freeloapp/js-sdk/commit/21bfe114c5db905323290cbc0555b515b05b5bae))
+* regenerate SDK from updated OpenAPI spec ([#33](https://github.com/freeloapp/js-sdk/issues/33)) ([839aec6](https://github.com/freeloapp/js-sdk/commit/839aec617d256e14d57d6df983f7c9e84970aa6e))
+
 ## [2.7.4](https://github.com/freeloapp/js-sdk/compare/js-sdk-v2.7.3...js-sdk-v2.7.4) (2026-10-21)
 
 
