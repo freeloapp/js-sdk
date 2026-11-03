@@ -266,7 +266,35 @@ describe('createFreelo', () => {
     consoleSpy.mockRestore();
   });
 
-  it('warns on rate limit (429) response', async () => {
+  it('warns on rate limit (429) response with Retry-After value', async () => {
+    const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
+
+    mockFetch.mockResolvedValue(
+      new Response('Rate limited', {
+        status: 429,
+        headers: { 'Content-Type': 'text/plain', 'Retry-After': '7' },
+      }),
+    );
+
+    const client = createFreelo({
+      auth: { type: 'basic', email: 'test@example.com', apiKey: 'test-key' },
+      userAgent: 'Test/1.0',
+    });
+
+    await client.get({
+      url: '/projects',
+    });
+
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    const message = warnSpy.mock.calls[0][0] as string;
+    expect(message).toContain('Rate limited');
+    expect(message).toContain('Retry after 7 s');
+    expect(message).not.toMatch(/25 requests|60 seconds|per minute/);
+
+    warnSpy.mockRestore();
+  });
+
+  it('warns on rate limit (429) response without Retry-After', async () => {
     const warnSpy = vi.spyOn(console, 'warn').mockImplementation(() => {});
 
     mockFetch.mockResolvedValue(
@@ -285,9 +313,11 @@ describe('createFreelo', () => {
       url: '/projects',
     });
 
-    expect(warnSpy).toHaveBeenCalledWith(
-      expect.stringContaining('Rate limited'),
-    );
+    expect(warnSpy).toHaveBeenCalledTimes(1);
+    const message = warnSpy.mock.calls[0][0] as string;
+    expect(message).toContain('Rate limited');
+    expect(message).toContain('Retry-After');
+    expect(message).not.toMatch(/25 requests|60 seconds|per minute/);
 
     warnSpy.mockRestore();
   });

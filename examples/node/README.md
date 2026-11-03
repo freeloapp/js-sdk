@@ -124,6 +124,6 @@ const projectTemplate = {
 
 ## Notes
 
-- These scripts respect API rate limits (25 requests/minute)
+- The API is rate-limited per user; on 429 wait for the `Retry-After` header before retrying
 - Use small delays between requests when processing large amounts of data
 - The SDK handles authentication automatically via Basic Auth

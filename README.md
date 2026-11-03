@@ -453,11 +453,11 @@ const all = await paginator.fetchAll();
 ```typescript
 import { getProject, isFreeloError, isRateLimited, isUnauthorized, isNotFound } from '@freeloapp/js-sdk';
 
-const { data, error } = await getProject({ path: { project_id: 123 } });
+const { data, error, response } = await getProject({ path: { project_id: 123 } });
 
 if (error) {
   if (isRateLimited(error)) {
-    console.log('Rate limited, try again in 60 seconds');
+    console.log(`Rate limited, retry after ${response?.headers.get('Retry-After') ?? '?'} s`);
   } else if (isUnauthorized(error)) {
     console.log('Invalid credentials');
   } else if (isNotFound(error)) {
@@ -472,7 +472,10 @@ if (error) {
 
 ## Rate Limiting
 
-The API allows 25 requests per minute. When exceeded, you'll receive a 429 status code. The SDK logs a warning automatically. Wait 60 seconds before retrying.
+The API rate-limits requests per Freelo user (token bucket). The limit is shared by all applications and tokens of the same user, and the exact numbers are configurable and may change — don't hardcode them.
+
+- When exceeded, you'll receive a `429` status code with a `Retry-After` header (seconds). Wait at least that long before retrying; use exponential backoff on repeated 429s. The SDK logs a warning automatically.
+- Responses also carry informational [IETF `RateLimit` headers](https://datatracker.ietf.org/doc/draft-ietf-httpapi-ratelimit-headers/), e.g. `RateLimit-Policy: "default";q=60;w=20` (quota of `q` requests per `w` seconds) and `RateLimit: "default";r=42;t=5` (`r` requests remaining, full refill in `t` seconds). `Retry-After` is authoritative.
 
 ## Utility Functions
 

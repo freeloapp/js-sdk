@@ -69,15 +69,16 @@ npx tsx bulk-operations.ts
 
 ### Rate Limit Handling
 
-The Freelo API allows 25 requests per minute. When exceeded, wait 60 seconds:
+The Freelo API rate-limits requests per user (limits are configurable, don't hardcode them). When exceeded, it returns 429 with a `Retry-After` header (seconds):
 
 ```typescript
 import { getProjects, isRateLimited } from '@freeloapp/js-sdk';
 
-const { data, error } = await getProjects();
+const { data, error, response } = await getProjects();
 if (error) {
   if (isRateLimited(error)) {
-    await new Promise(r => setTimeout(r, 60000));
+    const retryAfter = Number(response?.headers.get('Retry-After') ?? 1);
+    await new Promise(r => setTimeout(r, retryAfter * 1000));
     // Retry...
   }
 }
@@ -135,7 +136,7 @@ for await (const item of iterateAll()) {
 
 ## Best Practices
 
-1. **Always handle rate limits** - The API has a 25 req/min limit
+1. **Always handle rate limits** - Honor `Retry-After` on 429 responses
 2. **Use batch processing** - Don't fire all requests at once
 3. **Use Promise.allSettled** - Don't let one failure break everything
 4. **Add delays between batches** - Prevents overwhelming the API
