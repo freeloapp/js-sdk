@@ -2,7 +2,7 @@
 
 import { type Client, formDataBodySerializer, type Options as Options2, type TDataShape } from './client';
 import { client } from './client.gen';
-import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskcheckData, ActivateTaskcheckResponses, ActivateTaskData, ActivateTasklistData, ActivateTasklistResponses, ActivateTaskResponses, AddCustomFieldEnumValueData, AddCustomFieldEnumValueResponses, AddCustomFieldValueData, AddCustomFieldValueResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, ArchiveTasklistData, ArchiveTasklistResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, ChangeCustomFieldEnumValueData, ChangeCustomFieldEnumValueResponses, ChangeCustomFieldValueData, ChangeCustomFieldValueResponses, CreateCommentData, CreateCommentErrors, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateDirectoryData, CreateDirectoryErrors, CreateDirectoryResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateLinkData, CreateLinkErrors, CreateLinkResponses, CreateNoteData, CreateNoteErrors, CreateNoteResponses, CreateProjectData, CreateProjectFileData, CreateProjectFileErrors, CreateProjectFileResponses, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskErrors, CreateTaskFromTemplateData, CreateTaskFromTemplateErrors, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskRelationData, CreateTaskRelationErrors, CreateTaskRelationResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteCommentData, DeleteCommentErrors, DeleteCommentResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteDirectoryData, DeleteDirectoryErrors, DeleteDirectoryResponses, DeleteDocOrFileByUuidData, DeleteDocOrFileByUuidErrors, DeleteDocOrFileByUuidResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteLinkData, DeleteLinkErrors, DeleteLinkResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectFileData, DeleteProjectFileErrors, DeleteProjectFileResponses, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskcheckData, DeleteTaskcheckResponses, DeleteTaskData, DeleteTasklistData, DeleteTasklistResponses, DeleteTaskRelationData, DeleteTaskRelationErrors, DeleteTaskRelationResponses, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileErrors, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentErrors, EditCommentResponses, EditDirectoryData, EditDirectoryErrors, EditDirectoryResponses, EditEnumOptionData, EditEnumOptionResponses, EditLinkData, EditLinkErrors, EditLinkResponses, EditNoteData, EditNoteErrors, EditNoteResponses, EditProjectFileData, EditProjectFileErrors, EditProjectFileResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskcheckData, EditTaskcheckResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionErrors, EditTaskDescriptionResponses, EditTaskErrors, EditTasklistData, EditTasklistResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindAvailableTaskLabelsData, FindAvailableTaskLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskcheckData, FinishTaskcheckResponses, FinishTaskData, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesErrors, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetDirectoryData, GetDirectoryErrors, GetDirectoryResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectBudgetData, GetProjectBudgetResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTaskLabelColorsData, GetTaskLabelColorsResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MergeTaskLabelsData, MergeTaskLabelsResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, ResetProjectBudgetData, ResetProjectBudgetResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UpdateProjectBudgetData, UpdateProjectBudgetResponses, UpdateProjectData, UpdateProjectErrors, UpdateProjectResponses, UploadFileData, UploadFileResponses } from './types.gen';
+import type { ActivateProjectData, ActivateProjectResponses, ActivateTaskcheckData, ActivateTaskcheckResponses, ActivateTaskData, ActivateTasklistData, ActivateTasklistResponses, ActivateTaskResponses, AddCustomFieldEnumValueData, AddCustomFieldEnumValueResponses, AddCustomFieldValueData, AddCustomFieldValueResponses, AddOrEditCustomFieldValueData, AddOrEditCustomFieldValueResponses, AddOrEditEnumValueData, AddOrEditEnumValueResponses, AddProjectLabelToProjectData, AddProjectLabelToProjectResponses, AddTaskLabelsToTaskData, AddTaskLabelsToTaskResponses, ArchiveProjectData, ArchiveProjectResponses, ArchiveTasklistData, ArchiveTasklistResponses, AssignTaskToProjectData, AssignTaskToProjectErrors, AssignTaskToProjectResponses, ChangeCustomFieldEnumValueData, ChangeCustomFieldEnumValueResponses, ChangeCustomFieldValueData, ChangeCustomFieldValueResponses, CreateClientData, CreateClientErrors, CreateClientResponses, CreateCommentData, CreateCommentErrors, CreateCommentResponses, CreateCustomFieldData, CreateCustomFieldResponses, CreateDirectoryData, CreateDirectoryErrors, CreateDirectoryResponses, CreateEnumOptionData, CreateEnumOptionResponses, CreateLinkData, CreateLinkErrors, CreateLinkResponses, CreateNoteData, CreateNoteErrors, CreateNoteResponses, CreateProjectData, CreateProjectFileData, CreateProjectFileErrors, CreateProjectFileResponses, CreateProjectFromTemplateData, CreateProjectFromTemplateResponses, CreateProjectResponses, CreateSubtaskData, CreateSubtaskResponses, CreateTaskData, CreateTaskErrors, CreateTaskFromTemplateData, CreateTaskFromTemplateErrors, CreateTaskFromTemplateResponses, CreateTaskLabelsData, CreateTaskLabelsResponses, CreateTasklistData, CreateTasklistFromTemplateData, CreateTasklistFromTemplateErrors, CreateTasklistFromTemplateResponses, CreateTasklistResponses, CreateTaskRelationData, CreateTaskRelationErrors, CreateTaskRelationResponses, CreateTaskReminderData, CreateTaskReminderResponses, CreateTaskResponses, CreateWorkReportData, CreateWorkReportResponses, DeleteClientData, DeleteClientErrors, DeleteClientResponses, DeleteCommentData, DeleteCommentErrors, DeleteCommentResponses, DeleteCustomFieldData, DeleteCustomFieldResponses, DeleteCustomFieldValueData, DeleteCustomFieldValueResponses, DeleteDirectoryData, DeleteDirectoryErrors, DeleteDirectoryResponses, DeleteDocOrFileByUuidData, DeleteDocOrFileByUuidErrors, DeleteDocOrFileByUuidResponses, DeleteEnumOptionData, DeleteEnumOptionResponses, DeleteLinkData, DeleteLinkErrors, DeleteLinkResponses, DeleteNoteData, DeleteNoteResponses, DeletePinnedItemData, DeletePinnedItemResponses, DeleteProjectData, DeleteProjectFileData, DeleteProjectFileErrors, DeleteProjectFileResponses, DeleteProjectLabelData, DeleteProjectLabelResponses, DeleteProjectResponses, DeletePublicLinkToTaskData, DeletePublicLinkToTaskResponses, DeleteTaskcheckData, DeleteTaskcheckResponses, DeleteTaskData, DeleteTasklistData, DeleteTasklistResponses, DeleteTaskRelationData, DeleteTaskRelationErrors, DeleteTaskRelationResponses, DeleteTaskReminderData, DeleteTaskReminderResponses, DeleteTaskResponses, DeleteTotalTimeEstimateData, DeleteTotalTimeEstimateResponses, DeleteUserTimeEstimateData, DeleteUserTimeEstimateResponses, DeleteWorkReportData, DeleteWorkReportResponses, DisableOutOfOfficeData, DisableOutOfOfficeResponses, DownloadFileData, DownloadFileErrors, DownloadFileResponses, DownloadIssuedInvoiceReportsData, DownloadIssuedInvoiceReportsResponses, EditCommentData, EditCommentErrors, EditCommentResponses, EditDirectoryData, EditDirectoryErrors, EditDirectoryResponses, EditEnumOptionData, EditEnumOptionResponses, EditLinkData, EditLinkErrors, EditLinkResponses, EditNoteData, EditNoteErrors, EditNoteResponses, EditProjectFileData, EditProjectFileErrors, EditProjectFileResponses, EditProjectLabelData, EditProjectLabelResponses, EditTaskcheckData, EditTaskcheckResponses, EditTaskData, EditTaskDescriptionData, EditTaskDescriptionErrors, EditTaskDescriptionResponses, EditTaskErrors, EditTasklistData, EditTasklistResponses, EditTaskResponses, EditTimeTrackingData, EditTimeTrackingErrors, EditTimeTrackingResponses, EditWorkReportData, EditWorkReportResponses, EnableOutOfOfficeData, EnableOutOfOfficeResponses, FindAvailableProjectLabelsData, FindAvailableProjectLabelsResponses, FindAvailableTaskLabelsData, FindAvailableTaskLabelsResponses, FindCustomFieldsByProjectData, FindCustomFieldsByProjectResponses, FindTaskRelationsBulkData, FindTaskRelationsBulkErrors, FindTaskRelationsBulkResponses, FinishTaskcheckData, FinishTaskcheckResponses, FinishTaskData, FinishTaskErrors, FinishTaskResponses, ForceDeleteEnumOptionData, ForceDeleteEnumOptionResponses, GetAllCommentsData, GetAllCommentsResponses, GetAllDocsAndFilesData, GetAllDocsAndFilesErrors, GetAllDocsAndFilesResponses, GetAllEventsData, GetAllEventsResponses, GetAllNotificationsData, GetAllNotificationsResponses, GetAllProjectsData, GetAllProjectsResponses, GetAllStatesData, GetAllStatesResponses, GetAllTasklistsData, GetAllTasklistsResponses, GetAllTasksData, GetAllTasksResponses, GetAllUsersData, GetAllUsersResponses, GetArchivedProjectsData, GetArchivedProjectsResponses, GetAssignableWorkersData, GetAssignableWorkersResponses, GetClientData, GetClientErrors, GetClientProjectsData, GetClientProjectsErrors, GetClientProjectsResponses, GetClientResponses, GetClientsData, GetClientsErrors, GetClientsResponses, GetCustomFieldTypesData, GetCustomFieldTypesResponses, GetDirectoryData, GetDirectoryErrors, GetDirectoryResponses, GetEnumOptionsForCustomFieldData, GetEnumOptionsForCustomFieldResponses, GetFinishedTasksData, GetFinishedTasksResponses, GetInvitedProjectsData, GetInvitedProjectsResponses, GetIssuedInvoiceDetailData, GetIssuedInvoiceDetailResponses, GetIssuedInvoiceReportsJsonData, GetIssuedInvoiceReportsJsonResponses, GetIssuedInvoicesData, GetIssuedInvoicesResponses, GetNoteData, GetNoteResponses, GetOutOfOfficeData, GetOutOfOfficeResponses, GetPinnedItemsData, GetPinnedItemsResponses, GetProjectBudgetData, GetProjectBudgetResponses, GetProjectData, GetProjectManagerOfData, GetProjectManagerOfResponses, GetProjectResponses, GetProjectsData, GetProjectsResponses, GetProjectWorkersData, GetProjectWorkersResponses, GetPublicLinkToTaskData, GetPublicLinkToTaskResponses, GetSubtasksInTaskData, GetSubtasksInTaskResponses, GetTaskData, GetTaskDescriptionData, GetTaskDescriptionResponses, GetTaskLabelColorsData, GetTaskLabelColorsResponses, GetTasklistData, GetTasklistResponses, GetTaskRelationsData, GetTaskRelationsErrors, GetTaskRelationsResponses, GetTaskResponses, GetTasksInTasklistData, GetTasksInTasklistResponses, GetTemplateProjectsData, GetTemplateProjectsResponses, GetTimeTrackingStatusData, GetTimeTrackingStatusResponses, GetUserProjectsData, GetUserProjectsResponses, GetUsersMeData, GetUsersMeErrors, GetUsersMeResponses, GetWorkReportsData, GetWorkReportsResponses, InviteUsersToProjectsData, InviteUsersToProjectsResponses, MarkAsInvoicedData, MarkAsInvoicedResponses, MarkNotificationAsReadData, MarkNotificationAsReadResponses, MarkNotificationAsUnreadData, MarkNotificationAsUnreadResponses, MergeTaskLabelsData, MergeTaskLabelsResponses, MoveTaskData, MoveTaskResponses, PinItemToProjectData, PinItemToProjectResponses, RemoveProjectClientData, RemoveProjectClientErrors, RemoveProjectClientResponses, RemoveProjectLabelFromProjectData, RemoveProjectLabelFromProjectResponses, RemoveProjectWorkersByEmailsData, RemoveProjectWorkersByEmailsResponses, RemoveProjectWorkersByIdsData, RemoveProjectWorkersByIdsResponses, RemoveTaskFromProjectData, RemoveTaskFromProjectErrors, RemoveTaskFromProjectResponses, RemoveTaskLabelsFromTaskData, RemoveTaskLabelsFromTaskResponses, RenameCustomFieldData, RenameCustomFieldResponses, ResetProjectBudgetData, ResetProjectBudgetResponses, RestoreCustomFieldData, RestoreCustomFieldResponses, SearchData, SearchResponses, SetProjectClientData, SetProjectClientErrors, SetProjectClientResponses, SetProjectWorkerHourRateData, SetProjectWorkerHourRateErrors, SetProjectWorkerHourRateResponses, SetTotalTimeEstimateData, SetTotalTimeEstimateResponses, SetUserTimeEstimateData, SetUserTimeEstimateResponses, StartTimeTrackingData, StartTimeTrackingErrors, StartTimeTrackingResponses, StopTimeTrackingData, StopTimeTrackingErrors, StopTimeTrackingResponses, UpdateClientData, UpdateClientErrors, UpdateClientResponses, UpdateProjectBudgetData, UpdateProjectBudgetResponses, UpdateProjectData, UpdateProjectErrors, UpdateProjectResponses, UploadFileData, UploadFileResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -271,12 +271,44 @@ export const updateProject = <ThrowOnError extends boolean = false>(options: Opt
  * **Behavior notes:**
  * - Returns basic user data only — it is **not** filtered by ACL-tasklist membership (a worker assigned only to some tasklists still appears in the full list).
  * - Deleted (former) workers do not appear.
+ * - `hour_rate` is the worker's hourly rate in this project. The project owner and commanders see every
+ * worker's rate; other callers see only their own and `null` for everyone else.
  *
  */
 export const getProjectWorkers = <ThrowOnError extends boolean = false>(options: Options<GetProjectWorkersData, ThrowOnError>) => (options.client ?? client).get<GetProjectWorkersResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/project/{project_id}/workers',
     ...options
+});
+
+/**
+ * Set project worker hour rate
+ *
+ * Sets, locks or removes the hourly rate of one user in one project — the same setting as the hourly rate
+ * field and the "user cannot change it" checkbox in the project's Users section.
+ *
+ * **Use cases:**
+ * - Setting rates for project members without clicking through every project and user in the UI
+ *
+ * **Behavior notes:**
+ * - The rate is stored in the **project currency**; `hour_rate` is in minor currency units (`150000` = 1500.00).
+ * - Send `hour_rate: null` to remove the rate; this also removes the lock. `is_fixed: true` together with
+ * `hour_rate: null` is rejected with 400.
+ * - `is_fixed` is optional. When omitted, the current lock is kept (`false` for a user without a rate).
+ * - The rate applies **only to future work reports**. Existing work reports keep their stored cost and are
+ * not recalculated — use `POST /work-reports/{work_report_id}` to change them.
+ * - Only the project owner and project commanders may set rates. A commander cannot change the owner's rate.
+ * - The user must already be a member of the project; no membership is created.
+ *
+ */
+export const setProjectWorkerHourRate = <ThrowOnError extends boolean = false>(options: Options<SetProjectWorkerHourRateData, ThrowOnError>) => (options.client ?? client).post<SetProjectWorkerHourRateResponses, SetProjectWorkerHourRateErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/project/{project_id}/workers/{user_id}/hour-rate',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
 });
 
 /**
@@ -393,6 +425,130 @@ export const removeProjectWorkersByEmails = <ThrowOnError extends boolean = fals
 export const createProjectFromTemplate = <ThrowOnError extends boolean = false>(options: Options<CreateProjectFromTemplateData, ThrowOnError>) => (options.client ?? client).post<CreateProjectFromTemplateResponses, unknown, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/project/create-from-template/{template_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get clients
+ *
+ * Paginated list of clients the user can work with: clients the user owns and clients owned by users in whose (not deleted) projects the user is a project manager.
+ *
+ * **Use cases:**
+ * - Picking a client to assign to a project
+ * - Syncing clients with a CRM or invoicing tool
+ *
+ */
+export const getClients = <ThrowOnError extends boolean = false>(options?: Options<GetClientsData, ThrowOnError>) => (options?.client ?? client).get<GetClientsResponses, GetClientsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/clients',
+    ...options
+});
+
+/**
+ * Create a client
+ *
+ * Creates a client owned by the authenticated user. To assign it to a project, call `PUT /project/{project_id}/client`.
+ *
+ * **Behavior notes:**
+ * - `name` or `company` is required (after trimming).
+ * - A client with the same `email` and `company_id` (or the same `email` and no `company_id`) already owned by the user returns 409 with `existing_client_id`. Clients without an e-mail never collide.
+ *
+ */
+export const createClient = <ThrowOnError extends boolean = false>(options: Options<CreateClientData, ThrowOnError>) => (options.client ?? client).post<CreateClientResponses, CreateClientErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/clients',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Delete a client
+ *
+ * Deletes the client and removes it from all its projects; the projects stay.
+ *
+ * **Behavior notes:**
+ * - When the client is assigned to a project the user cannot see, it cannot be deleted — returns 403 with `error: client_used_in_hidden_projects`.
+ * - The removal from projects does not change their `date_edited_at`.
+ *
+ */
+export const deleteClient = <ThrowOnError extends boolean = false>(options: Options<DeleteClientData, ThrowOnError>) => (options.client ?? client).delete<DeleteClientResponses, DeleteClientErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/client/{client_id}',
+    ...options
+});
+
+/**
+ * Get client detail
+ */
+export const getClient = <ThrowOnError extends boolean = false>(options: Options<GetClientData, ThrowOnError>) => (options.client ?? client).get<GetClientResponses, GetClientErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/client/{client_id}',
+    ...options
+});
+
+/**
+ * Update a client
+ *
+ * Partial update: only sent fields change, `null` clears a field.
+ *
+ * **Behavior notes:**
+ * - The client must keep `name` or `company`, otherwise 400.
+ * - When the client is assigned to a project the user cannot see, the client cannot be changed — returns 403 with `error: client_used_in_hidden_projects` and `hidden_projects_count`. `GET /client/{client_id}/projects` shows the visible part.
+ * - A collision with another client of the same owner returns 409 (see `POST /clients`).
+ *
+ */
+export const updateClient = <ThrowOnError extends boolean = false>(options: Options<UpdateClientData, ThrowOnError>) => (options.client ?? client).patch<UpdateClientResponses, UpdateClientErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/client/{client_id}',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
+
+/**
+ * Get projects of a client
+ *
+ * Projects (active, archived and templates) the client is assigned to. Only projects the user can see are listed; `total_count` and `is_complete` tell whether the list is complete.
+ *
+ * **Use cases:**
+ * - Checking where a client is used before changing or deleting it
+ *
+ */
+export const getClientProjects = <ThrowOnError extends boolean = false>(options: Options<GetClientProjectsData, ThrowOnError>) => (options.client ?? client).get<GetClientProjectsResponses, GetClientProjectsErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/client/{client_id}/projects',
+    ...options
+});
+
+/**
+ * Remove the client from a project
+ *
+ * Removes the client from the project; the client itself stays. Requires the right to edit the project.
+ */
+export const removeProjectClient = <ThrowOnError extends boolean = false>(options: Options<RemoveProjectClientData, ThrowOnError>) => (options.client ?? client).delete<RemoveProjectClientResponses, RemoveProjectClientErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/project/{project_id}/client',
+    ...options
+});
+
+/**
+ * Assign a client to a project
+ *
+ * Sets or replaces the client of the project. Requires the right to edit the project. The client must be accessible to the user and owned by the project owner or by a project manager of the owner's projects.
+ *
+ */
+export const setProjectClient = <ThrowOnError extends boolean = false>(options: Options<SetProjectClientData, ThrowOnError>) => (options.client ?? client).put<SetProjectClientResponses, SetProjectClientErrors, ThrowOnError>({
+    security: [{ scheme: 'basic', type: 'http' }],
+    url: '/project/{project_id}/client',
     ...options,
     headers: {
         'Content-Type': 'application/json',
@@ -841,7 +997,7 @@ export const activateTasklist = <ThrowOnError extends boolean = false>(options: 
  * - `users_ids` lists which template members to invite into the target — must be a subset of the template's members.
  *
  */
-export const createTasklistFromTemplate = <ThrowOnError extends boolean = false>(options: Options<CreateTasklistFromTemplateData, ThrowOnError>) => (options.client ?? client).post<CreateTasklistFromTemplateResponses, unknown, ThrowOnError>({
+export const createTasklistFromTemplate = <ThrowOnError extends boolean = false>(options: Options<CreateTasklistFromTemplateData, ThrowOnError>) => (options.client ?? client).post<CreateTasklistFromTemplateResponses, CreateTasklistFromTemplateErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/tasklist/create-from-template/{template_id}',
     ...options,
@@ -1111,9 +1267,10 @@ export const activateTask = <ThrowOnError extends boolean = false>(options: Opti
  * - Any running timetracking **on this specific task** is stopped as part of the finish flow.
  * - Emits `task_finished` event / webhooks.
  * - Requires the caller to be the assignee, author, or a project manager (Role rules). Otherwise `RoleActionForbiddenException` → 403.
+ * - A task blocked by an unfinished task (a `blocked_by` relation, see `GET /task/{task_id}/relations`) cannot be finished: 403 with the message `Task {task_id} is blocked by a relation.` Finish the blocking task or delete the relation first.
  *
  */
-export const finishTask = <ThrowOnError extends boolean = false>(options: Options<FinishTaskData, ThrowOnError>) => (options.client ?? client).post<FinishTaskResponses, unknown, ThrowOnError>({
+export const finishTask = <ThrowOnError extends boolean = false>(options: Options<FinishTaskData, ThrowOnError>) => (options.client ?? client).post<FinishTaskResponses, FinishTaskErrors, ThrowOnError>({
     security: [{ scheme: 'basic', type: 'http' }],
     url: '/task/{task_id}/finish',
     ...options,
@@ -1340,6 +1497,7 @@ export const getTaskDescription = <ThrowOnError extends boolean = false>(options
  *
  * **Behavior notes (non-obvious):**
  * - Upsert semantics: first call creates, subsequent call **replaces** the content entirely. Any previous content is lost — not stored in history.
+ * - Inline files follow `content` whether or not `files` is sent: a file whose anchor stays (as read back, or as a new `data-freelo-uuid` anchor) is kept or attached, a file whose anchor is removed is archived. Plain attachments are kept without `files`; with `files` they are replaced by exactly that list (`[]` removes them all).
  * - `files` expects already-uploaded file UUIDs (see `POST /file/upload`). Files already attached to the description may be listed again; any other UUID must be your own fresh upload — a reused, foreign or unknown UUID returns **400** and the description is left unchanged.
  *
  */
@@ -1797,7 +1955,7 @@ export const deleteComment = <ThrowOnError extends boolean = false>(options: Opt
  * - Updating a status comment with new info
  *
  * **Behavior notes:**
- * - `files` replaces the full attachment set — pass the complete list of file UUIDs you want attached, not a delta.
+ * - Inline files follow `content` whether or not `files` is sent: a file whose anchor stays (as read back, or as a new `data-freelo-uuid` anchor) is kept or attached, a file whose anchor is removed is archived. Plain attachments are kept without `files`; with `files` they are replaced by exactly that list (`[]` removes them all). Pass the complete list, not a delta.
  * - Files can also be attached inline via a `<a data-freelo-uuid="{file_uuid}">…</a>` anchor in `content` (see `POST /task/{id}/comments`). Use one mechanism per file, never both for the same UUID.
  * - Files already attached to this comment may be listed again. Any other file must be your own fresh upload — a reused, foreign, unknown or archived-attachment UUID returns **400** and the comment is left unchanged.
  * - ACL: only the comment's author can edit (or project owner / commander depending on role rules). Otherwise 404 `NotFoundException` is returned (not 403, to avoid leaking the existence of inaccessible comments).
@@ -1967,6 +2125,7 @@ export const getWorkReports = <ThrowOnError extends boolean = false>(options?: O
  *
  * **Behavior notes:**
  * - `worker_id` defaults to the caller if omitted. To log time for a different user, the caller must be the project's owner / commander / have reporting rights; otherwise `WorkerHasNoAccessToTasklistException` → 400.
+ * - A task the caller cannot access returns `404`, the same as for a missing task.
  * - `date_reported` defaults to today if omitted; pass an explicit date to backdate.
  * - `cost` uses the string currency-amount format (e.g. `"100025"` = 1000.25). If omitted, the server derives it from the worker's hourly rate × minutes.
  * - 400 `WorkReportCanNotBeCreatedException` fires if the combination (project state, tasklist ACL) disallows logging time.
@@ -1992,7 +2151,7 @@ export const createWorkReport = <ThrowOnError extends boolean = false>(options: 
  * - Removing a report logged by mistake
  *
  * **Behavior notes:**
- * - ACL: only the report author or project admin (owner / commander) can delete. Unauthorized callers get 400 with `UserCannotDeleteWorkReport` message (not 403).
+ * - ACL: only the report author or project admin (owner / commander) can delete. Other users get `404`, the same as for a missing report (hiding existence).
  * - If the report is tied to a project that has been **marked as invoiced**, the deletion may be refused — invoices freeze underlying reports.
  *
  */
@@ -2014,7 +2173,7 @@ export const deleteWorkReport = <ThrowOnError extends boolean = false>(options: 
  *
  * **Behavior notes:**
  * - `task_id` can be changed to **re-parent** the report to a different task — ACL is re-checked against the new task.
- * - ACL rules: the report author and the project owner/commander can edit; other users get `NotFoundException` (hiding existence).
+ * - ACL rules: the report author and the project owner/commander can edit; other users get `NotFoundException` (hiding existence), also for an empty body.
  * - If the report's parent project has been marked as invoiced, edits may be blocked — see `/issued-invoice/{id}/mark-as-invoiced`.
  * - Omitted fields keep their stored value. `minutes` must be an integer or an integer-valued
  * string; any other value is rejected with `400`, it is never silently stored as `0`.
@@ -2944,7 +3103,7 @@ export const addOrEditCustomFieldValue = <ThrowOnError extends boolean = false>(
 /**
  * Upsert enum custom-field value on a task
  *
- * Sets the value of an **enum-typed** custom field on a task by referencing one of the field's predefined enum options (by UUID). Upsert semantics — creates or updates based on the (`task_id`, `customFieldUuid`) pair.
+ * Sets the value of an **enum-typed** custom field on a task by referencing one of the field's predefined enum options (by UUID). Upsert semantics — creates or updates based on the (`task_id`, `custom_field_uuid`) pair.
  *
  * **Use cases:**
  * - Selecting a dropdown / status value on a task programmatically
@@ -2952,10 +3111,9 @@ export const addOrEditCustomFieldValue = <ThrowOnError extends boolean = false>(
  *
  * **Behavior notes (non-obvious):**
  * - `value` is the **UUID of an enum option** (fetched from `/custom-field-enum/get-for-custom-field/{uuid}`), **not** the display string.
- * - Field name casing mismatch: body uses camelCase `customFieldUuid` (unlike the scalar endpoint which uses snake_case `custom_field_uuid`). Matches the server's internal data key.
  * - Same cross-project rule applies: custom field and task must be in the same project; otherwise 409.
  * - If the enum option UUID does not exist or belongs to a different custom field, 404 with "Enum was not found.".
- * - Response uses the camelCase key `customFieldEnum` for the value wrapper.
+ * - Response is wrapped: `{ "custom_field_value": { ... } }`.
  *
  */
 export const addOrEditEnumValue = <ThrowOnError extends boolean = false>(options: Options<AddOrEditEnumValueData, ThrowOnError>) => (options.client ?? client).post<AddOrEditEnumValueResponses, unknown, ThrowOnError>({
@@ -3107,6 +3265,7 @@ export const forceDeleteEnumOption = <ThrowOnError extends boolean = false>(opti
  * **Behavior notes:**
  * - Soft-deleted custom fields are excluded.
  * - Includes enum fields with their options embedded.
+ * - Returns an empty `custom_fields` list when the project owner can't use Business features (custom fields are a Business feature). The project owner's plan decides, not the caller's.
  *
  */
 export const findCustomFieldsByProject = <ThrowOnError extends boolean = false>(options: Options<FindCustomFieldsByProjectData, ThrowOnError>) => (options.client ?? client).get<FindCustomFieldsByProjectResponses, unknown, ThrowOnError>({
@@ -3188,10 +3347,10 @@ export const getNote = <ThrowOnError extends boolean = false>(options: Options<G
  * | Request | Result |
  * |---|---|
  * | `name` only (no `content` key) | Only the title changes; body and attachments stay as they are. |
- * | `content` without `files` | The body is replaced; current attachments are kept with their captions. |
- * | `content` with `files` | `files` is the **complete** list of attachments — attached files not listed are removed. Already attached files may be listed again. |
- * | `content` with `files: []` | The body is replaced and **all attachments are removed**. Omit `files` to keep them. |
- * | `content: null` | The body is cleared. Attachments follow the same rules as above (kept without `files`, replaced with `files`). |
+ * | `content` without `files` | The body is replaced. Inline files follow it: a file whose anchor stays is kept, a file whose anchor is removed is archived. Plain attachments are kept with their captions. |
+ * | `content` with `files` | `files` is the **complete** list of plain attachments — attached files neither listed nor anchored in `content` are removed. Already attached files may be listed again. |
+ * | `content` with `files: []` | The body is replaced; plain attachments are removed, files anchored in `content` stay. |
+ * | `content: null` | The body is cleared, so its inline files are archived; plain attachments are kept without `files` and replaced with `files`. |
  * | `files` without `content` | Rejected with 400 — send the current `content` to keep it. |
  *
  * Files can also be attached inline via `<a data-freelo-uuid="{file_uuid}">caption</a>` in `content`.

@@ -66,20 +66,102 @@ export type UserBasic = {
     mention_key: string;
 };
 
+/**
+ * Hourly rate of a user in a project, in the project currency. A user without a rate has `amount: 0` and
+ * `is_fixed: false`. `null` when the caller may not see this user's rate.
+ *
+ */
+export type ProjectWorkerHourRate = {
+    /**
+     * Minor currency units (`150000` = 1500.00)
+     */
+    amount: number;
+    currency: string;
+    /**
+     * When `true`, the user cannot change the rate themselves.
+     */
+    is_fixed: boolean;
+} | null;
+
 export type UserWithEmail = UserBasic & {
     email: string;
 };
 
+/**
+ * Missing values are `null` in the client endpoints, `GET /project/{project_id}`, `GET /all-projects` and `GET /template-projects`; `GET /projects` and `GET /archived-projects` return an empty string instead.
+ *
+ * In `GET /project/{project_id}`, `GET /all-projects` and `GET /template-projects` the full client is returned only to users who can access it (its owner, or a project manager in a not-deleted project of its owner). Other project members get only `id`, `name` and `company`.
+ *
+ */
 export type Client = {
     id?: number;
-    email?: string;
-    name?: string;
-    company?: string;
-    company_id?: string;
-    company_tax_id?: string;
-    street?: string;
-    town?: string;
-    zip?: string;
+    email?: string | null;
+    name?: string | null;
+    company?: string | null;
+    company_id?: string | null;
+    company_tax_id?: string | null;
+    street?: string | null;
+    town?: string | null;
+    zip?: string | null;
+};
+
+/**
+ * Values are trimmed (Unicode spaces included); an empty string means "not filled" and is stored as `null`. Spaces are removed from `company_id`. `email` is lowercased and transliterated to ASCII before validation. Unknown fields return 400.
+ *
+ */
+export type ClientInput = {
+    name?: string | null;
+    company?: string | null;
+    email?: string | null;
+    /**
+     * Company registration number (IČO)
+     */
+    company_id?: string | null;
+    /**
+     * VAT number (DIČ)
+     */
+    company_tax_id?: string | null;
+    street?: string | null;
+    town?: string | null;
+    zip?: string | null;
+};
+
+export type ClientProjects = {
+    /**
+     * Projects of the client the user can see
+     */
+    projects?: Array<{
+        id?: number;
+        name?: string;
+        state?: State;
+    }>;
+    /**
+     * All active, archived and template projects the client is assigned to, including those the user cannot see
+     */
+    total_count?: number;
+    visible_count?: number;
+    /**
+     * `true` when `projects` lists every project of the client
+     */
+    is_complete?: boolean;
+};
+
+export type ClientAlreadyExistsError = {
+    errors?: Array<string>;
+    error?: 'client_already_exists';
+    /**
+     * The colliding client; `null` when two requests raced and only the database caught the duplicate
+     */
+    existing_client_id?: number | null;
+};
+
+export type ClientUsedInHiddenProjectsError = {
+    errors?: Array<string>;
+    error?: 'client_used_in_hidden_projects';
+    /**
+     * Number of projects with this client the user cannot see
+     */
+    hidden_projects_count?: number;
 };
 
 export type TasklistBasic = {
@@ -135,6 +217,10 @@ export type ProjectFull = ProjectBasic & {
     budget?: Currency;
     real_minutes_spent?: number;
     real_cost?: Currency;
+    /**
+     * Returned by `GET /all-projects`; not part of `GET /user/{user_id}/all-projects`.
+     */
+    client?: Client | null;
 };
 
 export type ProjectDetail = ProjectFull & {
@@ -159,12 +245,9 @@ export type ProjectDetail = ProjectFull & {
     workers?: Array<{
         id?: number;
         fullname?: string;
-        hour_rate?: {
-            amount?: number;
-            currency?: string;
-            is_fixed?: boolean;
-        } | null;
+        hour_rate?: ProjectWorkerHourRate;
     }>;
+    client?: Client | null;
 };
 
 export type ProjectLabel = {
@@ -414,6 +497,9 @@ export type TaskFull = TaskSummary & {
      * Task priority level: 'h' = high, 'm' = medium, 'l' = low.
      */
     priority_enum?: 'h' | 'm' | 'l';
+    /**
+     * Empty when the project owner can't use Business features (custom fields are a Business feature). The project owner's plan decides, not the caller's.
+     */
     custom_fields?: Array<CustomFieldWithValue>;
 };
 
@@ -531,6 +617,9 @@ export type TaskDetail = {
     labels?: Array<TaskLabel>;
     project?: ProjectBasic;
     tasklist?: TasklistBasic;
+    /**
+     * Empty when the project owner can't use Business features (custom fields are a Business feature). The project owner's plan decides, not the caller's.
+     */
     custom_fields?: Array<CustomFieldWithValue>;
     total_time_estimate?: TimeEstimate;
     users_time_estimates?: Array<UserTimeEstimate>;
@@ -1145,22 +1234,6 @@ export type CustomFieldValue = {
     custom_field_uuid?: string;
 };
 
-export type CustomFieldEnumValue = {
-    uuid?: string;
-    task_id?: number;
-    custom_field_uuid?: string;
-    value?: string;
-    /**
-     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
-     */
-    date_add?: string;
-    /**
-     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
-     */
-    date_edited_at?: string | null;
-    author_id?: number;
-};
-
 export type CustomFieldEnumOption = {
     enum_uuid?: string;
     enum_value?: string;
@@ -1189,6 +1262,10 @@ export type CustomFieldWithValue = {
      * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
      */
     value_date_edited_at?: string | null;
+    /**
+     * UUID of the selected enum option; present only in task detail.
+     */
+    custom_field_enum_uuid?: string | null;
 };
 
 export type Note = {
@@ -1321,6 +1398,8 @@ export type PageParam = number;
 export type PageAliasParam = number;
 
 export type ProjectIdParam = number;
+
+export type ClientIdParam = number;
 
 export type TasklistIdParam = number;
 
@@ -1725,12 +1804,63 @@ export type GetProjectWorkersResponses = {
      */
     200: PaginatedResponse & {
         data?: {
-            workers?: Array<UserWithEmail>;
+            workers?: Array<UserWithEmail & {
+                hour_rate: ProjectWorkerHourRate;
+            }>;
         };
     };
 };
 
 export type GetProjectWorkersResponse = GetProjectWorkersResponses[keyof GetProjectWorkersResponses];
+
+export type SetProjectWorkerHourRateData = {
+    body: {
+        /**
+         * Amount in minor currency units of the project currency (`150000` = 1500.00), or `null` to remove the rate.
+         */
+        hour_rate: number | string | null;
+        /**
+         * When `true`, the user cannot change the rate themselves.
+         */
+        is_fixed?: boolean;
+    };
+    path: {
+        project_id: number;
+        user_id: number;
+    };
+    query?: never;
+    url: '/project/{project_id}/workers/{user_id}/hour-rate';
+};
+
+export type SetProjectWorkerHourRateErrors = {
+    /**
+     * Invalid `hour_rate` (negative, not a whole number of minor units, missing), invalid `is_fixed`, `is_fixed: true` with `hour_rate: null`, or the user is not a member of the project
+     */
+    400: unknown;
+    /**
+     * The caller is not the project owner or a project commander, or a commander tried to change the owner's rate
+     */
+    403: unknown;
+    /**
+     * Project not found or not visible to the caller, or the user does not exist
+     */
+    404: unknown;
+};
+
+export type SetProjectWorkerHourRateResponses = {
+    /**
+     * Hour rate after the change
+     */
+    200: {
+        /**
+         * User ID
+         */
+        id?: number;
+        hour_rate?: ProjectWorkerHourRate;
+    };
+};
+
+export type SetProjectWorkerHourRateResponse = SetProjectWorkerHourRateResponses[keyof SetProjectWorkerHourRateResponses];
 
 export type ArchiveProjectData = {
     body?: never;
@@ -1845,6 +1975,281 @@ export type CreateProjectFromTemplateResponses = {
 };
 
 export type CreateProjectFromTemplateResponse = CreateProjectFromTemplateResponses[keyof CreateProjectFromTemplateResponses];
+
+export type GetClientsData = {
+    body?: never;
+    path?: never;
+    query?: {
+        /**
+         * Page number (starting from 0). Alias of `page` — `p` takes precedence when both are provided.
+         */
+        p?: number;
+        /**
+         * Page number (starting from 0). Alias of `p` — `p` takes precedence when both are provided.
+         */
+        page?: number;
+    };
+    url: '/clients';
+};
+
+export type GetClientsErrors = {
+    /**
+     * Negative page number
+     */
+    400: ErrorResponse;
+};
+
+export type GetClientsError = GetClientsErrors[keyof GetClientsErrors];
+
+export type GetClientsResponses = {
+    /**
+     * Paginated clients
+     */
+    200: PaginatedResponse & {
+        data?: {
+            clients?: Array<Client>;
+        };
+    };
+};
+
+export type GetClientsResponse = GetClientsResponses[keyof GetClientsResponses];
+
+export type CreateClientData = {
+    body: ClientInput;
+    path?: never;
+    query?: never;
+    url: '/clients';
+};
+
+export type CreateClientErrors = {
+    /**
+     * Invalid request body, or neither `name` nor `company` filled
+     */
+    400: ErrorResponse;
+    /**
+     * A client with the same e-mail and company ID already exists
+     */
+    409: ClientAlreadyExistsError;
+};
+
+export type CreateClientError = CreateClientErrors[keyof CreateClientErrors];
+
+export type CreateClientResponses = {
+    /**
+     * Client created
+     */
+    201: Client;
+};
+
+export type CreateClientResponse = CreateClientResponses[keyof CreateClientResponses];
+
+export type DeleteClientData = {
+    body?: never;
+    path: {
+        client_id: number;
+    };
+    query?: never;
+    url: '/client/{client_id}';
+};
+
+export type DeleteClientErrors = {
+    /**
+     * The user cannot access this client, or the client is assigned to projects the user cannot see
+     */
+    403: ErrorResponse | ClientUsedInHiddenProjectsError;
+    /**
+     * Client not found
+     */
+    404: ErrorResponse;
+};
+
+export type DeleteClientError = DeleteClientErrors[keyof DeleteClientErrors];
+
+export type DeleteClientResponses = {
+    /**
+     * Client deleted
+     */
+    200: SuccessResponse;
+};
+
+export type DeleteClientResponse = DeleteClientResponses[keyof DeleteClientResponses];
+
+export type GetClientData = {
+    body?: never;
+    path: {
+        client_id: number;
+    };
+    query?: never;
+    url: '/client/{client_id}';
+};
+
+export type GetClientErrors = {
+    /**
+     * The user cannot access this client
+     */
+    403: ErrorResponse;
+    /**
+     * Client not found
+     */
+    404: ErrorResponse;
+};
+
+export type GetClientError = GetClientErrors[keyof GetClientErrors];
+
+export type GetClientResponses = {
+    /**
+     * Client detail
+     */
+    200: Client;
+};
+
+export type GetClientResponse = GetClientResponses[keyof GetClientResponses];
+
+export type UpdateClientData = {
+    body: ClientInput;
+    path: {
+        client_id: number;
+    };
+    query?: never;
+    url: '/client/{client_id}';
+};
+
+export type UpdateClientErrors = {
+    /**
+     * Invalid request body, or the client would have neither `name` nor `company`
+     */
+    400: ErrorResponse;
+    /**
+     * The user cannot access this client, or the client is assigned to projects the user cannot see
+     */
+    403: ErrorResponse | ClientUsedInHiddenProjectsError;
+    /**
+     * Client not found
+     */
+    404: ErrorResponse;
+    /**
+     * A client with the same e-mail and company ID already exists
+     */
+    409: ClientAlreadyExistsError;
+};
+
+export type UpdateClientError = UpdateClientErrors[keyof UpdateClientErrors];
+
+export type UpdateClientResponses = {
+    /**
+     * Client updated
+     */
+    200: Client;
+};
+
+export type UpdateClientResponse = UpdateClientResponses[keyof UpdateClientResponses];
+
+export type GetClientProjectsData = {
+    body?: never;
+    path: {
+        client_id: number;
+    };
+    query?: never;
+    url: '/client/{client_id}/projects';
+};
+
+export type GetClientProjectsErrors = {
+    /**
+     * The user cannot access this client
+     */
+    403: ErrorResponse;
+    /**
+     * Client not found
+     */
+    404: ErrorResponse;
+};
+
+export type GetClientProjectsError = GetClientProjectsErrors[keyof GetClientProjectsErrors];
+
+export type GetClientProjectsResponses = {
+    /**
+     * Projects of the client
+     */
+    200: ClientProjects;
+};
+
+export type GetClientProjectsResponse = GetClientProjectsResponses[keyof GetClientProjectsResponses];
+
+export type RemoveProjectClientData = {
+    body?: never;
+    path: {
+        project_id: number;
+    };
+    query?: never;
+    url: '/project/{project_id}/client';
+};
+
+export type RemoveProjectClientErrors = {
+    /**
+     * The plan of the project owner has expired
+     */
+    402: ErrorResponse;
+    /**
+     * No right to edit the project
+     */
+    403: ErrorResponse;
+    /**
+     * Project not found
+     */
+    404: ErrorResponse;
+};
+
+export type RemoveProjectClientError = RemoveProjectClientErrors[keyof RemoveProjectClientErrors];
+
+export type RemoveProjectClientResponses = {
+    /**
+     * Client removed
+     */
+    200: SuccessResponse;
+};
+
+export type RemoveProjectClientResponse = RemoveProjectClientResponses[keyof RemoveProjectClientResponses];
+
+export type SetProjectClientData = {
+    body: {
+        client_id: number;
+    };
+    path: {
+        project_id: number;
+    };
+    query?: never;
+    url: '/project/{project_id}/client';
+};
+
+export type SetProjectClientErrors = {
+    /**
+     * Invalid request body
+     */
+    400: ErrorResponse;
+    /**
+     * The plan of the project owner has expired
+     */
+    402: ErrorResponse;
+    /**
+     * No right to edit the project, or the client cannot be used for it
+     */
+    403: ErrorResponse;
+    /**
+     * Project or client not found
+     */
+    404: ErrorResponse;
+};
+
+export type SetProjectClientError = SetProjectClientErrors[keyof SetProjectClientErrors];
+
+export type SetProjectClientResponses = {
+    /**
+     * Client assigned
+     */
+    200: SuccessResponse;
+};
+
+export type SetProjectClientResponse = SetProjectClientResponses[keyof SetProjectClientResponses];
 
 export type FindAvailableProjectLabelsData = {
     body?: never;
@@ -2301,6 +2706,16 @@ export type CreateTasklistFromTemplateData = {
     url: '/tasklist/create-from-template/{template_id}';
 };
 
+export type CreateTasklistFromTemplateErrors = {
+    /**
+     * `template_id` is not a project template (an active or archived project is rejected too), `tasklist_id`
+     * is not an active tasklist with active tasks in that template, or the caller cannot access the template
+     * or the target.
+     *
+     */
+    404: unknown;
+};
+
 export type CreateTasklistFromTemplateResponses = {
     /**
      * Tasklist created
@@ -2590,7 +3005,7 @@ export type EditTaskData = {
     body: {
         name?: string;
         /**
-         * Task description as an object, identical to the POST /task/{task_id}/description request body. Files are downloaded from download_url, attached to the description, and the description file set is reconciled (files no longer present are archived).
+         * Task description as an object, identical to the POST /task/{task_id}/description request body. Files are downloaded from download_url, attached to the description, and the description file set is reconciled (files no longer present are archived). Inline files follow the content: an anchor kept keeps its file, an anchor removed archives it. Plain attachments are kept without `files` and replaced by the list with `files`.
          */
         description?: {
             content: string;
@@ -2709,6 +3124,15 @@ export type FinishTaskData = {
     query?: never;
     url: '/task/{task_id}/finish';
 };
+
+export type FinishTaskErrors = {
+    /**
+     * The caller may not finish the task, or the task is blocked by an unfinished task.
+     */
+    403: ErrorResponse;
+};
+
+export type FinishTaskError = FinishTaskErrors[keyof FinishTaskErrors];
 
 export type FinishTaskResponses = {
     /**
@@ -3232,6 +3656,12 @@ export type CreateTaskFromTemplateErrors = {
      *
      */
     400: ErrorResponse;
+    /**
+     * `template_id` is not a project template (an active or archived project is rejected too), `task_id` is
+     * not an active task in that template, or the caller cannot access the template or the target.
+     *
+     */
+    404: unknown;
 };
 
 export type CreateTaskFromTemplateError = CreateTaskFromTemplateErrors[keyof CreateTaskFromTemplateErrors];
@@ -3593,7 +4023,7 @@ export type EditCommentData = {
          */
         content: string;
         /**
-         * Files to attach as plain attachments (not placed inline in the body). Replaces the full attachment set. Use one mechanism per file — do not also embed the same UUID in `content`.
+         * Files to attach as plain attachments (not placed inline in the body). The complete list of plain attachments; omit it to keep them. Inline files follow `content` either way. Use one mechanism per file — do not also embed the same UUID in `content`.
          *
          */
         files?: Array<FileUpload>;
@@ -5162,7 +5592,7 @@ export type AddOrEditCustomFieldValueResponse = AddOrEditCustomFieldValueRespons
 
 export type AddOrEditEnumValueData = {
     body: {
-        customFieldUuid: string;
+        custom_field_uuid: string;
         task_id: number;
         /**
          * UUID of enum option
@@ -5179,7 +5609,7 @@ export type AddOrEditEnumValueResponses = {
      * Enum value set
      */
     200: {
-        customFieldEnum?: CustomFieldEnumValue;
+        custom_field_value?: CustomFieldValue;
     };
 };
 
@@ -5424,7 +5854,7 @@ export type EditNoteData = {
          */
         content?: string | null;
         /**
-         * Complete list of the note's attachments; requires `content`. Omit to keep the current attachments.
+         * Complete list of the note's plain attachments; requires `content`. Omit to keep them. Inline files follow `content`.
          */
         files?: Array<FileUpload>;
         /**
@@ -5523,9 +5953,9 @@ export type SearchData = {
         sort?: {
             order_by?: 'last_updated';
             /**
-             * Direction — note the uppercase values (`OrderEnum::ASC` / `OrderEnum::DESC`).
+             * Direction, case-insensitive (`ASC` / `DESC` are accepted too).
              */
-            order?: 'ASC' | 'DESC';
+            order?: 'asc' | 'desc';
         };
         /**
          * Language used by the Elasticsearch analyzer / stemmer.
