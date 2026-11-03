@@ -104,14 +104,26 @@ async function addLabelsToTasks(taskIds: number[], labels: { name: string; color
 }
 
 /**
- * Example 4: Batch update with rate limit handling
+ * How long to wait after a 429: the `Retry-After` header (seconds) is
+ * authoritative; on repeated 429s back off exponentially. Without the
+ * header, fall back to exponential backoff from `fallbackMs`.
+ */
+function rateLimitDelayMs(response: Response | undefined, attempt: number, fallbackMs = 1000): number {
+  const backoffMs = fallbackMs * 2 ** attempt;
+  const retryAfter = Number(response?.headers.get('Retry-After'));
+  if (!Number.isFinite(retryAfter) || retryAfter <= 0) return backoffMs;
+  return Math.max(retryAfter * 1000, attempt > 0 ? backoffMs : 0);
+}
+
+/**
+ * Example 4: Batch update with rate limit handling (honors Retry-After)
  */
 async function batchUpdateWithRateLimit<T, R>(
   items: T[],
-  updateFn: (item: T) => Promise<{ data: R; error?: unknown }>,
-  options: { batchSize?: number; delayMs?: number; rateLimitDelayMs?: number } = {}
+  updateFn: (item: T) => Promise<{ data: R; error?: unknown; response?: Response }>,
+  options: { batchSize?: number; delayMs?: number; maxRetries?: number } = {}
 ): Promise<{ results: R[]; errors: Error[] }> {
-  const { batchSize = 5, delayMs = 200, rateLimitDelayMs = 60000 } = options;
+  const { batchSize = 5, delayMs = 200, maxRetries = 3 } = options;
 
   const results: R[] = [];
   const errors: Error[] = [];
@@ -120,23 +132,18 @@ async function batchUpdateWithRateLimit<T, R>(
     const batch = items.slice(i, i + batchSize);
 
     for (const item of batch) {
-      const response = await updateFn(item);
-      if (response.error) {
-        if (isRateLimited(response.error)) {
-          console.log(`Rate limited. Waiting ${rateLimitDelayMs / 1000}s...`);
-          await new Promise((resolve) => setTimeout(resolve, rateLimitDelayMs));
-          // Retry the item
-          const retryResponse = await updateFn(item);
-          if (retryResponse.error) {
-            errors.push(new Error(String(retryResponse.error)));
-          } else {
-            results.push(retryResponse.data);
-          }
-        } else {
-          errors.push(new Error(String(response.error)));
-        }
+      let result = await updateFn(item);
+      // Retry the item while rate limited, waiting as the API asks
+      for (let attempt = 0; result.error && isRateLimited(result.error) && attempt < maxRetries; attempt++) {
+        const waitMs = rateLimitDelayMs(result.response, attempt);
+        console.log(`Rate limited. Waiting ${waitMs / 1000}s...`);
+        await new Promise((resolve) => setTimeout(resolve, waitMs));
+        result = await updateFn(item);
+      }
+      if (result.error) {
+        errors.push(new Error(String(result.error)));
       } else {
-        results.push(response.data);
+        results.push(result.data);
       }
     }
 
