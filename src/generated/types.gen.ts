@@ -623,6 +623,9 @@ export type TaskDetail = {
     custom_fields?: Array<CustomFieldWithValue>;
     total_time_estimate?: TimeEstimate;
     users_time_estimates?: Array<UserTimeEstimate>;
+    /**
+     * For a multi-project task only followers from projects you have access to are listed.
+     */
     tracking_users?: Array<UserBasic>;
     /**
      * Empty when the project owner's plan has no team features — the detail stays readable and
@@ -881,7 +884,13 @@ export type WorkReport = {
     note?: string | null;
     minutes?: number;
     cost?: Currency;
+    /**
+     * User who created (logged) the work report.
+     */
     author?: UserBasic;
+    /**
+     * User whose time the report represents. Matches `worker_id` sent to `POST /task/{task_id}/work-reports`.
+     */
     worker?: UserBasic;
     task?: {
         id?: number;
@@ -889,13 +898,60 @@ export type WorkReport = {
     } | null;
 };
 
-export type WorkReportExtended = WorkReport & {
+/**
+ * Work report row of an invoice (`/issued-invoice/{invoice_id}/reports-json`) — a snapshot of the work report
+ * taken when the invoice was created, not the work report itself. Only rows listed in the detail's
+ * `inv_items[].reports[]` are billed by the invoice; the others are not invoiced.
+ *
+ */
+export type WorkReportExtended = {
+    /**
+     * ID of the invoice row. Equals `inv_items[].reports[].id` in `GET /issued-invoice/{invoice_id}` when the row is assigned to an item.
+     */
+    id?: number;
+    /**
+     * ID of the original work report, or `null` when it has been deleted.
+     */
+    work_report_id?: number | null;
+    /**
+     * When the invoice draft was created (same as the invoice's `date_add`), not when the work report was logged. ISO 8601 with a UTC offset, see "Timestamp Format".
+     */
+    date_add?: string;
+    /**
+     * Day of the work report.
+     */
+    date_reported?: string;
+    note?: string | null;
+    minutes?: number;
+    cost?: Currency;
+    /**
+     * User who created the invoice — not the user who logged the report.
+     */
+    author?: {
+        id?: number;
+        fullname?: string;
+    };
+    /**
+     * User whose time the report represents.
+     */
+    worker?: {
+        id?: number;
+        fullname?: string;
+    };
+    task?: TaskBasic | null;
     project?: ProjectBasic;
     tasklist?: TasklistBasic;
-    work_report_id?: number | null;
 };
 
 export type WorkReportFull = WorkReport & {
+    /**
+     * In this endpoint, the user whose time the report represents. Swapped compared to the other work report endpoints, kept for backward compatibility.
+     */
+    author?: UserBasic;
+    /**
+     * In this endpoint, the user who created (logged) the report.
+     */
+    worker?: UserBasic;
     /**
      * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
      */
@@ -918,36 +974,76 @@ export type WorkReportFull = WorkReport & {
     } | null;
 };
 
-export type IssuedInvoice = {
+export type IssuedInvoiceBase = {
     id?: number;
     /**
-     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     * When the invoice draft was created (not changed when it is issued). ISO 8601 with a UTC offset, see "Timestamp Format".
      */
     date_add?: string;
     note?: string | null;
     currency?: 'CZK' | 'EUR' | 'USD';
+    /**
+     * Sum of `inv_items[].minutes`.
+     */
     minutes?: number;
+    /**
+     * Sum of `inv_items[].price`.
+     */
     price?: Currency;
+    /**
+     * External invoice attached via `POST /issued-invoice/{invoice_id}/mark-as-invoiced` or the Fakturoid/iDoklad integration in the app; `null` when none is attached.
+     */
     subject?: {
         company_name?: string;
         invoice_url?: string;
-    };
-    inv_items?: Array<{
+    } | null;
+};
+
+export type IssuedInvoiceItem = {
+    id?: number;
+    /**
+     * Entered by the user.
+     */
+    name?: string;
+    /**
+     * Entered by the user; does not have to equal the sum of the item's work report rows.
+     */
+    minutes?: number;
+    /**
+     * Entered by the user; does not have to equal the sum of the item's work report rows.
+     */
+    price?: Currency;
+};
+
+export type IssuedInvoice = IssuedInvoiceBase & {
+    inv_items?: Array<IssuedInvoiceItem>;
+    /**
+     * Attached external invoices, usually one; `subject` is built from the first. Kept for backward compatibility.
+     */
+    extern_invoice?: Array<{
         id?: number;
-        name?: string;
-        minutes?: number;
-        price?: Currency;
+        download_url?: string;
+        company_name?: string;
+        /**
+         * Name of the integration that created the record; `null` when it was first created via the API. Not reset when the link is overwritten via the API.
+         */
+        extern_app_name?: string | null;
     }>;
 };
 
-export type IssuedInvoiceDetail = IssuedInvoice & {
-    inv_items?: Array<{
-        id?: number;
-        name?: string;
-        minutes?: number;
-        price?: Currency;
+export type IssuedInvoiceDetail = IssuedInvoiceBase & {
+    inv_items?: Array<IssuedInvoiceItem & {
+        /**
+         * Work report rows assigned to the item (snapshot taken when the invoice was created); invoiced once the invoice is issued.
+         */
         reports?: Array<{
+            /**
+             * ID of the invoice row, equals `id` in `/issued-invoice/{invoice_id}/reports-json`.
+             */
             id?: number;
+            /**
+             * ID of the original work report, or `null` when it has been deleted.
+             */
             work_report_id?: number | null;
             project_name?: string;
             tasklist_name?: string;
@@ -1215,7 +1311,10 @@ export type CustomFieldMutationResult = {
      * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
      */
     date_add?: string;
-    priority?: number;
+    /**
+     * Position of the custom field in the project. `null` in the create response, the position is assigned on save.
+     */
+    priority?: number | null;
 };
 
 export type CustomFieldValue = {
@@ -1519,6 +1618,14 @@ export type CreateProjectData = {
          *
          */
         project_owner_id?: number;
+        /**
+         * Project color (hex, case-insensitive). A value outside the palette fails with `400`. The legacy `#ffffff` is still accepted and stored as the default gray.
+         */
+        color?: '#77787a' | '#15acc0' | '#367fee' | '#10aa40' | '#f2830b' | '#ca3e99' | '#9235e4' | '#e9483a' | '#e3b51e';
+        /**
+         * Project icon name. A value outside the list fails with `400`.
+         */
+        icon?: 'folder-simple' | 'star-four' | 'book' | 'nut' | 'spade' | 'club' | 'diamond' | 'heart' | 'shield' | 'cactus' | 'ghost' | 'fire-simple' | 'lightning' | 'moon' | 'rocket-launch' | 'sailboat' | 'yin-yang' | 'lightbulb' | 'first-aid' | 'balloon' | 'gavel' | 'clover' | 'hexagon' | 'map-pin' | 'atom' | 'avocado' | 'butterfly';
     };
     path?: never;
     query?: never;
@@ -2859,6 +2966,10 @@ export type GetAllTasksData = {
          */
         worker_id?: number;
         /**
+         * Filter by worker IDs — returns tasks assigned to any of the given workers. Combined with `worker_id` if both are sent.
+         */
+        'workers_ids[]'?: Array<number>;
+        /**
          * Only tasks in the authenticated user's priorities ("my priorities"). Pass `1` to enable, `0` to disable — string values like `true`/`false` are not accepted and silently fall back to the default.
          */
         my_priorities?: 0 | 1;
@@ -3268,6 +3379,15 @@ export type MoveTaskData = {
     url: '/task/{task_id}/move/{tasklist_id}';
 };
 
+export type MoveTaskErrors = {
+    /**
+     * The task is a subtask and the target tasklist is not its parent's tasklist
+     */
+    400: ErrorResponse;
+};
+
+export type MoveTaskError = MoveTaskErrors[keyof MoveTaskErrors];
+
 export type MoveTaskResponses = {
     /**
      * Successful response
@@ -3443,6 +3563,105 @@ export type DeleteTaskRelationResponses = {
 };
 
 export type DeleteTaskRelationResponse = DeleteTaskRelationResponses[keyof DeleteTaskRelationResponses];
+
+export type GetTaskTrackingUsersData = {
+    body?: never;
+    path: {
+        task_id: number;
+    };
+    query?: never;
+    url: '/task/{task_id}/tracking-users';
+};
+
+export type GetTaskTrackingUsersErrors = {
+    /**
+     * Returned when the task does not exist or the caller has no access to it.
+     */
+    404: unknown;
+};
+
+export type GetTaskTrackingUsersResponses = {
+    /**
+     * Users following the task, ordered by name
+     */
+    200: {
+        tracking_users: Array<UserBasic>;
+    };
+};
+
+export type GetTaskTrackingUsersResponse = GetTaskTrackingUsersResponses[keyof GetTaskTrackingUsersResponses];
+
+export type AddTaskTrackingUsersData = {
+    body: {
+        /**
+         * IDs of users to start following the task.
+         */
+        users_ids: Array<number>;
+    };
+    path: {
+        task_id: number;
+    };
+    query?: never;
+    url: '/task/{task_id}/tracking-users/add';
+};
+
+export type AddTaskTrackingUsersErrors = {
+    /**
+     * `users_ids` is missing, empty, has more than 100 items, or contains a value that is not a positive integer
+     */
+    400: unknown;
+    /**
+     * Returned when the task does not exist or the caller has no access to it.
+     */
+    404: unknown;
+};
+
+export type AddTaskTrackingUsersResponses = {
+    /**
+     * Users following the task after the change
+     */
+    200: {
+        tracking_users: Array<UserBasic>;
+    };
+};
+
+export type AddTaskTrackingUsersResponse = AddTaskTrackingUsersResponses[keyof AddTaskTrackingUsersResponses];
+
+export type RemoveTaskTrackingUsersData = {
+    body: {
+        /**
+         * IDs of users to stop following the task.
+         */
+        users_ids: Array<number>;
+    };
+    path: {
+        task_id: number;
+    };
+    query?: never;
+    url: '/task/{task_id}/tracking-users/remove';
+};
+
+export type RemoveTaskTrackingUsersErrors = {
+    /**
+     * `users_ids` is missing, empty, has more than 100 items, or contains a value that is not a positive integer
+     */
+    400: unknown;
+    /**
+     * Returned when the task does not exist or the caller has no access to it.
+     */
+    404: unknown;
+};
+
+export type RemoveTaskTrackingUsersResponses = {
+    /**
+     * Users following the task after the change
+     */
+    200: {
+        tracking_users: Array<UserBasic>;
+    };
+};
+
+export type RemoveTaskTrackingUsersResponse = RemoveTaskTrackingUsersResponses[keyof RemoveTaskTrackingUsersResponses];
 
 export type RemoveTaskFromProjectData = {
     body?: never;
@@ -3799,6 +4018,15 @@ export type CreateSubtaskData = {
     query?: never;
     url: '/task/{task_id}/subtasks';
 };
+
+export type CreateSubtaskErrors = {
+    /**
+     * The parent task is already on the deepest subtask level (subtasks nest at most 2 levels deep)
+     */
+    409: ErrorResponse;
+};
+
+export type CreateSubtaskError = CreateSubtaskErrors[keyof CreateSubtaskErrors];
 
 export type CreateSubtaskResponses = {
     /**
@@ -4274,6 +4502,9 @@ export type GetWorkReportsData = {
     path?: never;
     query?: {
         'projects_ids[]'?: Array<number>;
+        /**
+         * Filters by the user whose time the report represents — the `author` field in this response.
+         */
         'users_ids[]'?: Array<number>;
         'tasks_ids[]'?: Array<number>;
         /**
@@ -4301,6 +4532,15 @@ export type GetWorkReportsData = {
     url: '/work-reports';
 };
 
+export type GetWorkReportsErrors = {
+    /**
+     * The caller is not allowed to see work reports in any project in scope (e.g. a guest)
+     */
+    403: ErrorResponse;
+};
+
+export type GetWorkReportsError = GetWorkReportsErrors[keyof GetWorkReportsErrors];
+
 export type GetWorkReportsResponses = {
     /**
      * Successful response
@@ -4323,6 +4563,9 @@ export type CreateWorkReportData = {
          *
          */
         date_reported?: string;
+        /**
+         * User whose time is logged. Defaults to the caller. Returned as `worker`.
+         */
         worker_id?: number;
         minutes: number;
         /**
@@ -4405,7 +4648,13 @@ export type GetIssuedInvoicesData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Invoices with `date_add` on or after this day.
+         */
         'date_range[date_from]'?: string;
+        /**
+         * Invoices with `date_add` up to 00:00 of this day (invoices from later that day are excluded).
+         */
         'date_range[date_to]'?: string;
         'projects_ids[]'?: Array<number>;
         /**
@@ -4501,7 +4750,7 @@ export type MarkAsInvoicedData = {
 
 export type MarkAsInvoicedResponses = {
     /**
-     * Invoice marked
+     * Invoice detail with the attached external invoice
      */
     200: IssuedInvoiceDetail;
 };
@@ -4598,6 +4847,19 @@ export type DisableOutOfOfficeData = {
     url: '/user/{user_id}/out-of-office';
 };
 
+export type DisableOutOfOfficeErrors = {
+    /**
+     * The target is another user who is not the caller's coworker, or whose e-mail domain the caller has not verified
+     */
+    400: ErrorResponse;
+    /**
+     * User not found
+     */
+    404: ErrorResponse;
+};
+
+export type DisableOutOfOfficeError = DisableOutOfOfficeErrors[keyof DisableOutOfOfficeErrors];
+
 export type DisableOutOfOfficeResponses = {
     /**
      * Successful response
@@ -4616,6 +4878,19 @@ export type GetOutOfOfficeData = {
     url: '/user/{user_id}/out-of-office';
 };
 
+export type GetOutOfOfficeErrors = {
+    /**
+     * The target is another user who is not the caller's coworker, or whose e-mail domain the caller has not verified
+     */
+    400: ErrorResponse;
+    /**
+     * User not found
+     */
+    404: ErrorResponse;
+};
+
+export type GetOutOfOfficeError = GetOutOfOfficeErrors[keyof GetOutOfOfficeErrors];
+
 export type GetOutOfOfficeResponses = {
     /**
      * Successful response
@@ -4623,11 +4898,11 @@ export type GetOutOfOfficeResponses = {
     200: {
         out_of_office?: {
             /**
-             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             * ISO8601 timestamp in UTC (`Z` suffix).
              */
             date_from?: string;
             /**
-             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             * ISO8601 timestamp in UTC (`Z` suffix).
              */
             date_to?: string;
         } | null;
@@ -4640,11 +4915,11 @@ export type EnableOutOfOfficeData = {
     body: {
         out_of_office: {
             /**
-             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             * ISO8601 timestamp, with an offset / `Z` or naive (read as Europe/Prague).
              */
             date_from: string;
             /**
-             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             * ISO8601 timestamp, with an offset / `Z` or naive (read as Europe/Prague).
              */
             date_to: string;
         };
@@ -4655,6 +4930,19 @@ export type EnableOutOfOfficeData = {
     query?: never;
     url: '/user/{user_id}/out-of-office';
 };
+
+export type EnableOutOfOfficeErrors = {
+    /**
+     * The target is another user who is not the caller's coworker, or whose e-mail domain the caller has not verified; or invalid dates (`date_to` before `date_from`, unparsable value)
+     */
+    400: ErrorResponse;
+    /**
+     * User not found
+     */
+    404: ErrorResponse;
+};
+
+export type EnableOutOfOfficeError = EnableOutOfOfficeErrors[keyof EnableOutOfOfficeErrors];
 
 export type EnableOutOfOfficeResponses = {
     /**
