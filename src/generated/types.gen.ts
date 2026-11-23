@@ -174,6 +174,17 @@ export type ProjectBasic = {
     name?: string;
 };
 
+export type ProjectWithColorAndIcon = ProjectBasic & {
+    /**
+     * Project color (hex).
+     */
+    color?: '#77787a' | '#15acc0' | '#367fee' | '#10aa40' | '#f2830b' | '#ca3e99' | '#9235e4' | '#e9483a' | '#e3b51e';
+    /**
+     * Project icon name.
+     */
+    icon?: 'folder-simple' | 'star-four' | 'book' | 'nut' | 'spade' | 'club' | 'diamond' | 'heart' | 'shield' | 'cactus' | 'ghost' | 'fire-simple' | 'lightning' | 'moon' | 'rocket-launch' | 'sailboat' | 'yin-yang' | 'lightbulb' | 'first-aid' | 'balloon' | 'gavel' | 'clover' | 'hexagon' | 'map-pin' | 'atom' | 'avocado' | 'butterfly';
+};
+
 export type ProjectMutationResult = ProjectBasic & {
     /**
      * Project deadline as a calendar date (`YYYY-MM-DD`). The project deadline has no time-of-day component.
@@ -413,6 +424,19 @@ export type TaskLabelColor = {
 };
 
 /**
+ * Hex value of a task label color, as listed by `GET /task-label-colors`.
+ */
+export type TaskLabelColorValue = '#77787a' | '#15acc0' | '#367fee' | '#10aa40' | '#f2830b' | '#ca3e99' | '#9235e4' | '#e9483a' | '#ffffff' | '#e3b51e';
+
+export type TaskLabelEditRequest = {
+    /**
+     * Surrounding whitespace is trimmed; a name of only whitespace is rejected with 400.
+     */
+    name: string;
+    color: TaskLabelColorValue;
+};
+
+/**
  * Two input modes: (1) UUID only — reference an existing label by UUID, assigned as-is. (2) Name-based — name is required; color defaults to #77787a if omitted; uuid is auto-generated if omitted. Matching is by name+color — if an existing label matches both, it is reused; otherwise a new label is created.
  *
  */
@@ -623,6 +647,9 @@ export type TaskDetail = {
     custom_fields?: Array<CustomFieldWithValue>;
     total_time_estimate?: TimeEstimate;
     users_time_estimates?: Array<UserTimeEstimate>;
+    /**
+     * For a multi-project task only followers from projects you have access to are listed.
+     */
     tracking_users?: Array<UserBasic>;
     /**
      * Empty when the project owner's plan has no team features — the detail stays readable and
@@ -632,7 +659,92 @@ export type TaskDetail = {
     relations?: Array<TaskRelation>;
     copied_from_task?: CopiedFromTask;
     multi_project_task?: MultiProjectTask;
+    /**
+     * Recurrence of the task's series, `null` when the task does not repeat. Change it with `PUT /task/{task_id}/recurrence`.
+     */
+    recurrence?: TaskRecurrence | null;
 };
+
+/**
+ * Flat setting; which keys apply depends on `type`:
+ * - `daily`: `every_nth_day` (required), `only_work_days`
+ * - `weekly`: `every_nth_week` (required), `days_of_week`
+ * - `monthly`: `every_nth_month` (required), `monthly_yearly_type` (required), then `day_of_month` for
+ * `specific_day`, or `nth_occurence` + `day_of_week` for `nth_day`
+ * - `yearly`: `every_nth_year` (default 1), `months_of_year` (empty = every month), `monthly_yearly_type`
+ * (required) and its keys as for `monthly`
+ *
+ */
+export type TaskRecurrenceInput = {
+    type: 'daily' | 'weekly' | 'monthly' | 'yearly';
+    /**
+     * First day a task can be created.
+     */
+    date_start: string;
+    end_type?: 'never' | 'recurrence_count' | 'after_date';
+    /**
+     * Required for `end_type: recurrence_count`.
+     */
+    end_recurrence_count?: number | null;
+    /**
+     * Required for `end_type: after_date`; must be after `date_start`.
+     */
+    date_end?: string | null;
+    /**
+     * Whether a created task gets a due date (`due_date_plus_days` after its creation, at `due_date_time`).
+     * When `false`, `due_date_plus_days` and `due_date_time` are ignored and come back as `0` and `null`.
+     *
+     */
+    is_due_date_enabled?: boolean;
+    due_date_plus_days?: number;
+    due_date_time?: string | null;
+    /**
+     * `true` reopens the same task, `false` creates a copy of it.
+     */
+    only_reactivate_task?: boolean;
+    /**
+     * Copy the description to the created task (copies only).
+     */
+    copy_first_comment?: boolean;
+    /**
+     * Create copies in the current tasklist of the original task even after it is moved.
+     */
+    keep_tasklist?: boolean;
+    /**
+     * Keep finished subtasks finished instead of reopening them.
+     */
+    keep_existing_taskcheck_states?: boolean;
+    keep_custom_fields_values?: boolean;
+    every_nth_day?: number | null;
+    only_work_days?: boolean;
+    every_nth_week?: number | null;
+    days_of_week?: Array<TaskRecurrenceDayOfWeek> | null;
+    every_nth_month?: number | null;
+    monthly_yearly_type?: 'specific_day' | 'nth_day';
+    /**
+     * A day missing in a shorter month falls on its last day.
+     */
+    day_of_month?: number | null;
+    nth_occurence?: 'first' | 'second' | 'third' | 'fourth' | 'last';
+    day_of_week?: TaskRecurrenceDayOfWeek | null;
+    every_nth_year?: number;
+    months_of_year?: Array<'january' | 'february' | 'march' | 'april' | 'may' | 'june' | 'july' | 'august' | 'september' | 'october' | 'november' | 'december'> | null;
+};
+
+/**
+ * Current recurrence of the task's series. Same keys as `TaskRecurrenceInput`, only those of its `type`,
+ * plus the read-only `state`.
+ *
+ */
+export type TaskRecurrence = TaskRecurrenceInput & {
+    /**
+     * `finished` after the end condition was reached, `disabled` when the original task was deleted.
+     *
+     */
+    state?: 'active' | 'finished' | 'disabled';
+};
+
+export type TaskRecurrenceDayOfWeek = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday';
 
 /**
  * Origin task this task was copied from (template copy or multi-project copy); `null` otherwise.
@@ -881,7 +993,13 @@ export type WorkReport = {
     note?: string | null;
     minutes?: number;
     cost?: Currency;
+    /**
+     * User who created (logged) the work report.
+     */
     author?: UserBasic;
+    /**
+     * User whose time the report represents. Matches `worker_id` sent to `POST /task/{task_id}/work-reports`.
+     */
     worker?: UserBasic;
     task?: {
         id?: number;
@@ -889,13 +1007,78 @@ export type WorkReport = {
     } | null;
 };
 
-export type WorkReportExtended = WorkReport & {
-    project?: ProjectBasic;
-    tasklist?: TasklistBasic;
+/**
+ * Work report row of an invoice (`/issued-invoice/{invoice_id}/reports-json`) — a snapshot of the work report
+ * taken when the invoice was created, not the work report itself. Only rows listed in the detail's
+ * `inv_items[].reports[]` are billed by the invoice; the others are not invoiced.
+ *
+ */
+export type WorkReportExtended = {
+    /**
+     * ID of the invoice row. Equals `inv_items[].reports[].id` in `GET /issued-invoice/{invoice_id}` when the row is assigned to an item.
+     */
+    id?: number;
+    /**
+     * ID of the original work report, or `null` when it has been deleted.
+     */
     work_report_id?: number | null;
+    /**
+     * When the invoice draft was created (same as the invoice's `date_add`), not when the work report was logged. ISO 8601 with a UTC offset, see "Timestamp Format".
+     */
+    date_add?: string;
+    /**
+     * Day of the work report.
+     */
+    date_reported?: string;
+    note?: string | null;
+    minutes?: number;
+    cost?: Currency;
+    /**
+     * User who created the invoice — not the user who logged the report.
+     */
+    author?: {
+        id?: number;
+        fullname?: string;
+    };
+    /**
+     * User whose time the report represents.
+     */
+    worker?: {
+        id?: number;
+        fullname?: string;
+    };
+    task?: TaskBasic | null;
+    project?: {
+        /**
+         * Project ID, or `null` when the project has been deleted.
+         */
+        id?: number | null;
+        /**
+         * Project name at the time the invoice was created.
+         */
+        name?: string | null;
+    };
+    tasklist?: {
+        /**
+         * To-Do list ID, or `null` when the To-Do list has been deleted.
+         */
+        id?: number | null;
+        /**
+         * To-Do list name at the time the invoice was created.
+         */
+        name?: string;
+    };
 };
 
 export type WorkReportFull = WorkReport & {
+    /**
+     * In this endpoint, the user whose time the report represents. Swapped compared to the other work report endpoints, kept for backward compatibility.
+     */
+    author?: UserBasic;
+    /**
+     * In this endpoint, the user who created (logged) the report.
+     */
+    worker?: UserBasic;
     /**
      * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
      */
@@ -918,38 +1101,88 @@ export type WorkReportFull = WorkReport & {
     } | null;
 };
 
-export type IssuedInvoice = {
+export type IssuedInvoiceBase = {
     id?: number;
     /**
-     * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+     * When the invoice draft was created (not changed when it is issued). ISO 8601 with a UTC offset, see "Timestamp Format".
      */
     date_add?: string;
     note?: string | null;
     currency?: 'CZK' | 'EUR' | 'USD';
+    /**
+     * Sum of `inv_items[].minutes`.
+     */
     minutes?: number;
+    /**
+     * Sum of `inv_items[].price`.
+     */
     price?: Currency;
+    /**
+     * External invoice attached via `POST /issued-invoice/{invoice_id}/mark-as-invoiced` or the Fakturoid/iDoklad integration in the app; `null` when none is attached.
+     */
     subject?: {
         company_name?: string;
         invoice_url?: string;
-    };
-    inv_items?: Array<{
+    } | null;
+};
+
+export type IssuedInvoiceItem = {
+    id?: number;
+    /**
+     * Entered by the user.
+     */
+    name?: string;
+    /**
+     * Entered by the user; does not have to equal the sum of the item's work report rows.
+     */
+    minutes?: number;
+    /**
+     * Entered by the user; does not have to equal the sum of the item's work report rows.
+     */
+    price?: Currency;
+};
+
+export type IssuedInvoice = IssuedInvoiceBase & {
+    inv_items?: Array<IssuedInvoiceItem>;
+    /**
+     * Attached external invoices, usually one; `subject` is built from the first. Kept for backward compatibility.
+     */
+    extern_invoice?: Array<{
         id?: number;
-        name?: string;
-        minutes?: number;
-        price?: Currency;
+        download_url?: string;
+        company_name?: string;
+        /**
+         * Name of the integration that created the record; `null` when it was first created via the API. Not reset when the link is overwritten via the API.
+         */
+        extern_app_name?: string | null;
     }>;
 };
 
-export type IssuedInvoiceDetail = IssuedInvoice & {
-    inv_items?: Array<{
-        id?: number;
-        name?: string;
-        minutes?: number;
-        price?: Currency;
+export type IssuedInvoiceDetail = IssuedInvoiceBase & {
+    inv_items?: Array<IssuedInvoiceItem & {
+        /**
+         * Work report rows assigned to the item (snapshot taken when the invoice was created); invoiced once the invoice is issued.
+         */
         reports?: Array<{
+            /**
+             * ID of the invoice row, equals `id` in `/issued-invoice/{invoice_id}/reports-json`.
+             */
             id?: number;
+            /**
+             * ID of the original work report, or `null` when it has been deleted.
+             */
             work_report_id?: number | null;
-            project_name?: string;
+            project_name?: string | null;
+            project?: {
+                /**
+                 * Project ID, or `null` when the project has been deleted.
+                 */
+                id?: number | null;
+                /**
+                 * Project name at the time the invoice was created (same as `project_name`).
+                 */
+                name?: string | null;
+            };
             tasklist_name?: string;
             name?: string;
             minutes?: number;
@@ -982,7 +1215,7 @@ export type Notification = {
         name?: string;
     } | null;
     tasklist?: TasklistBasic;
-    project?: ProjectBasic;
+    project?: ProjectWithColorAndIcon;
     comment?: {
         id?: number;
     } | null;
@@ -1042,7 +1275,7 @@ export type Event = {
         name?: string;
     } | null;
     tasklist?: TasklistBasic;
-    project?: ProjectBasic;
+    project?: ProjectWithColorAndIcon;
     document?: {
         id?: number;
         name?: string;
@@ -1215,7 +1448,10 @@ export type CustomFieldMutationResult = {
      * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
      */
     date_add?: string;
-    priority?: number;
+    /**
+     * Position of the custom field in the project. `null` in the create response, the position is assigned on save.
+     */
+    priority?: number | null;
 };
 
 export type CustomFieldValue = {
@@ -1289,6 +1525,42 @@ export type Note = {
 };
 
 /**
+ * Project of a search hit. `color` and `icon` are missing when the project no longer exists.
+ */
+export type SearchProject = ProjectBasic & {
+    /**
+     * Project color (hex).
+     */
+    color?: '#77787a' | '#15acc0' | '#367fee' | '#10aa40' | '#f2830b' | '#ca3e99' | '#9235e4' | '#e9483a' | '#e3b51e';
+    /**
+     * Project icon name.
+     */
+    icon?: 'folder-simple' | 'star-four' | 'book' | 'nut' | 'spade' | 'club' | 'diamond' | 'heart' | 'shield' | 'cactus' | 'ghost' | 'fire-simple' | 'lightning' | 'moon' | 'rocket-launch' | 'sailboat' | 'yin-yang' | 'lightbulb' | 'first-aid' | 'balloon' | 'gavel' | 'clover' | 'hexagon' | 'map-pin' | 'atom' | 'avocado' | 'butterfly';
+};
+
+/**
+ * Same as `MultiProjectTask`, with the color and icon of each project.
+ */
+export type SearchMultiProjectTask = {
+    /**
+     * Whether the task lives in more than one project.
+     */
+    is_multi_project?: boolean;
+    /**
+     * One entry per project the task is assigned to, including the root task.
+     */
+    assigned_to?: Array<{
+        project?: SearchProject;
+        tasklist?: TasklistBasic;
+        task?: {
+            id?: number;
+            name?: string;
+            sorting_id?: number;
+        };
+    }>;
+} | null;
+
+/**
  * Single search hit. Fields marked **conditional** below appear only for specific `type` values:
  *
  * | Conditional field | Appears when `type` is |
@@ -1331,7 +1603,7 @@ export type SearchResult = {
      * Highlighted snippets from the entity content (HTML, with `<em>` markers).
      */
     highlight_content?: Array<string>;
-    project?: ProjectBasic | null;
+    project?: SearchProject | null;
     tasklist?: TasklistBasic | null;
     /**
      * Numeric state ID of the root entity (active / archived / finished / template).
@@ -1343,10 +1615,10 @@ export type SearchResult = {
      */
     is_smart?: boolean;
     /**
-     * **Conditional** — present only for `type=task`. The projects the task is assigned to that the caller can see, same shape as on the task detail. A multi-project task is listed once.
+     * **Conditional** — present only for `type=task`. The projects the task is assigned to that the caller can see, same shape as on the task detail plus the project color and icon. A multi-project task is listed once.
      *
      */
-    multi_project_task?: MultiProjectTask;
+    multi_project_task?: SearchMultiProjectTask;
     /**
      * **Conditional** — parent task of the hit. Present for `type` of `taskcheck`, `task_comment`, and for `task` hits that are smart subtasks (in which case it carries the parent task).
      *
@@ -1354,7 +1626,7 @@ export type SearchResult = {
     task?: {
         id?: number;
         name?: string;
-        multi_project_task?: MultiProjectTask;
+        multi_project_task?: SearchMultiProjectTask;
     };
     /**
      * **Conditional** — smart-task ancestor (if any) for `type` of `taskcheck` or `task_comment`. `null` when the hit is not under a smart task.
@@ -1413,6 +1685,8 @@ export type TaskcheckIdParam = number;
 export type DirectoryUuidParam = string;
 
 export type LinkUuidParam = string;
+
+export type TaskLabelUuidParam = string;
 
 export type ProjectFileUuidParam = string;
 
@@ -1519,6 +1793,14 @@ export type CreateProjectData = {
          *
          */
         project_owner_id?: number;
+        /**
+         * Project color (hex, case-insensitive). A value outside the palette fails with `400`. The legacy `#ffffff` is still accepted and stored as the default gray.
+         */
+        color?: '#77787a' | '#15acc0' | '#367fee' | '#10aa40' | '#f2830b' | '#ca3e99' | '#9235e4' | '#e9483a' | '#e3b51e';
+        /**
+         * Project icon name. A value outside the list fails with `400`.
+         */
+        icon?: 'folder-simple' | 'star-four' | 'book' | 'nut' | 'spade' | 'club' | 'diamond' | 'heart' | 'shield' | 'cactus' | 'ghost' | 'fire-simple' | 'lightning' | 'moon' | 'rocket-launch' | 'sailboat' | 'yin-yang' | 'lightbulb' | 'first-aid' | 'balloon' | 'gavel' | 'clover' | 'hexagon' | 'map-pin' | 'atom' | 'avocado' | 'butterfly';
     };
     path?: never;
     query?: never;
@@ -2859,6 +3141,10 @@ export type GetAllTasksData = {
          */
         worker_id?: number;
         /**
+         * Filter by worker IDs — returns tasks assigned to any of the given workers. Combined with `worker_id` if both are sent.
+         */
+        'workers_ids[]'?: Array<number>;
+        /**
          * Only tasks in the authenticated user's priorities ("my priorities"). Pass `1` to enable, `0` to disable — string values like `true`/`false` are not accepted and silently fall back to the default.
          */
         my_priorities?: 0 | 1;
@@ -3268,6 +3554,15 @@ export type MoveTaskData = {
     url: '/task/{task_id}/move/{tasklist_id}';
 };
 
+export type MoveTaskErrors = {
+    /**
+     * The task is a subtask and the target tasklist is not its parent's tasklist
+     */
+    400: ErrorResponse;
+};
+
+export type MoveTaskError = MoveTaskErrors[keyof MoveTaskErrors];
+
 export type MoveTaskResponses = {
     /**
      * Successful response
@@ -3444,6 +3739,105 @@ export type DeleteTaskRelationResponses = {
 
 export type DeleteTaskRelationResponse = DeleteTaskRelationResponses[keyof DeleteTaskRelationResponses];
 
+export type GetTaskTrackingUsersData = {
+    body?: never;
+    path: {
+        task_id: number;
+    };
+    query?: never;
+    url: '/task/{task_id}/tracking-users';
+};
+
+export type GetTaskTrackingUsersErrors = {
+    /**
+     * Returned when the task does not exist or the caller has no access to it.
+     */
+    404: unknown;
+};
+
+export type GetTaskTrackingUsersResponses = {
+    /**
+     * Users following the task, ordered by name
+     */
+    200: {
+        tracking_users: Array<UserBasic>;
+    };
+};
+
+export type GetTaskTrackingUsersResponse = GetTaskTrackingUsersResponses[keyof GetTaskTrackingUsersResponses];
+
+export type AddTaskTrackingUsersData = {
+    body: {
+        /**
+         * IDs of users to start following the task.
+         */
+        users_ids: Array<number>;
+    };
+    path: {
+        task_id: number;
+    };
+    query?: never;
+    url: '/task/{task_id}/tracking-users/add';
+};
+
+export type AddTaskTrackingUsersErrors = {
+    /**
+     * `users_ids` is missing, empty, has more than 100 items, or contains a value that is not a positive integer
+     */
+    400: unknown;
+    /**
+     * Returned when the task does not exist or the caller has no access to it.
+     */
+    404: unknown;
+};
+
+export type AddTaskTrackingUsersResponses = {
+    /**
+     * Users following the task after the change
+     */
+    200: {
+        tracking_users: Array<UserBasic>;
+    };
+};
+
+export type AddTaskTrackingUsersResponse = AddTaskTrackingUsersResponses[keyof AddTaskTrackingUsersResponses];
+
+export type RemoveTaskTrackingUsersData = {
+    body: {
+        /**
+         * IDs of users to stop following the task.
+         */
+        users_ids: Array<number>;
+    };
+    path: {
+        task_id: number;
+    };
+    query?: never;
+    url: '/task/{task_id}/tracking-users/remove';
+};
+
+export type RemoveTaskTrackingUsersErrors = {
+    /**
+     * `users_ids` is missing, empty, has more than 100 items, or contains a value that is not a positive integer
+     */
+    400: unknown;
+    /**
+     * Returned when the task does not exist or the caller has no access to it.
+     */
+    404: unknown;
+};
+
+export type RemoveTaskTrackingUsersResponses = {
+    /**
+     * Users following the task after the change
+     */
+    200: {
+        tracking_users: Array<UserBasic>;
+    };
+};
+
+export type RemoveTaskTrackingUsersResponse = RemoveTaskTrackingUsersResponses[keyof RemoveTaskTrackingUsersResponses];
+
 export type RemoveTaskFromProjectData = {
     body?: never;
     path: {
@@ -3529,6 +3923,68 @@ export type EditTaskDescriptionResponses = {
 };
 
 export type EditTaskDescriptionResponse = EditTaskDescriptionResponses[keyof EditTaskDescriptionResponses];
+
+export type DeleteTaskRecurrenceData = {
+    body?: never;
+    path: {
+        task_id: number;
+    };
+    query?: never;
+    url: '/task/{task_id}/recurrence';
+};
+
+export type DeleteTaskRecurrenceErrors = {
+    /**
+     * Task not found, or the original task of its series is not accessible or was deleted
+     */
+    404: ErrorResponse;
+};
+
+export type DeleteTaskRecurrenceError = DeleteTaskRecurrenceErrors[keyof DeleteTaskRecurrenceErrors];
+
+export type DeleteTaskRecurrenceResponses = {
+    /**
+     * Recurrence cancelled, or there was none
+     */
+    200: SuccessResponse;
+};
+
+export type DeleteTaskRecurrenceResponse = DeleteTaskRecurrenceResponses[keyof DeleteTaskRecurrenceResponses];
+
+export type SetTaskRecurrenceData = {
+    body: TaskRecurrenceInput;
+    path: {
+        task_id: number;
+    };
+    query?: never;
+    url: '/task/{task_id}/recurrence';
+};
+
+export type SetTaskRecurrenceErrors = {
+    /**
+     * Invalid setting, or a key required by `type`, `end_type` or `monthly_yearly_type` is missing
+     */
+    400: ErrorResponse;
+    /**
+     * Task not found, or the original task of its series is not accessible or was deleted
+     */
+    404: ErrorResponse;
+    /**
+     * Another recurrent task on the same subtask branch (`error: recurrency_depth_conflict`)
+     */
+    409: ErrorResponse;
+};
+
+export type SetTaskRecurrenceError = SetTaskRecurrenceErrors[keyof SetTaskRecurrenceErrors];
+
+export type SetTaskRecurrenceResponses = {
+    /**
+     * Recurrence set
+     */
+    200: TaskRecurrence;
+};
+
+export type SetTaskRecurrenceResponse = SetTaskRecurrenceResponses[keyof SetTaskRecurrenceResponses];
 
 export type DeleteTaskReminderData = {
     body?: never;
@@ -3800,6 +4256,15 @@ export type CreateSubtaskData = {
     url: '/task/{task_id}/subtasks';
 };
 
+export type CreateSubtaskErrors = {
+    /**
+     * The parent task is already on the deepest subtask level (subtasks nest at most 2 levels deep)
+     */
+    409: ErrorResponse;
+};
+
+export type CreateSubtaskError = CreateSubtaskErrors[keyof CreateSubtaskErrors];
+
 export type CreateSubtaskResponses = {
     /**
      * Subtask created
@@ -3893,6 +4358,41 @@ export type MergeTaskLabelsResponses = {
 };
 
 export type MergeTaskLabelsResponse = MergeTaskLabelsResponses[keyof MergeTaskLabelsResponses];
+
+export type EditTaskLabelData = {
+    body: TaskLabelEditRequest;
+    path: {
+        label_uuid: string;
+    };
+    query?: never;
+    url: '/task-labels/{label_uuid}';
+};
+
+export type EditTaskLabelErrors = {
+    /**
+     * Invalid label UUID or request body
+     */
+    400: ErrorResponse;
+    /**
+     * The caller is not allowed to edit the label
+     */
+    403: ErrorResponse;
+    /**
+     * Label not found
+     */
+    404: ErrorResponse;
+};
+
+export type EditTaskLabelError = EditTaskLabelErrors[keyof EditTaskLabelErrors];
+
+export type EditTaskLabelResponses = {
+    /**
+     * Successful response
+     */
+    200: SuccessResponse;
+};
+
+export type EditTaskLabelResponse = EditTaskLabelResponses[keyof EditTaskLabelResponses];
 
 export type AddTaskLabelsToTaskData = {
     body: {
@@ -4274,6 +4774,9 @@ export type GetWorkReportsData = {
     path?: never;
     query?: {
         'projects_ids[]'?: Array<number>;
+        /**
+         * Filters by the user whose time the report represents — the `author` field in this response.
+         */
         'users_ids[]'?: Array<number>;
         'tasks_ids[]'?: Array<number>;
         /**
@@ -4301,6 +4804,15 @@ export type GetWorkReportsData = {
     url: '/work-reports';
 };
 
+export type GetWorkReportsErrors = {
+    /**
+     * The caller is not allowed to see work reports in any project in scope (e.g. a guest)
+     */
+    403: ErrorResponse;
+};
+
+export type GetWorkReportsError = GetWorkReportsErrors[keyof GetWorkReportsErrors];
+
 export type GetWorkReportsResponses = {
     /**
      * Successful response
@@ -4323,6 +4835,9 @@ export type CreateWorkReportData = {
          *
          */
         date_reported?: string;
+        /**
+         * User whose time is logged. Defaults to the caller. Returned as `worker`.
+         */
         worker_id?: number;
         minutes: number;
         /**
@@ -4405,7 +4920,13 @@ export type GetIssuedInvoicesData = {
     body?: never;
     path?: never;
     query?: {
+        /**
+         * Invoices with `date_add` on or after this day.
+         */
         'date_range[date_from]'?: string;
+        /**
+         * Invoices with `date_add` on or before this day (the whole day is included).
+         */
         'date_range[date_to]'?: string;
         'projects_ids[]'?: Array<number>;
         /**
@@ -4501,7 +5022,7 @@ export type MarkAsInvoicedData = {
 
 export type MarkAsInvoicedResponses = {
     /**
-     * Invoice marked
+     * Invoice detail with the attached external invoice
      */
     200: IssuedInvoiceDetail;
 };
@@ -4598,6 +5119,19 @@ export type DisableOutOfOfficeData = {
     url: '/user/{user_id}/out-of-office';
 };
 
+export type DisableOutOfOfficeErrors = {
+    /**
+     * The target is another user who is not the caller's coworker, or whose e-mail domain the caller has not verified
+     */
+    400: ErrorResponse;
+    /**
+     * User not found
+     */
+    404: ErrorResponse;
+};
+
+export type DisableOutOfOfficeError = DisableOutOfOfficeErrors[keyof DisableOutOfOfficeErrors];
+
 export type DisableOutOfOfficeResponses = {
     /**
      * Successful response
@@ -4616,6 +5150,19 @@ export type GetOutOfOfficeData = {
     url: '/user/{user_id}/out-of-office';
 };
 
+export type GetOutOfOfficeErrors = {
+    /**
+     * The target is another user who is not the caller's coworker, or whose e-mail domain the caller has not verified
+     */
+    400: ErrorResponse;
+    /**
+     * User not found
+     */
+    404: ErrorResponse;
+};
+
+export type GetOutOfOfficeError = GetOutOfOfficeErrors[keyof GetOutOfOfficeErrors];
+
 export type GetOutOfOfficeResponses = {
     /**
      * Successful response
@@ -4623,11 +5170,11 @@ export type GetOutOfOfficeResponses = {
     200: {
         out_of_office?: {
             /**
-             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             * ISO8601 timestamp in UTC (`Z` suffix).
              */
             date_from?: string;
             /**
-             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             * ISO8601 timestamp in UTC (`Z` suffix).
              */
             date_to?: string;
         } | null;
@@ -4640,11 +5187,11 @@ export type EnableOutOfOfficeData = {
     body: {
         out_of_office: {
             /**
-             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             * ISO8601 timestamp, with an offset / `Z` or naive (read as Europe/Prague).
              */
             date_from: string;
             /**
-             * Naive ISO8601 timestamp in Europe/Prague timezone (no offset). See "Timestamp Format" in API description.
+             * ISO8601 timestamp, with an offset / `Z` or naive (read as Europe/Prague).
              */
             date_to: string;
         };
@@ -4655,6 +5202,19 @@ export type EnableOutOfOfficeData = {
     query?: never;
     url: '/user/{user_id}/out-of-office';
 };
+
+export type EnableOutOfOfficeErrors = {
+    /**
+     * The target is another user who is not the caller's coworker, or whose e-mail domain the caller has not verified; or invalid dates (`date_to` before `date_from`, unparsable value)
+     */
+    400: ErrorResponse;
+    /**
+     * User not found
+     */
+    404: ErrorResponse;
+};
+
+export type EnableOutOfOfficeError = EnableOutOfOfficeErrors[keyof EnableOutOfOfficeErrors];
 
 export type EnableOutOfOfficeResponses = {
     /**
